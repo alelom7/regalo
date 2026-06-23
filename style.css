@@ -169,11 +169,57 @@ h1 {
     transform: translateY(-5px); /* Effetto sollevamento */
 }
 
+/* ==========================================
+   STILI PER LE SCHERMATE SECONDARIE (Es. Bacheca)
+   ========================================== */
+
+/* Barra di navigazione in alto */
+.nav-bar {
+    width: 100%;
+    background-color: #003366; /* Stesso blu del portale */
+    color: white;
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.back-btn {
+    background: transparent;
+    color: white;
+    border: 1px solid white;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.2s;
+}
+
+.back-btn:hover {
+    background: white;
+    color: #003366;
+}
+
+/* Facciamo in modo che la schermata della bacheca riempia lo schermo */
+#bacheca-screen {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: #f4f4f4;
+}
+
+/* Il contenitore che ospita il muro di post-it */
+.iframe-container {
+    flex-grow: 1; /* Prende tutto lo spazio rimanente sotto la nav-bar */
+    width: 100%;
+}
+
 /* Colori specifici (se vuoi mantenerli) */
 #btn-galleria { background: #e17055; }
 #btn-cruciverba { background: #00b894; }
 #btn-quiz { background: #0984e3; }
-
+#btn-bacheca { background: #6c5ce7; }
 /* ==========================================
    REGOLE PER FARLO FUNZIONARE ANCHE SUI TELEFONI
    ========================================== */

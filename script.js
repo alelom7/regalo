@@ -43,3 +43,23 @@ document.getElementById("enter-btn").addEventListener("click", function() {
     // 3. Rimuove la classe hidden dalla seconda per mostrarla sullo schermo
     mainScreen.classList.remove("hidden");
 });
+
+// Recupero gli elementi delle schermate
+const mainScreen = document.getElementById("main-screen");
+const bachecaScreen = document.getElementById("bacheca-screen");
+
+// Pulsanti
+const btnBacheca = document.getElementById("btn-bacheca");
+const btnBackBacheca = document.getElementById("back-from-bacheca");
+
+// 1. Quando premo "Lascia una Dedica", nascondo il menu e mostro la bacheca
+btnBacheca.addEventListener("click", function() {
+    mainScreen.classList.add("hidden");
+    bachecaScreen.classList.remove("hidden");
+});
+
+// 2. Quando premo "Torna al Menu", nascondo la bacheca e rimostro il menu
+btnBackBacheca.addEventListener("click", function() {
+    bachecaScreen.classList.add("hidden");
+    mainScreen.classList.remove("hidden");
+});
