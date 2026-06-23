@@ -75,64 +75,89 @@ h1 {
 }
 
 /* ==========================================
-   SCHERMATA 2: Sito a scorrimento verticale
+   SCHERMATA 2: Sito a fasce orizzontali
    ========================================== */
 #main-screen {
-    /* Crea una "colonna" bianca larga massimo 800px centrata nello schermo */
     width: 100%;
-    max-width: 800px;
-    margin: 0 auto; 
-    background-color: #fcfcfc;
-    min-height: 100vh; /* Permette di scorrere verso il basso */
-    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
+    /* Rimuoviamo gli sfondi e i margini che usavamo prima */
+    background-color: white; 
 }
 
-/* La foto delle tue amiche come grande banner superiore */
-.top-banner {
-    width: 100%;
-    height: 50vh; /* Occupa esattamente metà dello schermo appena entri */
-    background-image: url('assets/foto-amiche.jpg');
+/* 1. La fascia superiore (Testo sx, Foto dx) */
+.top-section {
+    background-color: #003366; /* Blu scuro elegante tipo Università */
+    display: flex;
+    align-items: center; /* Centra verticalmente gli elementi */
+    justify-content: space-between; /* Mette spazio tra testo e foto */
+    padding: 4rem 10%; /* Lascia un bel margine ai lati */
+    color: white;
+    min-height: 50vh; /* Occupa almeno metà schermo */
+}
+
+.top-text {
+    width: 50%; /* Il testo occupa metà dello spazio a sinistra */
+}
+
+.top-text h2 {
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+}
+
+.top-text p {
+    font-size: 1.3rem;
+    color: #e0e0e0;
+    line-height: 1.5;
+}
+
+/* La foto arrotondata a destra */
+.top-photo {
+    width: 400px;
+    height: 400px;
+    background-image: url('assets/sfondo.jpeg'); 
     background-size: cover;
     background-position: center;
-    background-repeat: no-repeat;
+    border-radius: 50%; /* Questo comando la fa diventare un cerchio perfetto! */
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3); /* Dà profondità alla foto */
 }
 
-/* La sezione inferiore con testi e bottoni, libera di allungarsi all'infinito */
-.menu-content {
-    padding: 3rem 2rem;
+/* 2. La fascia inferiore (Bottoni) */
+.bottom-section {
+    background-color: #d8d4d0; /* Un grigio caldo e neutro */
+    padding: 5rem 10%;
     text-align: center;
-    padding-bottom: 5rem; /* Lascia spazio vuoto in fondo per non appiccicare i bottoni al bordo */
+    flex-grow: 1; /* Si allunga per riempire lo schermo rimanente verso il basso */
 }
 
-.menu-content h2 {
-    color: #2c3e50;
-    margin-bottom: 1rem;
-    font-size: 2.2rem;
+.bottom-section h3 {
+    color: #003366; /* Riprende il blu di sopra per coerenza */
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
 }
 
-.menu-content p {
+.bottom-section p {
     color: #555;
-    margin-bottom: 2rem;
     font-size: 1.2rem;
+    margin-bottom: 3rem;
 }
 
-/* Griglia per impaginare i bottoni in colonna */
+/* La griglia orizzontale dei bottoni */
 .button-grid {
     display: flex;
-    flex-direction: column;
-    gap: 1.5rem; /* Distanza tra i bottoni */
-    max-width: 400px;
-    margin: 0 auto; /* Centra i bottoni nella pagina */
+    justify-content: center; /* Centra i bottoni */
+    gap: 2rem; /* Distanza tra i bottoni */
+    flex-wrap: wrap; /* Se lo schermo è piccolo, i bottoni vanno a capo automaticamente */
 }
 
-/* Stile dei bottoni */
 .nav-btn {
-    padding: 1.2rem;
-    font-size: 1.3rem;
+    padding: 1.2rem 2.5rem;
+    font-size: 1.2rem;
     font-weight: bold;
     color: white;
+    background: #2c3e50;
     border: none;
     border-radius: 12px;
     cursor: pointer;
@@ -141,24 +166,30 @@ h1 {
 }
 
 .nav-btn:hover {
-    transform: translateY(-3px);
+    transform: translateY(-5px); /* Effetto sollevamento */
 }
 
-/* Colori delle singole attività */
+/* Colori specifici (se vuoi mantenerli) */
 #btn-galleria { background: #e17055; }
 #btn-cruciverba { background: #00b894; }
 #btn-quiz { background: #0984e3; }
 
 /* ==========================================
-   REGOLE SOLO PER SMARTPHONE
+   REGOLE PER FARLO FUNZIONARE ANCHE SUI TELEFONI
    ========================================== */
-@media screen and (max-width: 600px) {
-    header { padding: 2rem 1.5rem; }
-    h1 { font-size: 2rem; }
-    #countdown { font-size: 1.5rem; padding: 0.8rem 1rem; }
+@media screen and (max-width: 800px) {
+    /* Sul telefono non c'è spazio per affiancarli, quindi impiliamo il testo sopra e la foto sotto */
+    .top-section {
+        flex-direction: column;
+        text-align: center;
+        padding: 3rem 5%;
+    }
     
-    /* Sul telefono la foto è leggermente più bassa per far leggere bene il titolo sotto */
-    .top-banner { height: 40vh; }
-    .menu-content { padding: 2rem 1rem; }
-    .nav-btn { font-size: 1.1rem; padding: 1rem; }
+    .top-text { width: 100%; margin-bottom: 2rem; }
+    .top-text h2 { font-size: 2.5rem; }
+    
+    /* Rimpiccioliamo un po' la foto circolare sul telefono */
+    .top-photo { width: 250px; height: 250px; }
+    
+    .bottom-section { padding: 3rem 5%; }
 }
