@@ -1,0 +1,53 @@
+/* 1. Reset di base */
+/* Il selettore universale (*) azzera i margini che i browser mettono di default */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* 2. Il corpo della pagina */
+body {
+    /* Occupa sempre almeno il 100% dell'altezza dello schermo visibile (Viewport Height) */
+    min-height: 100vh; 
+    
+    /* Flexbox: il modo più moderno per centrare gli elementi perfettamente in orizzontale e verticale */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+    /* Uno sfondo sfumato elegante (da un rosa scuro a un azzurro chiaro) */
+    background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%);
+    color: #333;
+}
+
+/* 3. Il "biglietto" centrale */
+header {
+    background-color: rgba(255, 255, 255, 0.85); /* Sfondo bianco leggermente trasparente */
+    padding: 3rem 4rem; /* Spazio interno */
+    border-radius: 20px; /* Bordi arrotondati */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15); /* Ombra morbida per dare profondità */
+    text-align: center;
+}
+
+/* 4. Il Titolo */
+h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+    color: #2c3e50; /* Un grigio/blu scuro molto leggibile */
+}
+
+/* 5. Il Timer del Countdown */
+#countdown {
+    font-size: 2.2rem;
+    font-weight: bold;
+    color: #e74c3c; /* Un rosso acceso per far risaltare i numeri */
+    background: white;
+    padding: 1rem 2rem;
+    border-radius: 10px;
+    /* Un'ombra interna per far sembrare il timer "incavato" nella pagina */
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.08); 
+    letter-spacing: 2px; /* Spazio extra tra i caratteri */
+}
