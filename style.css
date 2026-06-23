@@ -1,5 +1,4 @@
-/* 1. Reset di base */
-/* Il selettore universale (*) azzera i margini che i browser mettono di default */
+/* Reset di base */
 * {
     margin: 0;
     padding: 0;
@@ -7,63 +6,56 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* 2. Il corpo della pagina */
+/* Corpo della pagina e sfondo */
 body {
-    /* Occupa sempre almeno il 100% dell'altezza dello schermo visibile (Viewport Height) */
     min-height: 100vh; 
-    
-    /* Flexbox: il modo più moderno per centrare gli elementi perfettamente in orizzontale e verticale */
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    
-    /* Uno sfondo sfumato elegante (da un rosa scuro a un azzurro chiaro) */
     background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%);
     color: #333;
 }
 
-/* 3. Il "biglietto" centrale */
-header {
-    background-color: rgba(255, 255, 255, 0.85); /* Sfondo bianco leggermente trasparente */
-    padding: 3rem 4rem; /* Spazio interno */
-    border-radius: 20px; /* Bordi arrotondati */
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15); /* Ombra morbida per dare profondità */
-    text-align: center;
-}
-
-/* 4. Il Titolo */
-h1 {
-    font-size: 2.5rem;
-    margin-bottom: 1.5rem;
-    color: #2c3e50; /* Un grigio/blu scuro molto leggibile */
-}
-
-/* 5. Il Timer del Countdown */
-#countdown {
-    font-size: 2.2rem;
-    font-weight: bold;
-    color: #e74c3c; /* Un rosso acceso per far risaltare i numeri */
-    background: white;
-    padding: 1rem 2rem;
-    border-radius: 10px;
-    /* Un'ombra interna per far sembrare il timer "incavato" nella pagina */
-    box-shadow: inset 0 2px 5px rgba(0,0,0,0.08); 
-    letter-spacing: 2px; /* Spazio extra tra i caratteri */
-}
-/* Classe magica per nascondere gli elementi */
+/* La classe magica che nasconde gli elementi */
 .hidden {
     display: none !important;
 }
 
-/* Stile per il pulsante */
+/* STILI SCHERMATA 1 (Countdown) */
+header {
+    background-color: rgba(255, 255, 255, 0.85);
+    padding: 3rem 4rem;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    text-align: center;
+}
+
+h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+    color: #2c3e50;
+}
+
+#countdown {
+    font-size: 2.2rem;
+    font-weight: bold;
+    color: #e74c3c;
+    background: white;
+    padding: 1rem 2rem;
+    border-radius: 10px;
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.08); 
+    letter-spacing: 2px;
+}
+
+/* Stile del pulsante */
 #enter-btn {
     margin-top: 2rem;
     padding: 0.8rem 2rem;
     font-size: 1.2rem;
     font-weight: bold;
     color: white;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); /* Sfumatura viola/blu */
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     border: none;
     border-radius: 25px;
     cursor: pointer;
@@ -71,13 +63,12 @@ h1 {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
-/* Effetto quando si passa sopra il pulsante con il mouse */
 #enter-btn:hover {
-    transform: scale(1.05); /* Si ingrandisce leggermente */
+    transform: scale(1.05);
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
 }
 
-/* Contenitore della seconda schermata */
+/* STILI SCHERMATA 2 (Foto) */
 .content-box {
     background-color: rgba(255, 255, 255, 0.9);
     padding: 2.5rem;
@@ -85,7 +76,7 @@ h1 {
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
     text-align: center;
     max-width: 90%;
-    width: 500px;
+    width: 600px;
 }
 
 .content-box h2 {
@@ -93,7 +84,6 @@ h1 {
     margin-bottom: 1rem;
 }
 
-/* Gestione della foto affinché non sballi il layout del telefono */
 .photo-container {
     margin-top: 1.5rem;
     border-radius: 15px;
