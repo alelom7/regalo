@@ -1,21 +1,23 @@
-<!DOCTYPE html>
-<html lang="it">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sorpresa per la Laurea!</title>
-    <link rel="stylesheet" href="style.css">
-</head>
 <body>
     
-    <header>
-        <h1>Manca...</h1>
-        <div id="countdown">Calcolo del tempo rimanente...</div>
-    </header>
+    <div id="landing-screen" class="screen">
+        <header>
+            <h1>Manca...</h1>
+            <div id="countdown">Calcolo del tempo rimanente...</div>
+            <button id="enter-btn">Entra nel sito ✨</button>
+        </header>
+    </div>
 
-    <main>
+    <div id="main-screen" class="screen hidden">
+        <main class="content-box">
+            <h2>🎉 Benvenuti al grande giorno! 🎉</h2>
+            <p>Ecco una sorpresa speciale per le nostre dottoresse.</p>
+            
+            <div class="photo-container">
+                <img src="assets/sfondo.jpeg" alt="Foto delle festeggiate" id="laurea-photo">
+            </div>
         </main>
+    </div>
 
     <script src="script.js"></script>
 </body>
-</html>

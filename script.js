@@ -31,3 +31,15 @@ const timer = setInterval(function() {
         // Nota: Qui inseriremo in seguito la funzione per far comparire i giochi e le foto
     }
 }, 1000);
+// Gestione del cambio schermata al clic del pulsante
+document.getElementById("enter-btn").addEventListener("click", function() {
+    // 1. Seleziona le due schermate
+    const landingScreen = document.getElementById("landing-screen");
+    const mainScreen = document.getElementById("main-screen");
+
+    // 2. Aggiunge la classe hidden alla prima per nasconderla
+    landingScreen.classList.add("hidden");
+
+    // 3. Rimuove la classe hidden dalla seconda per mostrarla sullo schermo
+    mainScreen.classList.remove("hidden");
+});
