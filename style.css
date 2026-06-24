@@ -51,6 +51,8 @@ header {
     border-radius: 20px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
     text-align: center;
+    font-family: "Fredericka the Great", serif;
+
 }
 
 h1 {
@@ -103,7 +105,6 @@ h1 {
 
 /* 1. La fascia superiore (Testo sx, Foto dx) */
 .top-section {
-    font-family: "Fredericka the Great", serif;
     background-color: #003366; /* Blu scuro elegante tipo Università */
     display: flex;
     align-items: center; /* Centra verticalmente gli elementi */
