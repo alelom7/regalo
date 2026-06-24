@@ -1,3 +1,18 @@
+/* ==========================================
+   FONT GENERALI
+   ========================================== */
+@import url('https://fonts.googleapis.com/css2?family=Chelsea+Market&display=swap');
+ /*  font-family: "Chelsea Market", system-ui;*/
+
+@import url('https://fonts.googleapis.com/css2?family=Chelsea+Market&family=Cormorant:ital,wght@0,300..700;1,300..700&display=swap');
+/*    font-family: "Cormorant", serif;*/
+
+@import url('https://fonts.googleapis.com/css2?family=Chelsea+Market&family=Cormorant:ital,wght@0,300..700;1,300..700&family=Fredericka+the+Great&display=swap');
+  /*font-family: "Fredericka the Great", serif;*/
+
+
+
+
 /* Reset di base */
 * {
     margin: 0;
@@ -98,6 +113,7 @@ h1 {
 }
 
 .top-text {
+    font-family: "Fredericka the Great", serif;
     width: 50%; /* Il testo occupa metà dello spazio a sinistra */
 }
 
