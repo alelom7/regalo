@@ -1,6 +1,6 @@
 // 1. Imposta la data della laurea (Anno, Mese - 1, Giorno, Ora, Minuti, Secondi)
 // Attenzione: in JavaScript i mesi partono da 0 (0 = Gennaio, 5 = Giugno, 6 = Luglio, ecc.)
-const dataLaurea = new Date(2026, 10, 28, 0, 0, 0).getTime();
+const dataLaurea = new Date(2026, 10, 27, 0, 0, 0).getTime();
 // 2. Aggiorna il conteggio alla rovescia ogni secondo (1000 millisecondi)
 const timer = setInterval(function() {
 

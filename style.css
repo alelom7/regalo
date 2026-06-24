@@ -238,4 +238,23 @@ h1 {
     .top-photo { width: 250px; height: 250px; }
     
     .bottom-section { padding: 3rem 5%; }
+
+    header { 
+        padding: 2rem 1.5rem; /* Riduciamo lo spazio bianco interno */
+        width: 90%; /* Evitiamo che il riquadro tocchi i bordi laterali del telefono */
+    }
+
+    h1 { 
+        font-size: 2rem; /* Riduciamo la dimensione del titolo principale */
+    } 
+    #countdown { 
+        font-size: 1.3rem; /* Rimpiccioliamo i numeri per non farli andare a capo */
+        padding: 0.8rem 1rem; 
+    }
+    
+    #enter-btn {
+        font-size: 1.1rem; /* Adattiamo anche il bottone */
+        padding: 0.8rem 1.5rem;
+    }
+
 }
