@@ -25,6 +25,11 @@ body {
     min-height: 100vh;
 }
 
+/* Applichiamo il font speciale solo ai titoli e al countdown */
+h1, h2, h3, #countdown {
+    font-family: "Chelsea Market", system-ui; 
+}
+
 .hidden {
     display: none !important;
 }
