@@ -1,14 +1,11 @@
 /* ==========================================
    FONT GENERALI
    ========================================== */
-@import url('https://fonts.googleapis.com/css2?family=Chelsea+Market&display=swap');
- /*  font-family: "Chelsea Market", system-ui;*/
 
 @import url('https://fonts.googleapis.com/css2?family=Chelsea+Market&family=Cormorant:ital,wght@0,300..700;1,300..700&display=swap');
-/*    font-family: "Cormorant", serif;*/
-
-@import url('https://fonts.googleapis.com/css2?family=Chelsea+Market&family=Cormorant:ital,wght@0,300..700;1,300..700&family=Fredericka+the+Great&display=swap');
-  /*font-family: "Fredericka the Great", serif;*/
+/*font-family: "Cormorant", serif;*/
+/*font-family: "Chelsea Market", system-ui;*/
+/*font-family: "Fredericka the Great", serif;*/
 
 
 
@@ -18,11 +15,11 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 /* Il corpo della pagina ora gestisce solo lo sfondo sfumato */
 body {
+    font-family: "Cormorant", serif;
     background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%);
     color: #333;
     min-height: 100vh;
