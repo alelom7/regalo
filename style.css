@@ -9,8 +9,6 @@
 /*font-family: "Fredericka the Great", serif;*/
 
 
-
-
 /* Reset di base */
 * {
     margin: 0;
@@ -21,77 +19,18 @@
 /* Il corpo della pagina ora gestisce solo lo sfondo sfumato */
 body {
     font-family: "DM Serif Text", serif;
-    background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%);
+    background: linear-gradient(135deg, #ffffff 0%, #ffffff 100%);
     color: #333;
     min-height: 100vh;
 }
 
 /* Applichiamo il font speciale solo ai titoli e al countdown */
 h1, h2, h3, #countdown {
-    font-family: "Bangers", system-ui;
+    font-family: "Cormorant", serif;
 }
 
 .hidden {
     display: none !important;
-}
-
-/* ==========================================
-   SCHERMATA 1: Landing Page (Bloccata al centro)
-   ========================================== */
-#landing-screen {
-    /* Questa regola dice: prendi il 100% dell'altezza dello schermo e centra tutto */
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-}
-
-header {
-    background-color: rgba(255, 255, 255, 0.85);
-    padding: 3rem 4rem;
-    border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-    text-align: center;
-    font-family: "Fredericka the Great", serif;
-
-}
-
-h1 {
-    font-size: 2.5rem;
-    margin-bottom: 1.5rem;
-    color: #2c3e50;
-}
-
-#countdown {
-    font-size: 2.2rem;
-    font-weight: bold;
-    color: #e74c3c;
-    background: white;
-    padding: 1rem 2rem;
-    border-radius: 10px;
-    box-shadow: inset 0 2px 5px rgba(0,0,0,0.08); 
-    letter-spacing: 2px;
-}
-
-#enter-btn {
-    margin-top: 2rem;
-    padding: 0.8rem 2rem;
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: white;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    border: none;
-    border-radius: 25px;
-    cursor: pointer;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-}
-
-#enter-btn:hover {
-    transform: scale(1.05);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
 }
 
 /* ==========================================
@@ -103,7 +42,7 @@ h1 {
     display: flex;
     flex-direction: column;
     /* Rimuoviamo gli sfondi e i margini che usavamo prima */
-    background-color: white; 
+    background-color: rgb(193, 189, 189); 
 }
 
 /* 1. La fascia superiore (Testo sx, Foto dx) */
@@ -130,13 +69,9 @@ h1 {
     margin-bottom: 1rem;
     color: #000000;
     text-transform: uppercase;
+    text-shadow: 2px 4px 10px rgba(0, 0, 0, 0.3);
 }
 
-.top-text p {
-    font-size: 1.3rem;
-    color: #e0e0e0;
-    line-height: 1.5;
-}
 
 /* 1. La scatola invisibile che proietta l'ombra */
 .photo-shadow-wrapper {
@@ -161,14 +96,14 @@ h1 {
 
 /* 2. La fascia inferiore (Bottoni) */
 .bottom-section {
-    background-color: #d8d4d0; /* Un grigio caldo e neutro */
+    background-color: #fff6efdd; /* Un grigio caldo e neutro */
     padding: 5rem 10%;
     text-align: center;
     flex-grow: 1; /* Si allunga per riempire lo schermo rimanente verso il basso */
 }
 
 .bottom-section h3 {
-    color: #003366; /* Riprende il blu di sopra per coerenza */
+    color: #930707; 
     font-size: 2rem;
     margin-bottom: 0.5rem;
 }
@@ -182,6 +117,7 @@ h1 {
 /* La griglia orizzontale dei bottoni */
 .button-grid {
     display: flex;
+    flex-direction: row; /* Affianca i bottoni */
     justify-content: center; /* Centra i bottoni */
     gap: 2rem; /* Distanza tra i bottoni */
     flex-wrap: wrap; /* Se lo schermo è piccolo, i bottoni vanno a capo automaticamente */
@@ -204,6 +140,38 @@ h1 {
     transform: translateY(-5px); /* Effetto sollevamento */
 }
 
+/* Stile per il contenitore di ogni ricordo */
+.card-ricordo {
+    margin-top: 20px;
+    display: flex;           /* Mette foto e testo in riga */
+    align-items: center;     /* Allinea verticalmente al centro */
+    gap: 20px;               /* Spazio tra la foto e la didascalia */
+    margin-bottom: 30px;     /* Spazio tra un ricordo e l'altro */
+    background: #fff;        /* Sfondo bianco per il blocco */
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* Una leggera ombra per dare profondità */
+}
+
+/* Stile per la foto */
+.card-img {
+    width: 300px;            /* Dimensione fissa per la foto */
+    height: 300px;
+    flex-shrink: 0;          /* Impedisce alla foto di rimpicciolirsi */
+}
+
+.card-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;       /* Ritaglia la foto senza deformarla */
+    border-radius: 8px;
+}
+
+/* Stile per il testo a destra */
+.card-testo {
+    flex: 1;                 /* Occupa lo spazio rimanente */
+}
+
 /* ==========================================
    STILI PER LE SCHERMATE SECONDARIE (Es. Bacheca)
    ========================================== */
@@ -211,7 +179,7 @@ h1 {
 /* Barra di navigazione in alto */
 .nav-bar {
     width: 100%;
-    background-color: #003366; /* Stesso blu del portale */
+    background-color: #fa5f98; /* Stesso blu del portale */
     color: white;
     padding: 1rem 2rem;
     display: flex;
@@ -251,10 +219,10 @@ h1 {
 }
 
 /* Colori specifici (se vuoi mantenerli) */
-#btn-galleria { background: #e17055; }
-#btn-cruciverba { background: #00b894; }
-#btn-quiz { background: #0984e3; }
-#btn-bacheca { background: #6c5ce7; }
+#btn-galleria { background: #4d0606; }
+#btn-cruciverba { background: #930d33; }
+#btn-quiz { background: #bc263f; }
+#btn-bacheca { background: #d8596e; }
 
 /* ==========================================
    STILI CRUCIVERBA
@@ -326,24 +294,6 @@ h1 {
     .top-photo { width: 250px; height: 250px; }
     
     .bottom-section { padding: 3rem 5%; }
-
-    header { 
-        padding: 2rem 1.5rem; /* Riduciamo lo spazio bianco interno */
-        width: 90%; /* Evitiamo che il riquadro tocchi i bordi laterali del telefono */
-    }
-
-    h1 { 
-        font-size: 2rem; /* Riduciamo la dimensione del titolo principale */
-    } 
-    #countdown { 
-        font-size: 1.3rem; /* Rimpiccioliamo i numeri per non farli andare a capo */
-        padding: 0.8rem 1rem; 
-    }
-    
-    #enter-btn {
-        font-size: 1.1rem; /* Adattiamo anche il bottone */
-        padding: 0.8rem 1.5rem;
-    }
 
     /* ==========================================
        Aggiustamenti per il Cruciverba

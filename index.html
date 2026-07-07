@@ -8,20 +8,11 @@
 </head>
 <body>
     
-    <div id="landing-screen" class="screen">
-        <header>
-            <h1>Manca...</h1>
-            <div id="countdown">Calcolo del tempo rimanente...</div>
-            <button id="enter-btn">Entra nel sito ✨</button>
-        </header>
-    </div>
-
-    <div id="main-screen" class="screen hidden">
+    <div id="main-screen" class="screen">
         
         <div class="top-section">
             <div class="top-text">
                 <h2>Dottoresse ad Alta Gradazione</h2>
-                <p>Auguri dottoresseeeee</p>
             </div>
             <div class="photo-shadow-wrapper">
                 <div class="top-photo"></div>
@@ -30,15 +21,57 @@
 
         <div class="bottom-section">
             <h3>ATTIVITÀ DISPONIBILI</h3>
-            <p>Scegli il gioco o la galleria fotografica</p>
+            <p>Scegli il gioco</p>
             
             <div class="button-grid">
                 <button class="nav-btn" id="btn-galleria">📸 Galleria</button>
                 <button class="nav-btn" id="btn-cruciverba">🧩 Cruciverba</button>
-                <button class="nav-btn" id="btn-quiz">❓Altre cose</button>
+                <button class="nav-btn" id="btn-quiz"> 🌟Rivivi il nostro viaggio</button>
                 <button class="nav-btn" id="btn-bacheca">📝 Lascia una Dedica</button>
             </div>
+
+                        <!-- Incolla questo blocco nel tuo index.html, dentro la bottom-section -->
+            <div class="card-ricordo">
+                <!-- Parte Sinistra: Foto -->
+                <div class="card-img">
+                    <img src="assets/sfondo.jpeg" alt="Descrizione della foto">
+                </div>
+
+                <!-- Parte Destra: Didascalia -->
+                <div class="card-testo">
+                    <h3>Titolo del ricordo</h3>
+                    <p>Qui scrivi la tua didascalia o il racconto legato alla foto.</p>
+                </div>
+            </div>
+
+            <div class="card-ricordo">
+                <!-- Parte Sinistra: Foto -->
+                <div class="card-img">
+                    <img src="assets/tua-foto.jpg" alt="Descrizione della foto">
+                </div>
+
+                <!-- Parte Destra: Didascalia -->
+                <div class="card-testo">
+                    <h3>Titolo del ricordo</h3>
+                    <p>Qui scrivi la tua didascalia o il racconto legato alla foto.</p>
+                </div>
+            </div>
+
+            <div class="card-ricordo">
+                <!-- Parte Sinistra: Foto -->
+                <div class="card-img">
+                    <img src="assets/tua-foto.jpg" alt="Descrizione della foto">
+                </div>
+
+                <!-- Parte Destra: Didascalia -->
+                <div class="card-testo">
+                    <h3>Titolo del ricordo</h3>
+                    <p>Qui scrivi la tua didascalia o il racconto legato alla foto.</p>
+                </div>
+            </div>
+
         </div>
+
     </div>
 
     <div id="bacheca-screen" class="screen hidden">
@@ -52,6 +85,24 @@
             <iframe src="https://padlet.com/lomastroalessandra7/dediche-per-le-festeggiate-o4omlr3lfxrtbkn5" frameborder="0" allow="camera;microphone;geolocation" style="width:100%; height:100%; border:none;"></iframe>
         </div>
 
+    </div>
+
+    <div id="galleria-screen" class="screen hidden">
+        
+        <div class="nav-bar">
+            <button class="back-btn" id="back-from-galleria">⬅ Torna al Menu</button>
+            <h2>Galleria</h2>
+        </div>
+        
+    </div>
+
+    <div id="storia-screen" class="screen hidden">
+        
+        <div class="nav-bar">
+            <button class="back-btn" id="back-from-storia">⬅ Torna al Menu</button>
+            <h2>Rivivi il nostro viaggio</h2>
+        </div>
+        
     </div>
 
     <div id="cruciverba-screen" class="screen hidden">
