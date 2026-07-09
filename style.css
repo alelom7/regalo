@@ -287,13 +287,15 @@ h1, h2, h3, #countdown {
         padding: 3rem 5%;
     }
     
-    .top-text { width: 100%; margin-bottom: 2rem; }
+    .top-text { width: 50%; margin-bottom: 2rem; }
     .top-text h2 { font-size: 2.5rem; }
     
     /* Rimpiccioliamo un po' la foto circolare sul telefono */
     .top-photo { width: 250px; height: 250px; }
     
     .bottom-section { padding: 3rem 5%; }
+
+
 
     /* ==========================================
        Aggiustamenti per il Cruciverba
