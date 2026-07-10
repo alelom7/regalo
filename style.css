@@ -287,11 +287,11 @@ h1, h2, h3, #countdown {
         padding: 3rem 5%;
     }
     
-    .top-text { width: 50%; margin-bottom: 2rem; }
+    .top-text { width: 100%; margin-bottom: 2rem; }
     .top-text h2 { font-size: 2.5rem; }
     
     /* Rimpiccioliamo un po' la foto circolare sul telefono */
-    .top-photo { width: 250px; height: 250px; }
+    .top-photo { width: 250px; height: 250px; position: relative;  }
     
     .bottom-section { padding: 3rem 5%; }
 
@@ -314,4 +314,25 @@ h1, h2, h3, #countdown {
         font-size: 1.2rem; /* Adattiamo anche il testo finale della vittoria */
     }
 
+}
+
+@media screen and (max-width: 800px) {
+    /* 1. Trasformiamo le card orizzontali in verticali */
+    .card-ricordo {
+        flex-direction: column; /* Mette la foto sopra e il testo sotto */
+        text-align: center;     /* Centra il testo */
+        padding: 20px;
+    }
+
+    /* 2. Facciamo diventare la foto larga quanto la card */
+    .card-img {
+        width: 100%;            /* La foto prende tutta la larghezza */
+        height: 200px;          /* Altezza fissa per mantenere l'ordine */
+        margin-bottom: 15px;    /* Spazio tra foto e testo */
+    }
+
+    /* 3. Spazio tra i bottoni e le card sul telefono */
+    .card-ricordo {
+        margin-top: 2rem;       /* Riduce leggermente lo spazio rispetto al PC */
+    }
 }
