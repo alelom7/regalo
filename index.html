@@ -24,10 +24,10 @@
             <p>Scegli il gioco</p>
             
             <div class="button-grid">
-                <button class="nav-btn" id="btn-galleria">📸 Galleria</button>
-                <button class="nav-btn" id="btn-cruciverba">🧩 Cruciverba</button>
-                <button class="nav-btn" id="btn-quiz"> 🌟Rivivi il nostro viaggio</button>
-                <button class="nav-btn" id="btn-bacheca">📝 Lascia una Dedica</button>
+                <button class="nav-btn bottone-pulsante" id="btn-galleria">📸 Galleria</button>
+                <button class="nav-btn bottone-pulsante" id="btn-cruciverba">🧩 Cruciverba</button>
+                <button class="nav-btn bottone-pulsante" id="btn-quiz"> 🌟Rivivi il nostro viaggio</button>
+                <button class="nav-btn bottone-pulsante" id="btn-bacheca">📝 Lascia una Dedica</button>
             </div>
 
                         <!-- Incolla questo blocco nel tuo index.html, dentro la bottom-section -->
@@ -113,30 +113,71 @@
         </div>
 
         <div class="game-container">
-            <p>1. Se valentina inizia a ballare, sai già cosa sta per domandare:tra un sorriso e una sculettata, parte la frase tanto amata.</p>
-            <p>2. Non eran gatti né animali lontane, ma come chiamavamo le nostre birmane?</p>
-            <div class="crossword-grid">
-                <input type="text" class="cell" maxlength="1" data-answer="C">
-                <input type="text" class="cell" maxlength="1" data-answer="A">
-                <input type="text" class="cell" maxlength="1" data-answer="F">
-                <input type="text" class="cell" maxlength="1" data-answer="F">
-                <input type="text" class="cell" maxlength="1" data-answer="E">
-                <input type="text" class="cell" maxlength="1" data-answer="T">
-                <input type="text" class="cell" maxlength="1" data-answer="T">
-                <input type="text" class="cell" maxlength="1" data-answer="I">
-                <input type="text" class="cell" maxlength="1" data-answer="A">
-                <input type="text" class="cell" maxlength="1" data-answer="M">
-                <input type="text" class="cell" maxlength="1" data-answer="O">
-            </div>
-            <div class="crossword-grid">
-                <input type="text" class="cell" maxlength="1" data-answer="S">
-                <input type="text" class="cell" maxlength="1" data-answer="U">
-                <input type="text" class="cell" maxlength="1" data-answer="J">
-                <input type="text" class="cell" maxlength="1" data-answer="I">
-    
-            </div>
+            <div class="cruciverba-split">
+                <div class="cruciverba-domande">    
+                    <p>1. Se valentina inizia a ballare, sai già cosa sta per domandare:tra un sorriso e una sculettata, parte la frase tanto amata.</p>
+                    <p>2. Non eran gatti né animali lontane, ma come chiamavamo le nostre birmane?</p>
+                    <p>3. Un cane tanto sognato da me e Babbetta con passione, ma Vale poneva sempre una condizione: se mai fosse arrivato quel cagnolino speciale, quale nome doveva avere per essere ufficiale?</p>
+                    <p>4. È il nostro brindisi più speciale, ormai diventato tradizionale: dopo cuore e sesso con tanto trasporto, qual è il terzo augurio che porta conforto?</p>
+                    <p>5. Il primo anno aveva un appuntamento fisso, tra balli, risate e qualche tipo mai visto: tra personaggi strani e storie da raccontare, quale locale ci faceva sempre ritornare?</p>
+                </div>
 
-            <button id="check-cruciverba" class="nav-btn">Controlla Soluzione</button>
+                <div class="cruciverba-griglia">
+                    <div class="crossword-grid">
+                        <input type="text" class="cell" maxlength="1" data-answer="C">
+                        <input type="text" class="cell" maxlength="1" data-answer="A">
+                        <input type="text" class="cell" maxlength="1" data-answer="F">
+                        <input type="text" class="cell" maxlength="1" data-answer="F">
+                        <input type="text" class="cell" maxlength="1" data-answer="E">
+                        <input type="text" class="cell" maxlength="1" data-answer="T">
+                        <input type="text" class="cell" maxlength="1" data-answer="T">
+                        <input type="text" class="cell" maxlength="1" data-answer="I">
+                        <input type="text" class="cell" maxlength="1" data-answer="A">
+                        <input type="text" class="cell" maxlength="1" data-answer="M">
+                        <input type="text" class="cell" maxlength="1" data-answer="O">
+                    </div>
+                    <div class="crossword-grid">
+                        <input type="text" class="cell" maxlength="1" data-answer="S">
+                        <input type="text" class="cell" maxlength="1" data-answer="U">
+                        <input type="text" class="cell" maxlength="1" data-answer="J">
+                        <input type="text" class="cell" maxlength="1" data-answer="I">
+                    </div>
+                    <div class="crossword-grid">
+                        <input type="text" class="cell" maxlength="1" data-answer="H">
+                        <input type="text" class="cell" maxlength="1" data-answer="E">
+                        <input type="text" class="cell" maxlength="1" data-answer="E">
+                        <input type="text" class="cell" maxlength="1" data-answer="T">
+                        <input type="text" class="cell" maxlength="1" data-answer="S">
+                        <input type="text" class="cell" maxlength="1" data-answer="I">
+                        <input type="text" class="cell" maxlength="1" data-answer="N">
+                        <input type="text" class="cell" maxlength="1" data-answer="A">
+                    </div>
+                    <div class="crossword-grid">
+                        <input type="text" class="cell" maxlength="1" data-answer="S">
+                        <input type="text" class="cell" maxlength="1" data-answer="U">
+                        <input type="text" class="cell" maxlength="1" data-answer="C">
+                        <input type="text" class="cell cell-special" maxlength="1" data-answer="C">
+                        <input type="text" class="cell" maxlength="1" data-answer="E">
+                        <input type="text" class="cell" maxlength="1" data-answer="S">
+                        <input type="text" class="cell" maxlength="1" data-answer="S">
+                        <input type="text" class="cell" maxlength="1" data-answer="O">
+                    </div>
+                    <div class="crossword-grid">
+                        <input type="text" class="cell" maxlength="1" data-answer="G">
+                        <input type="text" class="cell" maxlength="1" data-answer="I">
+                        <input type="text" class="cell" maxlength="1" data-answer="O">
+                        <input type="text" class="cell cell-special" maxlength="1" data-answer="V">
+                        <input type="text" class="cell" maxlength="1" data-answer="E">
+                        <input type="text" class="cell" maxlength="1" data-answer="D">
+                        <input type="text" class="cell" maxlength="1" data-answer="R">
+                        <input type="text" class="cell" maxlength="1" data-answer="I">
+                        <input type="text" class="cell" maxlength="1" data-answer="N">
+                        <input type="text" class="cell" maxlength="1" data-answer="K">
+                    </div>
+                    <!-- STICKER DECORATIVO -->
+                    <img src="assets/WhatsApp Image 2026-07-09 at 01.29.12.jpeg" class="sticker bottone-pulsante" style="top: 15%; left: 35%;" alt="Sticker decorativo">
+                    <button id="check-cruciverba" class="nav-btn">Controlla Soluzione</button>
+                </div>
             <p id="risultato-cruciverba"></p>
         </div>
 
