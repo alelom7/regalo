@@ -2,9 +2,16 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sorpresa per la Laurea!</title>
-    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta name="theme-color" content="#1f040a">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="format-detection" content="telephone=no">
+    <title>Dottoresse ad Alta Gradazione | Sorpresa di Laurea</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=Playfair+Display:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css?v=2">
 </head>
 <body>
     
@@ -12,7 +19,9 @@
         
         <div class="top-section">
             <div class="top-text">
+                <span class="hero-tag">EDIZIONE SPECIALE • LAUREA</span>
                 <h2>Dottoresse ad Alta Gradazione</h2>
+                <p class="hero-subtitle">Il portale esclusivo dei ricordi, giochi e celebrazioni per le neo-dottoresse.</p>
             </div>
             <div class="photo-shadow-wrapper">
                 <div class="top-photo"></div>
@@ -20,17 +29,17 @@
         </div>
 
         <div class="bottom-section">
+            <span class="section-tag">ARCHIVIO & INTRATTENIMENTO</span>
             <h3>ATTIVITÀ DISPONIBILI</h3>
-            <p>Scegli il gioco</p>
+            <p>Seleziona un'esperienza dal menu</p>
             
             <div class="button-grid">
-                <button class="nav-btn bottone-pulsante" id="btn-galleria">📸 Galleria</button>
-                <button class="nav-btn bottone-pulsante" id="btn-cruciverba">🧩 Cruciverba</button>
-                <button class="nav-btn bottone-pulsante" id="btn-quiz"> 🌟Rivivi il nostro viaggio</button>
-                <button class="nav-btn bottone-pulsante" id="btn-bacheca">📝 Lascia una Dedica</button>
+                <button class="nav-btn bottone-pulsante" id="btn-galleria">Galleria Fotografica</button>
+                <button class="nav-btn bottone-pulsante" id="btn-cruciverba">Il Cruciverba</button>
+                <button class="nav-btn bottone-pulsante" id="btn-quiz">Il Nostro Viaggio</button>
+                <button class="nav-btn bottone-pulsante" id="btn-bacheca">Lascia una Dedica</button>
             </div>
 
-                        <!-- Incolla questo blocco nel tuo index.html, dentro la bottom-section -->
             <div class="card-ricordo">
                 <!-- Parte Sinistra: Foto -->
                 <div class="card-img">
@@ -39,6 +48,7 @@
 
                 <!-- Parte Destra: Didascalia -->
                 <div class="card-testo">
+                    <span class="card-tag">MEMORIA • CAPITOLO I</span>
                     <h3>Titolo del ricordo</h3>
                     <p>Qui scrivi la tua didascalia o il racconto legato alla foto.</p>
                 </div>
@@ -52,6 +62,7 @@
 
                 <!-- Parte Destra: Didascalia -->
                 <div class="card-testo">
+                    <span class="card-tag">MEMORIA • CAPITOLO II</span>
                     <h3>Titolo del ricordo</h3>
                     <p>Qui scrivi la tua didascalia o il racconto legato alla foto.</p>
                 </div>
@@ -65,6 +76,7 @@
 
                 <!-- Parte Destra: Didascalia -->
                 <div class="card-testo">
+                    <span class="card-tag">MEMORIA • CAPITOLO III</span>
                     <h3>Titolo del ricordo</h3>
                     <p>Qui scrivi la tua didascalia o il racconto legato alla foto.</p>
                 </div>
@@ -88,25 +100,30 @@
     </div>
 
     <div id="galleria-screen" class="screen hidden">
-        
         <div class="nav-bar">
             <button class="back-btn" id="back-from-galleria">⬅ Torna al Menu</button>
             <h2>Galleria</h2>
         </div>
-        
+        <div class="screen-placeholder">
+            <span class="placeholder-tag">IN ARRIVO</span>
+            <h3>Scatti & Ricordi</h3>
+            <p>La galleria fotografica sarà presto online per rivivere i momenti più belli!</p>
+        </div>
     </div>
 
     <div id="storia-screen" class="screen hidden">
-        
         <div class="nav-bar">
             <button class="back-btn" id="back-from-storia">⬅ Torna al Menu</button>
             <h2>Rivivi il nostro viaggio</h2>
         </div>
-        
+        <div class="screen-placeholder">
+            <span class="placeholder-tag">IN ARRIVO</span>
+            <h3>Il Nostro Percorso</h3>
+            <p>Un viaggio speciale tra ricordi, aneddoti e traguardi raggiunti insieme.</p>
+        </div>
     </div>
 
     <div id="cruciverba-screen" class="screen hidden">
-        
         <div class="nav-bar">
             <button class="back-btn" id="back-from-cruciverba">⬅ Torna al Menu</button>
             <h2>Il Cruciverba</h2>
@@ -115,7 +132,7 @@
         <div class="game-container">
             <div class="cruciverba-split">
                 <div class="cruciverba-domande">    
-                    <p>1. Se valentina inizia a ballare, sai già cosa sta per domandare:tra un sorriso e una sculettata, parte la frase tanto amata.</p>
+                    <p>1. Se valentina inizia a ballare, sai già cosa sta per domandare: tra un sorriso e una sculettata, parte la frase tanto amata.</p>
                     <p>2. Non eran gatti né animali lontane, ma come chiamavamo le nostre birmane?</p>
                     <p>3. Un cane tanto sognato da me e Babbetta con passione, ma Vale poneva sempre una condizione: se mai fosse arrivato quel cagnolino speciale, quale nome doveva avere per essere ufficiale?</p>
                     <p>4. È il nostro brindisi più speciale, ormai diventato tradizionale: dopo cuore e sesso con tanto trasporto, qual è il terzo augurio che porta conforto?</p>
@@ -123,66 +140,99 @@
                 </div>
 
                 <div class="cruciverba-griglia">
-                    <div class="crossword-grid">
-                        <input type="text" class="cell" maxlength="1" data-answer="C">
-                        <input type="text" class="cell" maxlength="1" data-answer="A">
-                        <input type="text" class="cell" maxlength="1" data-answer="F">
-                        <input type="text" class="cell" maxlength="1" data-answer="F">
-                        <input type="text" class="cell" maxlength="1" data-answer="E">
-                        <input type="text" class="cell" maxlength="1" data-answer="T">
-                        <input type="text" class="cell" maxlength="1" data-answer="T">
-                        <input type="text" class="cell" maxlength="1" data-answer="I">
-                        <input type="text" class="cell" maxlength="1" data-answer="A">
-                        <input type="text" class="cell" maxlength="1" data-answer="M">
-                        <input type="text" class="cell" maxlength="1" data-answer="O">
+                    <!-- Riga 1: CAFFETTIAMO -->
+                    <div class="cruciverba-riga" data-row="1">
+                        <span class="riga-badge">1</span>
+                        <div class="crossword-grid">
+                            <input type="text" class="cell" maxlength="1" data-answer="C" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
+                            <input type="text" class="cell" maxlength="1" data-answer="A" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
+                            <input type="text" class="cell" maxlength="1" data-answer="F" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
+                            <input type="text" class="cell" maxlength="1" data-answer="F" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
+                            <input type="text" class="cell" maxlength="1" data-answer="E" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
+                            <input type="text" class="cell" maxlength="1" data-answer="T" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
+                            <input type="text" class="cell" maxlength="1" data-answer="T" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
+                            <input type="text" class="cell" maxlength="1" data-answer="I" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
+                            <input type="text" class="cell" maxlength="1" data-answer="A" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
+                            <input type="text" class="cell" maxlength="1" data-answer="M" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
+                            <input type="text" class="cell" maxlength="1" data-answer="O" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="done">
+                        </div>
+                        <button type="button" class="btn-check-riga nav-btn bottone-pulsante">Verifica</button>
+                        <span class="riga-status"></span>
                     </div>
-                    <div class="crossword-grid">
-                        <input type="text" class="cell" maxlength="1" data-answer="S">
-                        <input type="text" class="cell" maxlength="1" data-answer="U">
-                        <input type="text" class="cell" maxlength="1" data-answer="J">
-                        <input type="text" class="cell" maxlength="1" data-answer="I">
+
+                    <!-- Riga 2: SUJI -->
+                    <div class="cruciverba-riga" data-row="2">
+                        <span class="riga-badge">2</span>
+                        <div class="crossword-grid">
+                            <input type="text" class="cell" maxlength="1" data-answer="S" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
+                            <input type="text" class="cell" maxlength="1" data-answer="U" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
+                            <input type="text" class="cell" maxlength="1" data-answer="J" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
+                            <input type="text" class="cell" maxlength="1" data-answer="I" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="done">
+                        </div>
+                        <button type="button" class="btn-check-riga nav-btn bottone-pulsante">Verifica</button>
+                        <span class="riga-status"></span>
                     </div>
-                    <div class="crossword-grid">
-                        <input type="text" class="cell" maxlength="1" data-answer="H">
-                        <input type="text" class="cell" maxlength="1" data-answer="E">
-                        <input type="text" class="cell" maxlength="1" data-answer="E">
-                        <input type="text" class="cell" maxlength="1" data-answer="T">
-                        <input type="text" class="cell" maxlength="1" data-answer="S">
-                        <input type="text" class="cell" maxlength="1" data-answer="I">
-                        <input type="text" class="cell" maxlength="1" data-answer="N">
-                        <input type="text" class="cell" maxlength="1" data-answer="A">
+
+                    <!-- Riga 3: HEETSINA -->
+                    <div class="cruciverba-riga" data-row="3">
+                        <span class="riga-badge">3</span>
+                        <div class="crossword-grid">
+                            <input type="text" class="cell" maxlength="1" data-answer="H" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
+                            <input type="text" class="cell" maxlength="1" data-answer="E" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
+                            <input type="text" class="cell" maxlength="1" data-answer="E" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
+                            <input type="text" class="cell" maxlength="1" data-answer="T" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
+                            <input type="text" class="cell" maxlength="1" data-answer="S" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
+                            <input type="text" class="cell" maxlength="1" data-answer="I" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
+                            <input type="text" class="cell" maxlength="1" data-answer="N" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
+                            <input type="text" class="cell" maxlength="1" data-answer="A" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="done">
+                        </div>
+                        <button type="button" class="btn-check-riga nav-btn bottone-pulsante">Verifica</button>
+                        <span class="riga-status"></span>
                     </div>
-                    <div class="crossword-grid">
-                        <input type="text" class="cell" maxlength="1" data-answer="S">
-                        <input type="text" class="cell" maxlength="1" data-answer="U">
-                        <input type="text" class="cell" maxlength="1" data-answer="C">
-                        <input type="text" class="cell cell-special" maxlength="1" data-answer="C">
-                        <input type="text" class="cell" maxlength="1" data-answer="E">
-                        <input type="text" class="cell" maxlength="1" data-answer="S">
-                        <input type="text" class="cell" maxlength="1" data-answer="S">
-                        <input type="text" class="cell" maxlength="1" data-answer="O">
+
+                    <!-- Riga 4: SUCCESSO -->
+                    <div class="cruciverba-riga" data-row="4">
+                        <span class="riga-badge">4</span>
+                        <div class="crossword-grid">
+                            <input type="text" class="cell" maxlength="1" data-answer="S" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
+                            <input type="text" class="cell" maxlength="1" data-answer="U" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
+                            <input type="text" class="cell" maxlength="1" data-answer="C" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
+                            <input type="text" class="cell cell-special" maxlength="1" data-answer="C" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
+                            <input type="text" class="cell" maxlength="1" data-answer="E" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
+                            <input type="text" class="cell" maxlength="1" data-answer="S" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
+                            <input type="text" class="cell" maxlength="1" data-answer="S" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
+                            <input type="text" class="cell" maxlength="1" data-answer="O" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="done">
+                        </div>
+                        <button type="button" class="btn-check-riga nav-btn bottone-pulsante">Verifica</button>
+                        <span class="riga-status"></span>
                     </div>
-                    <div class="crossword-grid">
-                        <input type="text" class="cell" maxlength="1" data-answer="G">
-                        <input type="text" class="cell" maxlength="1" data-answer="I">
-                        <input type="text" class="cell" maxlength="1" data-answer="O">
-                        <input type="text" class="cell cell-special" maxlength="1" data-answer="V">
-                        <input type="text" class="cell" maxlength="1" data-answer="E">
-                        <input type="text" class="cell" maxlength="1" data-answer="D">
-                        <input type="text" class="cell" maxlength="1" data-answer="R">
-                        <input type="text" class="cell" maxlength="1" data-answer="I">
-                        <input type="text" class="cell" maxlength="1" data-answer="N">
-                        <input type="text" class="cell" maxlength="1" data-answer="K">
+
+                    <!-- Riga 5: GIOVEDRINK -->
+                    <div class="cruciverba-riga" data-row="5">
+                        <span class="riga-badge">5</span>
+                        <div class="crossword-grid">
+                            <input type="text" class="cell" maxlength="1" data-answer="G" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
+                            <input type="text" class="cell" maxlength="1" data-answer="I" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
+                            <input type="text" class="cell" maxlength="1" data-answer="O" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
+                            <input type="text" class="cell cell-special" maxlength="1" data-answer="V" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
+                            <input type="text" class="cell" maxlength="1" data-answer="E" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
+                            <input type="text" class="cell" maxlength="1" data-answer="D" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
+                            <input type="text" class="cell" maxlength="1" data-answer="R" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
+                            <input type="text" class="cell" maxlength="1" data-answer="I" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
+                            <input type="text" class="cell" maxlength="1" data-answer="N" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
+                            <input type="text" class="cell" maxlength="1" data-answer="K" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="done">
+                        </div>
+                        <button type="button" class="btn-check-riga nav-btn bottone-pulsante">Verifica</button>
+                        <span class="riga-status"></span>
                     </div>
-                    <!-- STICKER DECORATIVO -->
-                    <img src="assets/WhatsApp Image 2026-07-09 at 01.29.12.jpeg" class="sticker bottone-pulsante" style="top: 15%; left: 35%;" alt="Sticker decorativo">
-                    <button id="check-cruciverba" class="nav-btn">Controlla Soluzione</button>
                 </div>
             <p id="risultato-cruciverba"></p>
         </div>
 
     </div>
 
-    <script src="script.js"></script>
+    <!-- Libreria per i coriandoli (Confetti) -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script src="script.js?v=2"></script>
 </body>
 </html>

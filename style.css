@@ -1,408 +1,889 @@
-/* ==========================================
-   FONT GENERALI
-   ========================================== */
+/* ==========================================================================
+   STYLE: QUIET LUXURY / EDITORIAL THEME (Inspired by JE NE SAIS PAS)
+   ========================================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Chelsea+Market&family=Cormorant:ital,wght@0,300..700;1,300..700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Bangers&family=Chelsea+Market&family=Cormorant:ital,wght@0,300..700;1,300..700&family=DM+Serif+Text:ital@0;1&family=Fredericka+the+Great&display=swap');
-/*font-family: "Cormorant", serif;*/
-/*font-family: "Chelsea Market", system-ui;*/
-/*font-family: "Fredericka the Great", serif;*/
+/* --------------------------------------------------------------------------
+   DESIGN TOKENS & VARIABLES
+   -------------------------------------------------------------------------- */
+:root {
+    /* Palette Colori "Quiet Luxury" */
+    --bg-body: #fbf9f5;          /* Écru caldo / Avorio naturale */
+    --bg-secondary: #f4eee5;     /* Crema lino */
+    --bg-card: #ffffff;          /* Bianco seta */
+    --text-main: #1c1917;        /* Dark espresso / Nero caldo */
+    --text-muted: #78716c;       /* Taupe / Grigio caldo morbido */
+    
+    /* Accenti di Eleganza */
+    --accent-burgundy: #4a1521;  /* Rouge Noir / Bordeaux profondo sartoriale */
+    --accent-burgundy-hover: #350e17;
+    --accent-gold: #dfd5bf;      /* Champagne sabbia dorata */
+    --border-subtle: #eae5db;    /* Bordo sottile delicato */
+    --border-input: #dcd6cb;     /* Bordo caselle e input */
+    
+    /* Tipografia Editoriale */
+    --font-sans: "Instrument Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --font-serif: "Playfair Display", Georgia, serif;
+}
 
-
-/* Reset di base */
+/* Reset universale */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* Il corpo della pagina ora gestisce solo lo sfondo sfumato */
-body {
-    font-family: "DM Serif Text", serif;
-    background: linear-gradient(135deg, #ffffff 0%, #ffffff 100%);
-    color: #333;
-    min-height: 100vh;
+html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
 }
 
-/* Applichiamo il font speciale solo ai titoli e al countdown */
-h1, h2, h3, #countdown {
-    font-family: "Cormorant", serif;
+/* Corpo della pagina */
+body {
+    font-family: var(--font-sans);
+    background-color: var(--bg-body);
+    color: var(--text-main);
+    min-height: 100vh;
+    min-height: 100dvh;
+    width: 100%;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Gerarchia Tipografica */
+h1, h2, h3 {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    letter-spacing: 0.02em;
 }
 
 .hidden {
     display: none !important;
 }
 
-/* ==========================================
-   SCHERMATA 2: Sito a fasce orizzontali
-   ========================================== */
+/* --------------------------------------------------------------------------
+   TRANSIZIONI SCHERMATE MORBIDE
+   -------------------------------------------------------------------------- */
+.screen:not(.hidden) {
+    animation: screenEntrata 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes screenEntrata {
+    from {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 #main-screen {
     width: 100%;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    /* Rimuoviamo gli sfondi e i margini che usavamo prima */
-    background-color: rgb(193, 189, 189); 
+    background-color: var(--bg-body);
 }
 
-/* 1. La fascia superiore (Testo sx, Foto dx) */
+/* --------------------------------------------------------------------------
+   1. HERO SECTION (FASCIA SUPERIORE CON SFONDO FLUIDO E FOTO CURVA)
+   -------------------------------------------------------------------------- */
 .top-section {
-    background: linear-gradient(135deg, #5d0101 0%, #890054 100%); /* I tuoi colori sfumati */
+    background: linear-gradient(-45deg, #1f040a, #8c102b, #480f33, #b31d42, #290610);
+    background-size: 350% 350%;
+    animation: gradientFlusso 7s ease infinite;
     display: flex;
     align-items: center;
-    padding: 4rem 10%;
-    color: white;
-    min-height: 60vh; /* Leggermente più alta per far respirare la foto */
-    position: relative; /* FONDAMENTALE: crea un recinto invalicabile per la foto */
-    overflow: hidden; /* Taglia via i pezzi di foto che escono dal riquadro */
+    padding: 4.5rem 10%;
+    color: #ffffff;
+    min-height: 65vh;
+    position: relative;
+    overflow: hidden;
+}
+
+@keyframes gradientFlusso {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
 
 .top-text {
-    width: 30%;
+    width: 38%;
     position: relative;
-    z-index: 2; /* Tiene il testo al sicuro in primo piano */
+    z-index: 2;
+}
+
+.hero-tag {
+    font-family: var(--font-sans);
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: var(--accent-gold);
+    display: block;
+    margin-bottom: 1.2rem;
 }
 
 .top-text h2 {
-    font-family: "Playfair Display SC", serif;
-    font-size: 3.5rem;
-    margin-bottom: 1rem;
-    color: #000000;
-    text-transform: uppercase;
-    text-shadow: 2px 4px 10px rgba(0, 0, 0, 0.3);
+    font-family: var(--font-serif);
+    font-size: 3.6rem;
+    line-height: 1.15;
+    margin-bottom: 1.2rem;
+    color: #fbf9f5;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    text-shadow: 0 4px 18px rgba(0, 0, 0, 0.45);
 }
 
+.hero-subtitle {
+    font-family: var(--font-sans);
+    font-size: 1.05rem;
+    color: var(--accent-gold);
+    line-height: 1.6;
+    font-weight: 300;
+    letter-spacing: 0.03em;
+}
 
-/* 1. La scatola invisibile che proietta l'ombra */
+/* La scatola invisibile che proietta l'ombra morbida verso sinistra */
 .photo-shadow-wrapper {
     position: absolute;
     top: 0;
     right: 0;
-    width: 65%; /* Usa la percentuale che hai scelto per allargare/stringere la foto */
+    width: 65%;
     height: 100%;
-    /* LA MAGIA: Proietta un'ombra morbida verso sinistra e segue fedelmente la curva */
-    filter: drop-shadow(-15px 0px 20px rgba(0, 0, 0, 0.6)); 
+    filter: drop-shadow(-15px 0px 20px rgba(0, 0, 0, 0.5));
+    z-index: 1;
 }
 
-/* 2. La foto vera e propria, che ora si adatta al 100% della sua scatola */
+/* La foto vera e propria con il taglio curvo perfetto per le facce */
 .top-photo {
-    width: 100%; 
+    width: 100%;
     height: 100%;
-    background-image: url('assets/sfondo.jpeg'); 
+    background-image: url('assets/sfondo.jpeg');
     background-size: cover;
-    background-position: 50% 30%; /* I numeri che hai trovato perfetti per le facce */
-    clip-path: ellipse(80% 100% at 90% 40%); /* Il taglio curvo */
+    background-position: 50% 30%;
+    clip-path: ellipse(80% 100% at 90% 40%);
 }
 
-/* 2. La fascia inferiore (Bottoni) */
+/* --------------------------------------------------------------------------
+   2. SEZIONE INFERIORE (MENU ATTIVITÀ & RICORDI)
+   -------------------------------------------------------------------------- */
 .bottom-section {
-    background-color: #fff6efdd; /* Un grigio caldo e neutro */
-    padding: 5rem 10%;
+    background-color: var(--bg-body);
+    padding: 6rem 10%;
     text-align: center;
-    flex-grow: 1; /* Si allunga per riempire lo schermo rimanente verso il basso */
+    flex-grow: 1;
+}
+
+.section-tag {
+    font-family: var(--font-sans);
+    font-size: 0.74rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--text-muted);
+    display: block;
+    margin-bottom: 0.6rem;
 }
 
 .bottom-section h3 {
-    color: #930707; 
+    color: var(--text-main);
     font-size: 2rem;
-    margin-bottom: 0.5rem;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.4rem;
 }
 
 .bottom-section p {
-    color: #555;
-    font-size: 1.2rem;
-    margin-bottom: 3rem;
+    color: var(--text-muted);
+    font-size: 0.88rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 3.5rem;
 }
 
-/* La griglia orizzontale dei bottoni */
+/* Griglia dei Bottoni */
 .button-grid {
     display: flex;
-    flex-direction: row; /* Affianca i bottoni */
-    justify-content: center; /* Centra i bottoni */
-    gap: 2rem; /* Distanza tra i bottoni */
-    flex-wrap: wrap; /* Se lo schermo è piccolo, i bottoni vanno a capo automaticamente */
+    flex-direction: row;
+    justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 5rem;
 }
 
+/* I Classici "Pill Buttons" di Je Ne Sais Pas */
 .nav-btn {
-    padding: 1.2rem 2.5rem;
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: white;
-    background: #cc2895;
-    border: none;
-    border-radius: 12px;
+    font-family: var(--font-sans);
+    padding: 0.95rem 2.2rem;
+    font-size: 0.82rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #ffffff;
+    background: var(--text-main);
+    border: 1px solid var(--text-main);
+    border-radius: 9999px; /* Forma a capsula perfetta */
     cursor: pointer;
-    transition: transform 0.2s, background 0.2s;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 15px rgba(28, 25, 23, 0.08);
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    overflow: hidden;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
 }
 
-.nav-btn:hover {
-    transform: translateY(-5px); /* Effetto sollevamento */
+@media (hover: hover) and (pointer: fine) {
+    .nav-btn:hover {
+        background: var(--accent-burgundy);
+        border-color: var(--accent-burgundy);
+        color: #fbf9f5;
+        box-shadow: 0 8px 24px rgba(74, 21, 33, 0.2);
+        transform: translateY(-3px);
+    }
+
+    .bottone-pulsante:hover {
+        animation: battito 0.8s ease-in-out infinite;
+    }
 }
 
-/* Stile per il contenitore di ogni ricordo */
+.nav-btn:active {
+    transform: scale(0.97);
+    box-shadow: 0 2px 8px rgba(28, 25, 23, 0.15);
+}
+
+/* Animazione di battito solo al passaggio del mouse su desktop */
+@keyframes battito {
+    0% { transform: translateY(-3px) scale(1); }       
+    50% { transform: translateY(-3px) scale(1.04); }   
+    100% { transform: translateY(-3px) scale(1); }     
+}
+
+.bottone-pulsante {
+    animation: none;
+}
+
+/* --------------------------------------------------------------------------
+   3. CARD RICORDO (STILE EDITORIALE LOOKBOOK)
+   -------------------------------------------------------------------------- */
 .card-ricordo {
-    margin-top: 20px;
-    display: flex;           /* Mette foto e testo in riga */
-    align-items: center;     /* Allinea verticalmente al centro */
-    gap: 20px;               /* Spazio tra la foto e la didascalia */
-    margin-bottom: 30px;     /* Spazio tra un ricordo e l'altro */
-    background: #fff;        /* Sfondo bianco per il blocco */
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* Una leggera ombra per dare profondità */
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 16px;
+    padding: 2.5rem;
+    display: flex;
+    align-items: center;
+    gap: 2.8rem;
+    margin-bottom: 2.5rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease, border-color 0.4s ease, opacity 0.6s ease;
+    text-align: left;
 }
 
-/* Stile per la foto */
+.card-ricordo:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 16px 36px rgba(28, 25, 23, 0.07);
+    border-color: #d8d1c4;
+}
+
+/* Scroll reveal states */
+.card-ricordo.nascosta-scroll {
+    opacity: 0;
+    transform: translateY(35px);
+}
+
+.card-ricordo.visibile {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.card-ricordo.visibile:hover {
+    transform: translateY(-5px);
+}
+
+/* Riquadro fotografico card */
 .card-img {
-    width: 300px;            /* Dimensione fissa per la foto */
-    height: 300px;
-    flex-shrink: 0;          /* Impedisce alla foto di rimpicciolirsi */
+    width: 280px;
+    height: 280px;
+    flex-shrink: 0;
+    overflow: hidden;
+    border-radius: 12px;
+    border: 1px solid rgba(0, 0, 0, 0.04);
 }
 
 .card-img img {
     width: 100%;
     height: 100%;
-    object-fit: cover;       /* Ritaglia la foto senza deformarla */
-    border-radius: 8px;
+    object-fit: cover;
+    border-radius: 12px;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Stile per il testo a destra */
+.card-ricordo:hover .card-img img {
+    transform: scale(1.05);
+}
+
 .card-testo {
-    flex: 1;                 /* Occupa lo spazio rimanente */
+    flex: 1;
 }
 
-/* ==========================================
-   STILI PER LE SCHERMATE SECONDARIE (Es. Bacheca)
-   ========================================== */
+.card-tag {
+    font-family: var(--font-sans);
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--text-muted);
+    display: block;
+    margin-bottom: 0.6rem;
+}
 
-/* Barra di navigazione in alto */
+.card-testo h3 {
+    font-family: var(--font-serif);
+    font-size: 1.9rem;
+    color: var(--text-main);
+    margin-bottom: 0.8rem;
+    font-weight: 400;
+    transition: color 0.3s ease;
+}
+
+.card-ricordo:hover .card-testo h3 {
+    color: var(--accent-burgundy);
+}
+
+.card-testo p {
+    font-family: var(--font-sans);
+    font-size: 0.98rem;
+    line-height: 1.7;
+    color: var(--text-muted);
+    letter-spacing: 0.01em;
+}
+
+/* --------------------------------------------------------------------------
+   4. SCHERMATE SECONDARIE (NAV BAR & STRUTTURA)
+   -------------------------------------------------------------------------- */
 .nav-bar {
     width: 100%;
-    background-color: #fa5f98; /* Stesso blu del portale */
-    color: white;
-    padding: 1rem 2rem;
+    background: rgba(251, 249, 245, 0.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-subtle);
+    color: var(--text-main);
+    padding: 1.2rem 3rem;
     display: flex;
     align-items: center;
     gap: 2rem;
 }
 
+.nav-bar h2 {
+    font-family: var(--font-serif);
+    font-size: 1.7rem;
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    color: var(--text-main);
+}
+
 .back-btn {
+    font-family: var(--font-sans);
     background: transparent;
-    color: white;
-    border: 1px solid white;
-    padding: 0.5rem 1rem;
-    border-radius: 8px;
+    color: var(--text-main);
+    border: 1px solid var(--text-main);
+    padding: 0.6rem 1.6rem;
+    border-radius: 9999px;
     cursor: pointer;
-    font-weight: bold;
-    transition: background 0.2s;
+    font-size: 0.76rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    transition: all 0.25s ease;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .back-btn:hover {
-    background: white;
-    color: #003366;
+    background: var(--text-main);
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(28, 25, 23, 0.15);
 }
 
-/* Facciamo in modo che la schermata della bacheca riempia lo schermo */
+.back-btn:active {
+    transform: scale(0.96);
+}
+
 #bacheca-screen {
     width: 100%;
     height: 100vh;
+    height: 100dvh;
     display: flex;
     flex-direction: column;
-    background-color: #f4f4f4;
+    background-color: var(--bg-body);
 }
 
-/* Il contenitore che ospita il muro di post-it */
 .iframe-container {
-    flex-grow: 1; /* Prende tutto lo spazio rimanente sotto la nav-bar */
+    flex-grow: 1;
     width: 100%;
+    -webkit-overflow-scrolling: touch;
 }
 
-/* Colori specifici (se vuoi mantenerli) */
-#btn-galleria { background: #4d0606; }
-#btn-cruciverba { background: #930d33; }
-#btn-quiz { background: #bc263f; }
-#btn-bacheca { background: #d8596e; }
+/* Placeholder per schermate in arrivo */
+.screen-placeholder {
+    max-width: 520px;
+    margin: 4.5rem auto;
+    padding: 3rem 1.8rem;
+    text-align: center;
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 20px;
+    box-shadow: 0 4px 24px rgba(28, 25, 23, 0.04);
+}
 
-/* ==========================================
-   STILI CRUCIVERBA
-   ========================================== */
+.placeholder-tag {
+    font-family: var(--font-sans);
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--accent-burgundy);
+    display: inline-block;
+    margin-bottom: 1rem;
+    padding: 0.35rem 0.9rem;
+    background: #fdf5f5;
+    border-radius: 9999px;
+}
 
-.cruciverba-split{
+.screen-placeholder h3 {
+    font-size: 1.8rem;
+    margin-bottom: 0.75rem;
+    color: var(--text-main);
+}
+
+.screen-placeholder p {
+    color: var(--text-muted);
+    font-size: 0.96rem;
+    line-height: 1.65;
+}
+
+/* --------------------------------------------------------------------------
+   5. CRUCIVERBA (EDIZIONE CHIC & MINIMAL)
+   -------------------------------------------------------------------------- */
+.game-container {
+    padding: 4rem 5%;
+    text-align: left;
+    background-color: var(--bg-body);
+    flex-grow: 1;
+}
+
+.cruciverba-split {
     display: flex;
     flex-direction: row;
     align-items: flex-start;
     justify-content: space-between;
-    margin-bottom: 2rem;
-    gap: 3rem; /* Spazio tra le due colonne */
+    margin-bottom: 3rem;
+    gap: 3.5rem;
 }
 
-.cruciverba-domande{
-    flex: 0.5; /* Occupa metà dello spazio disponibile */
+.cruciverba-domande {
+    flex: 0.38;
+    min-width: 280px;
+    max-width: 380px;
     text-align: left;
 }
 
-.cruciverba-domande p{
-    font-size: 1.1rem;
-    margin-bottom: 1rem;
-    color: #000000; 
-    line-height: 1.4;
+.cruciverba-domande p {
+    font-family: var(--font-sans);
+    font-size: 0.98rem;
+    line-height: 1.7;
+    color: var(--text-main);
+    margin-bottom: 1.5rem;
+    padding-left: 1rem;
+    border-left: 2px solid var(--accent-gold);
 }
 
-.cruciverba-griglia{
-    flex: 1; /* Occupa metà dello spazio disponibile */
+.cruciverba-griglia {
+    flex: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
+    position: relative;
+    width: 100%;
+    overflow-x: auto; /* Impedisce che la riga si rompa */
+    padding: 0.5rem 0;
 }
-.game-container {
-    padding: 3rem 2%;
-    text-align: left;
-    background-color: #f4f4f4;
-    flex-grow: 1;
+
+/* Ogni riga è rigorosamente su una sola linea: numero, caselle e bottone affiancati */
+.cruciverba-riga {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin: 10px 0;
+    width: 100%;
+    flex-wrap: nowrap !important; /* MAI andare a capo: il bottone sta sempre di fianco */
+}
+
+/* Badge numerico discreto ed elegante */
+.riga-badge {
+    background: var(--text-main);
+    color: #ffffff;
+    font-family: var(--font-sans);
+    font-size: 0.8rem;
+    font-weight: 600;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 6px rgba(28, 25, 23, 0.1);
+    flex-shrink: 0;
+}
+
+/* Pulsante Verifica a Capsula di fianco alla parola */
+.btn-check-riga {
+    font-family: var(--font-sans);
+    padding: 0.55rem 1.3rem;
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #ffffff;
+    background: var(--text-main);
+    border: 1px solid var(--text-main);
+    border-radius: 9999px;
+    cursor: pointer;
+    box-shadow: 0 3px 8px rgba(28, 25, 23, 0.1);
+    transition: all 0.25s ease;
+    flex-shrink: 0;
+    white-space: nowrap;
+}
+
+.btn-check-riga:hover {
+    background: var(--accent-burgundy);
+    border-color: var(--accent-burgundy);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(74, 21, 33, 0.2);
+}
+
+.btn-check-riga.parola-esatta {
+    background: #205c2a !important;
+    border-color: #205c2a !important;
+    cursor: default;
+    transform: none;
+}
+
+.riga-status {
+    font-size: 1.1rem;
+    font-weight: bold;
+    min-width: 24px;
+    text-align: center;
+    flex-shrink: 0;
 }
 
 .crossword-grid {
     display: flex;
     justify-content: center;
-    gap: 3px; /* Spazio tra i quadratini */
-    margin: 15px 0;
+    align-items: center;
+    gap: 3px;
+    margin: 4px 0;
+    flex-shrink: 0;
 }
 
-/* Stile per ogni singolo quadratino */
+/* Caselle del cruciverba proporzionate per stare comode su una sola riga */
 .cell {
-    width: 50px;
-    height: 50px;
-    font-size: 2rem;
-    text-align: center; /* Centra la lettera */
-    text-transform: uppercase; /* Trasforma automaticamente in Maiuscolo */
-    border: 2px solid #333;
-    font-weight: bold;
+    width: 42px;
+    height: 42px;
+    font-family: var(--font-sans);
+    font-size: 1.45rem;
+    font-weight: 600;
+    text-align: center;
+    text-transform: uppercase;
+    background: #ffffff;
+    border: 1px solid var(--border-input);
+    border-radius: 6px;
+    color: var(--text-main);
     outline: none;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
 }
 
-.cell-special {
-        background-color: #b962fc; /* Colore di sfondo diverso per le celle speciali */
-}
-
-/* Quando l'utente clicca su una cella per scrivere */
 .cell:focus {
-    background-color: #e0f7fa;
-    border-color: #00acc1;
+    background-color: #faf7f2;
+    border-color: var(--accent-burgundy);
+    box-shadow: 0 0 0 3px rgba(74, 21, 33, 0.08);
 }
 
-/* Classi assegnate da JavaScript in base al risultato */
+/* Celle speciali: tono champagne dorato anziché viola fluo */
+.cell-special {
+    background-color: #f1e9dc;
+    border-color: #cfc2ad;
+    color: var(--accent-burgundy);
+}
+
+/* Risultato esatto: verde salvia morbido */
 .corretto {
-    background-color: #c8e6c9 !important; /* Verde chiaro */
-    color: #2e7d32;
+    background-color: #edf5ee !important;
+    border-color: #82b58d !important;
+    color: #205c2a !important;
+    animation: cellBounce 0.4s ease;
 }
 
+/* Risultato errato: rosa cipria morbido */
 .sbagliato {
-    background-color: #ffcdd2 !important; /* Rosso chiaro */
-    color: #c62828;
+    background-color: #fcf1f1 !important;
+    border-color: #dea1a1 !important;
+    color: #9c2727 !important;
+    animation: cellShake 0.4s ease;
+}
+
+@keyframes cellBounce {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.15); }
+    100% { transform: scale(1); }
+}
+
+@keyframes cellShake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-4px); }
+    40%, 80% { transform: translateX(4px); }
 }
 
 #risultato-cruciverba {
-    margin-top: 1rem;
+    margin-top: 2rem;
+    font-family: var(--font-serif);
     font-size: 1.5rem;
-    font-weight: bold;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    transition: all 0.3s ease;
+    text-align: center;
 }
 
-/* 1. L'adesivo decorativo da posizionare dove vuoi */
-.sticker {
-    position: absolute; 
-    width: 120px;        
-    transform: rotate(-25deg); 
-    z-index: 10;        
-    filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.2)); 
-    
-}
-
-/* 2. La linea del tempo dell'animazione pulsante */
-@keyframes battito {
-    0% { transform: scale(1); }       
-    50% { transform: scale(1.05); }   
-    100% { transform: scale(1); }     
-}
-
-/* Applica questa classe a qualsiasi cosa vuoi far "pulsare" */
-.bottone-pulsante {
-    animation: battito 2s infinite; 
-}
-/* ==========================================
-   REGOLE PER FARLO FUNZIONARE ANCHE SUI TELEFONI
-   ========================================== */
-@media screen and (max-width: 800px) {
-    /* Sul telefono non c'è spazio per affiancarli, quindi impiliamo il testo sopra e la foto sotto */
+/* --------------------------------------------------------------------------
+   6. RESPONSIVE DESIGN PER SMARTPHONE & TABLET
+   -------------------------------------------------------------------------- */
+@media screen and (max-width: 850px) {
     .top-section {
         flex-direction: column;
         text-align: center;
-        padding: 3rem 5%;
+        padding: 3.5rem 1.25rem;
+        gap: 2rem;
+        min-height: auto;
     }
     
     .top-text { 
-        width: 100%; 
-        margin-bottom: 2rem; 
+        width: 100%;
+        max-width: 100%; 
     }
+    
     .top-text h2 { 
-        font-size: 2.5rem; 
+        font-size: clamp(2rem, 6.5vw, 2.7rem); 
+        line-height: 1.2;
+    }
+
+    .hero-subtitle {
+        margin: 0 auto;
+        font-size: 0.98rem;
+        max-width: 520px;
     }
 
     .photo-shadow-wrapper {
-        position: relative; /* La foto non esce più dal riquadro */
-        width: 100%; /* La foto prende tutta la larghezza */
-        height: auto; /* Altezza automatica per mantenere le proporzioni */
-        display: flex; /* Centra la foto */
+        position: relative;
+        width: 100%;
+        height: auto;
+        display: flex;
         justify-content: center;
-    }
-    
-    /* Rimpiccioliamo un po' la foto circolare sul telefono */
-    .top-photo { 
-        width: 250px; 
-        height: 250px; 
-        clip-path: ellipse(80% 100% at 90% 40%); /* Manteniamo il taglio curvo */
+        filter: none;
     }
 
-    .bottom-section { padding: 3rem 5%; }
+    /* Foto curva sostituita con una cornice raffinata centrata senza tagliare i visi */
+    .top-photo {
+        width: 100%;
+        max-width: 320px;
+        height: 220px;
+        clip-path: none;
+        border-radius: 20px;
+        background-size: cover;
+        background-position: center 30%;
+        border: 2px solid rgba(223, 213, 191, 0.4);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+    }
 
+    .bottom-section { 
+        padding: 3.5rem 1.25rem 4rem; 
+    }
 
+    .bottom-section h3 {
+        font-size: 1.7rem;
+    }
 
-    /* ==========================================
-       Aggiustamenti per il Cruciverba
-       ========================================== */
+    .button-grid {
+        flex-direction: column;
+        align-items: center;
+        gap: 0.85rem;
+        margin-bottom: 3.5rem;
+    }
+
+    .nav-btn {
+        padding: 0.9rem 1.8rem;
+        font-size: 0.8rem;
+        width: 100%;
+        max-width: 330px;
+    }
+
+    .card-ricordo {
+        flex-direction: column;
+        text-align: center;
+        padding: 1.5rem;
+        gap: 1.25rem;
+        margin-bottom: 1.8rem;
+    }
+
+    .card-img {
+        width: 100%;
+        height: 220px;
+    }
+
+    .card-testo h3 {
+        font-size: 1.55rem;
+    }
+
+    /* Nav bar & Schermate */
+    .nav-bar {
+        padding: 0.85rem 1rem;
+        gap: 0.85rem;
+    }
+
+    .nav-bar h2 {
+        font-size: 1.2rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .back-btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.72rem;
+        white-space: nowrap;
+        flex-shrink: 0;
+    }
+
+    #bacheca-screen {
+        height: 100vh;
+        height: 100dvh;
+    }
+
+    /* Cruciverba mobile elegante a schede */
     .game-container {
-        padding: 2rem 5%; /* Riduciamo i grandi margini bianchi ai lati per fare spazio alla griglia */
+        padding: 1.8rem 1rem 3rem;
+    }
+
+    .cruciverba-split {
+        flex-direction: column;
+        gap: 1.8rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .cruciverba-domande {
+        flex: 1;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .cruciverba-domande p {
+        font-size: 0.92rem;
+        line-height: 1.55;
+        margin-bottom: 0.75rem;
+        padding: 0.75rem 0.9rem;
+        background: #ffffff;
+        border-radius: 8px;
+        border-left: 3px solid var(--accent-burgundy);
+        box-shadow: 0 1px 4px rgba(28, 25, 23, 0.04);
+    }
+
+    .cruciverba-griglia {
+        overflow-x: visible;
+        width: 100%;
+        padding: 0;
+    }
+
+    /* Ogni parola diventa una card autonoma touch-friendly */
+    .cruciverba-riga {
+        flex-wrap: wrap !important;
+        justify-content: space-between;
+        align-items: center;
+        background: #ffffff;
+        padding: 0.85rem 0.9rem;
+        border-radius: 14px;
+        border: 1px solid var(--border-subtle);
+        box-shadow: 0 2px 8px rgba(28, 25, 23, 0.04);
+        margin: 12px 0;
+        gap: 8px;
+    }
+
+    .riga-badge {
+        order: 1;
+        width: 28px;
+        height: 28px;
+        font-size: 0.82rem;
+    }
+
+    .btn-check-riga {
+        order: 2;
+        margin-left: auto;
+        padding: 0.45rem 1.05rem;
+        font-size: 0.72rem;
+    }
+
+    .riga-status {
+        order: 3;
+        min-width: 22px;
+        font-size: 1.05rem;
+    }
+
+    .crossword-grid {
+        order: 4;
+        width: 100%;
+        justify-content: center;
+        flex-wrap: nowrap;
+        gap: 3px;
+        margin: 8px 0 2px 0;
+        overflow-x: auto;
+        padding-bottom: 2px;
     }
 
     .cell {
-        width: 38px;  /* Rimpiccioliamo la larghezza del quadratino */
-        height: 38px; /* Rimpiccioliamo l'altezza del quadratino */
-        font-size: 1.5rem; /* Rimpiccioliamo la lettera che viene scritta dentro */
+        width: clamp(26px, 6.8vw, 36px);
+        height: clamp(34px, 8.8vw, 42px);
+        font-size: 16px; /* OBBLIGATORIO: previene lo zoom automatico invasivo di iOS Safari */
+        border-radius: 5px;
+        font-weight: 700;
     }
-    
-    #risultato-cruciverba {
-        font-size: 1.2rem; /* Adattiamo anche il testo finale della vittoria */
-    }
-
 }
 
-@media screen and (max-width: 800px) {
-    /* 1. Trasformiamo le card orizzontali in verticali */
-    .card-ricordo {
-        flex-direction: column; /* Mette la foto sopra e il testo sotto */
-        text-align: center;     /* Centra il testo */
-        padding: 20px;
+@media screen and (max-width: 420px) {
+    .crossword-grid {
+        gap: 2px;
     }
 
-    /* 2. Facciamo diventare la foto larga quanto la card */
-    .card-img {
-        width: 100%;            /* La foto prende tutta la larghezza */
-        height: 200px;          /* Altezza fissa per mantenere l'ordine */
-        margin-bottom: 15px;    /* Spazio tra foto e testo */
+    .cell {
+        width: clamp(23px, 6.4vw, 30px);
+        height: 35px;
+        font-size: 16px; /* Non scendere sotto 16px su mobile */
+        border-radius: 4px;
     }
 
-    /* 3. Spazio tra i bottoni e le card sul telefono */
-    .card-ricordo {
-        margin-top: 2rem;       /* Riduce leggermente lo spazio rispetto al PC */
+    .cruciverba-riga {
+        padding: 0.75rem 0.6rem;
+    }
+
+    .btn-check-riga {
+        padding: 0.4rem 0.85rem;
+        font-size: 0.68rem;
+    }
+
+    .screen-placeholder {
+        margin: 2rem 0.5rem;
+        padding: 2rem 1rem;
     }
 }

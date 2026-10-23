@@ -1,132 +1,246 @@
-
-
 // Recupero gli elementi delle schermate
 const mainScreen = document.getElementById("main-screen");
 const bachecaScreen = document.getElementById("bacheca-screen");
+const galleriaScreen = document.getElementById("galleria-screen");
+const storiaScreen = document.getElementById("storia-screen");
+const cruciverbaScreen = document.getElementById("cruciverba-screen");
 
-// Pulsanti
+// Funzione helper per il cambio schermata fluido su mobile e desktop
+function mostraSchermata(schermataDaMostrare) {
+    [mainScreen, bachecaScreen, galleriaScreen, storiaScreen, cruciverbaScreen].forEach(function(s) {
+        if (s) s.classList.add("hidden");
+    });
+    if (schermataDaMostrare) {
+        schermataDaMostrare.classList.remove("hidden");
+        window.scrollTo(0, 0); // Riporta in cima alla pagina su mobile
+    }
+}
+
+function tornaAlMenu() {
+    mostraSchermata(mainScreen);
+}
+
+// 1. Bacheca Pubblica
 const btnBacheca = document.getElementById("btn-bacheca");
 const btnBackBacheca = document.getElementById("back-from-bacheca");
+if (btnBacheca) btnBacheca.addEventListener("click", () => mostraSchermata(bachecaScreen));
+if (btnBackBacheca) btnBackBacheca.addEventListener("click", tornaAlMenu);
 
-// 1. Quando premo "Lascia una Dedica", nascondo il menu e mostro la bacheca
-btnBacheca.addEventListener("click", function() {
-    mainScreen.classList.add("hidden");
-    bachecaScreen.classList.remove("hidden");
-});
-
-// 2. Quando premo "Torna al Menu", nascondo la bacheca e rimostro il menu
-btnBackBacheca.addEventListener("click", function() {
-    bachecaScreen.classList.add("hidden");
-    mainScreen.classList.remove("hidden");
-});
-
-// 3. Quando premo "Galleria", nascondo il menu e mostro la galleria
-const galleriaScreen = document.getElementById("galleria-screen");
+// 2. Galleria Fotografica
 const btnGalleria = document.getElementById("btn-galleria");
 const btnBackGalleria = document.getElementById("back-from-galleria");
-btnGalleria.addEventListener("click", function() {
-    mainScreen.classList.add("hidden");
-    galleriaScreen.classList.remove("hidden");
-});
+if (btnGalleria) btnGalleria.addEventListener("click", () => mostraSchermata(galleriaScreen));
+if (btnBackGalleria) btnBackGalleria.addEventListener("click", tornaAlMenu);
 
-// 4. Quando premo "Torna al Menu", nascondo la galleria e rimostro il menu
-btnBackGalleria.addEventListener("click", function() {
-    galleriaScreen.classList.add("hidden");
-    mainScreen.classList.remove("hidden");
-});
-
-//5. Quando premo "Rivivi il nostro viaggio", nascondo il menu e mostro la galleria
-const storiaScreen = document.getElementById("storia-screen");
+// 3. Il Nostro Viaggio
 const btnStoria = document.getElementById("btn-quiz");
 const btnBackStoria = document.getElementById("back-from-storia");
-btnStoria.addEventListener("click", function() {
-    mainScreen.classList.add("hidden");
-    storiaScreen.classList.remove("hidden");
-}); 
-//quando premo "Torna al Menu", nascondo la galleria e rimostro il menu
-btnBackStoria.addEventListener("click", function() {
-    storiaScreen.classList.add("hidden");
-    mainScreen.classList.remove("hidden");
-});
+if (btnStoria) btnStoria.addEventListener("click", () => mostraSchermata(storiaScreen));
+if (btnBackStoria) btnBackStoria.addEventListener("click", tornaAlMenu);
 
-// Gestione Schermata Cruciverba
-const cruciverbaScreen = document.getElementById("cruciverba-screen");
+// 4. Cruciverba
 const btnCruciverba = document.getElementById("btn-cruciverba");
 const btnBackCruciverba = document.getElementById("back-from-cruciverba");
+if (btnCruciverba) btnCruciverba.addEventListener("click", () => mostraSchermata(cruciverbaScreen));
+if (btnBackCruciverba) btnBackCruciverba.addEventListener("click", tornaAlMenu);
 
-// Apro il cruciverba
-btnCruciverba.addEventListener("click", function() {
-    mainScreen.classList.add("hidden");
-    cruciverbaScreen.classList.remove("hidden");
-});
 
-// Torno al menu
-btnBackCruciverba.addEventListener("click", function() {
-    cruciverbaScreen.classList.add("hidden");
-    mainScreen.classList.remove("hidden");
-});
+// ==========================================
+// IL MOTORE DEL CRUCIVERBA (Verifica per singola parola)
+// ==========================================
 
-// IL MOTORE DEL GIOCO
-document.getElementById("check-cruciverba").addEventListener("click", function() {
-    // 1. Prendo tutte le caselle della pagina
-    const celle = document.querySelectorAll(".cell");
-    let tutteCorrette = true;
+function controllaRiga(rigaEl) {
+    // Chiude la tastiera virtuale dello smartphone se aperta
+    if (document.activeElement && typeof document.activeElement.blur === "function") {
+        document.activeElement.blur();
+    }
 
-    // 2. Controllo ogni singola casella una per una (ciclo)
+    const celle = rigaEl.querySelectorAll(".cell");
+    const btn = rigaEl.querySelector(".btn-check-riga");
+    const status = rigaEl.querySelector(".riga-status");
+    let rigaCorretta = true;
+    let rigaVuota = true;
+
     celle.forEach(function(cella) {
-        // Prendo la lettera inserita dall'utente e la trasformo in maiuscolo
-        const letteraInserita = cella.value.toUpperCase();
-        // Prendo la risposta esatta che avevamo nascosto nell'HTML
-        const letteraEsatta = cella.dataset.answer.toUpperCase();
+        const letteraInserita = cella.value.trim().toUpperCase();
+        const letteraEsatta = (cella.dataset.answer || "").toUpperCase();
 
-        // 3. Faccio il paragone
+        if (letteraInserita !== "") {
+            rigaVuota = false;
+        }
+
         if (letteraInserita === letteraEsatta) {
             cella.classList.add("corretto");
             cella.classList.remove("sbagliato");
         } else {
             cella.classList.add("sbagliato");
             cella.classList.remove("corretto");
-            tutteCorrette = false; // Se ne sbaglia anche solo una, il gioco non è finito
+            rigaCorretta = false;
         }
     });
 
-    // 4. Messaggio finale
-    const messaggio = document.getElementById("risultato-cruciverba");
-    if (tutteCorrette) {
-        messaggio.innerText = "🎉 Complimenti! Risposta Esatta!";
-        messaggio.style.color = "green";
-    } else {
-        messaggio.innerText = "❌ Mmh, c'è qualche errore. Riprova!";
-        messaggio.style.color = "red";
+    if (rigaVuota) {
+        if (status) status.innerText = "";
+        return false;
     }
 
+    if (rigaCorretta) {
+        if (btn) {
+            btn.innerText = "✓ Esatta!";
+            btn.classList.add("parola-esatta");
+        }
+        if (status) {
+            status.innerText = "✨";
+        }
+    } else {
+        if (btn) {
+            btn.innerText = "Riprova";
+            btn.classList.remove("parola-esatta");
+        }
+        if (status) {
+            status.innerText = "❌";
+        }
+    }
+
+    // Controlliamo se tutte le 5 parole sono state completate
+    controllaVittoriaTotale();
+    return rigaCorretta;
+}
+
+function controllaVittoriaTotale() {
+    const tutteLeRighe = document.querySelectorAll(".cruciverba-riga");
+    let tutteVinte = true;
+
+    tutteLeRighe.forEach(function(riga) {
+        const celle = riga.querySelectorAll(".cell");
+        celle.forEach(function(cella) {
+            if (cella.value.trim().toUpperCase() !== (cella.dataset.answer || "").toUpperCase()) {
+                tutteVinte = false;
+            }
+        });
+    });
+
+    const messaggio = document.getElementById("risultato-cruciverba");
+    if (tutteVinte && messaggio) {
+        messaggio.innerText = "🎉 Complimenti! Hai completato tutto il cruciverba!";
+        messaggio.style.color = "#205c2a";
+
+        // Pioggia di coriandoli festosi
+        if (typeof confetti === "function") {
+            confetti({
+                particleCount: 100,
+                spread: 75,
+                origin: { y: 0.6 }
+            });
+            setTimeout(function() {
+                confetti({
+                    particleCount: 50,
+                    angle: 60,
+                    spread: 55,
+                    origin: { x: 0.1, y: 0.6 }
+                });
+                confetti({
+                    particleCount: 50,
+                    angle: 120,
+                    spread: 55,
+                    origin: { x: 0.9, y: 0.6 }
+                });
+            }, 250);
+        }
+    }
+}
+
+// Assegno il click a ciascun pulsante Verifica di ogni parola
+document.querySelectorAll(".btn-check-riga").forEach(function(btn) {
+    btn.addEventListener("click", function() {
+        const riga = btn.closest(".cruciverba-riga");
+        if (riga) {
+            controllaRiga(riga);
+        }
+    });
 });
 
 // ==========================================
-// AUTOFOCUS CRUCIVERBA (Salto caselle)
+// AUTOFOCUS & DIGITAZIONE CRUCIVERBA (Mobile & Desktop)
 // ==========================================
 
-// Prendo tutte le caselle (creando una struttura indicizzata simile a un array)
-const tutteLeCelle = document.querySelectorAll(".cell");
+const tutteLeRigheCruciverba = document.querySelectorAll(".cruciverba-riga");
 
-// Scorro l'array elemento per elemento, tenendo traccia dell'indice attuale
-tutteLeCelle.forEach(function(cellaAttuale, indice) {
-    
-    // 1. Quando l'utente inserisce un carattere
-    cellaAttuale.addEventListener("input", function() {
-        // Se la cella è piena (ha 1 carattere) e non siamo all'ultima casella dell'array
-        if (cellaAttuale.value.length === 1 && indice + 1 < tutteLeCelle.length) {
-            // Sposta il cursore (focus) all'indice successivo
-            tutteLeCelle[indice + 1].focus();
-        }
-    });
+tutteLeRigheCruciverba.forEach(function(riga) {
+    const celleDellaRiga = Array.from(riga.querySelectorAll(".cell"));
 
-    // 2. Quando l'utente preme il tasto Cancella (Backspace)
-    cellaAttuale.addEventListener("keydown", function(evento) {
-        // Se il tasto premuto è Backspace, la cella attuale è vuota e non siamo alla prima casella (indice 0)
-        if (evento.key === "Backspace" && cellaAttuale.value === "" && indice - 1 >= 0) {
-            // Sposta il cursore (focus) all'indice precedente
-            tutteLeCelle[indice - 1].focus();
-        }
+    celleDellaRiga.forEach(function(cellaAttuale, indiceNellaRiga) {
+        
+        // 1. Quando la cella riceve il focus (tap su smartphone o click), seleziona il testo esistente
+        // In questo modo digitare una nuova lettera la sostituisce subito senza dover prima cancellare!
+        cellaAttuale.addEventListener("focus", function() {
+            cellaAttuale.select();
+        });
+
+        // 2. Quando l'utente inserisce un carattere
+        cellaAttuale.addEventListener("input", function() {
+            cellaAttuale.classList.remove("sbagliato");
+
+            // Garantisce sempre il maiuscolo e prende l'ultimo carattere inserito
+            const rawVal = cellaAttuale.value.trim().toUpperCase();
+            if (rawVal.length > 0) {
+                cellaAttuale.value = rawVal.charAt(rawVal.length - 1);
+            } else {
+                cellaAttuale.value = "";
+            }
+
+            // Se è stata digitata una lettera, avanza alla cella successiva della STESSA riga
+            if (cellaAttuale.value.length === 1) {
+                if (indiceNellaRiga + 1 < celleDellaRiga.length) {
+                    const cellaSucc = celleDellaRiga[indiceNellaRiga + 1];
+                    cellaSucc.focus();
+                    cellaSucc.select();
+                }
+            }
+        });
+
+        // 3. Tasti speciali (Backspace e Invio)
+        cellaAttuale.addEventListener("keydown", function(evento) {
+            // Se preme Invio, verifica la parola corrente e chiude la tastiera
+            if (evento.key === "Enter") {
+                evento.preventDefault();
+                cellaAttuale.blur();
+                controllaRiga(riga);
+                return;
+            }
+
+            // Se preme Backspace ed è vuota, torna indietro alla casella precedente della stessa riga e la svuota
+            if (evento.key === "Backspace" && cellaAttuale.value === "" && indiceNellaRiga > 0) {
+                evento.preventDefault();
+                const cellaPrec = celleDellaRiga[indiceNellaRiga - 1];
+                cellaPrec.focus();
+                cellaPrec.value = "";
+            }
+        });
     });
 });
+
+// ==========================================
+// SCROLL REVEAL (Comparsa morbida delle Card)
+// ==========================================
+if ("IntersectionObserver" in window) {
+    const observerCard = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+                entry.target.classList.add("visibile");
+                observerCard.unobserve(entry.target);
+            }
+        });
+    }, {
+        threshold: 0.05
+    });
+
+    document.querySelectorAll(".card-ricordo").forEach(function(card) {
+        card.classList.add("nascosta-scroll");
+        observerCard.observe(card);
+    });
+} else {
+    document.querySelectorAll(".card-ricordo").forEach(function(card) {
+        card.classList.add("visibile");
+    });
+}
