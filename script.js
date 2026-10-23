@@ -214,7 +214,7 @@ tutteLeRigheCruciverba.forEach(function(riga) {
 });
 
 // ==========================================
-// SCROLL REVEAL (Comparsa morbida delle Card)
+// SCROLL REVEAL (Comparsa morbida della Timeline)
 // ==========================================
 if ("IntersectionObserver" in window) {
     const observerCard = new IntersectionObserver(function(entries) {
@@ -225,15 +225,14 @@ if ("IntersectionObserver" in window) {
             }
         });
     }, {
-        threshold: 0.05
+        threshold: 0.08
     });
 
-    document.querySelectorAll(".card-ricordo").forEach(function(card) {
-        card.classList.add("nascosta-scroll");
-        observerCard.observe(card);
+    document.querySelectorAll(".timeline-item, .card-ricordo").forEach(function(el) {
+        observerCard.observe(el);
     });
 } else {
-    document.querySelectorAll(".card-ricordo").forEach(function(card) {
-        card.classList.add("visibile");
+    document.querySelectorAll(".timeline-item, .card-ricordo").forEach(function(el) {
+        el.classList.add("visibile");
     });
 }

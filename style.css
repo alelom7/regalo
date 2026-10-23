@@ -290,101 +290,156 @@ h1, h2, h3 {
     border-radius: 9999px;
 }
 
-.cards-viaggio-container {
-    width: 100%;
+.timeline-viaggio {
+    position: relative;
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 2rem 0 4rem;
 }
 
-.card-ricordo {
-    background: var(--bg-card);
-    border: 1px solid var(--border-subtle);
-    border-radius: 16px;
-    padding: 2.5rem;
+/* La linea verticale centrale (filo dorato/bordeaux) */
+.timeline-viaggio::before {
+    content: "";
+    position: absolute;
+    top: 35px;
+    bottom: 35px;
+    left: 50%;
+    width: 2px;
+    background: linear-gradient(to bottom, #dfd5bf 0%, #4a1521 25%, #4a1521 75%, #dfd5bf 100%);
+    transform: translateX(-50%);
+    z-index: 1;
+}
+
+/* Ogni tappa del viaggio */
+.timeline-item {
+    position: relative;
     display: flex;
     align-items: center;
-    gap: 2.8rem;
-    margin-bottom: 2.5rem;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
-    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease, border-color 0.4s ease, opacity 0.6s ease;
-    text-align: left;
-}
-
-.card-ricordo:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 16px 36px rgba(28, 25, 23, 0.07);
-    border-color: #d8d1c4;
-}
-
-/* Scroll reveal states */
-.card-ricordo.nascosta-scroll {
+    margin-bottom: 5.5rem;
+    width: 100%;
     opacity: 0;
     transform: translateY(35px);
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease;
 }
 
-.card-ricordo.visibile {
+.timeline-item.visibile {
     opacity: 1;
     transform: translateY(0);
 }
 
-.card-ricordo.visibile:hover {
-    transform: translateY(-5px);
+/* Nodo circolare con il numero della tappa al centro */
+.timeline-node {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--accent-burgundy);
+    color: var(--accent-gold);
+    border: 3px solid #ffffff;
+    box-shadow: 0 4px 16px rgba(74, 21, 33, 0.28);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-serif);
+    font-size: 1.15rem;
+    font-weight: 600;
+    z-index: 3;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
 }
 
-/* Riquadro fotografico card */
-.card-img {
-    width: 280px;
-    height: 280px;
-    flex-shrink: 0;
-    overflow: hidden;
-    border-radius: 12px;
-    border: 1px solid rgba(0, 0, 0, 0.04);
+.timeline-item:hover .timeline-node {
+    transform: translate(-50%, -50%) scale(1.15);
+    box-shadow: 0 8px 24px rgba(74, 21, 33, 0.4);
 }
 
-.card-img img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 12px;
-    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+/* Le due metà della riga */
+.timeline-side {
+    width: 50%;
+    box-sizing: border-box;
 }
 
-.card-ricordo:hover .card-img img {
-    transform: scale(1.05);
+.timeline-left {
+    padding-right: 4rem;
 }
 
-.card-testo {
-    flex: 1;
+.timeline-right {
+    padding-left: 4rem;
 }
 
-.card-tag {
+/* Card testuale con didascalia */
+.timeline-content {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 18px;
+    padding: 2.2rem 2.4rem;
+    box-shadow: 0 4px 24px rgba(28, 25, 23, 0.03);
+    text-align: left;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease, border-color 0.4s ease;
+}
+
+.timeline-item:hover .timeline-content {
+    transform: translateY(-4px);
+    box-shadow: 0 14px 34px rgba(28, 25, 23, 0.08);
+    border-color: #d8d1c4;
+}
+
+.timeline-tag {
     font-family: var(--font-sans);
     font-size: 0.72rem;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.18em;
-    color: var(--text-muted);
+    color: var(--accent-burgundy);
     display: block;
     margin-bottom: 0.6rem;
 }
 
-.card-testo h3 {
+.timeline-content h3 {
     font-family: var(--font-serif);
-    font-size: 1.9rem;
+    font-size: 1.85rem;
     color: var(--text-main);
     margin-bottom: 0.8rem;
     font-weight: 400;
     transition: color 0.3s ease;
 }
 
-.card-ricordo:hover .card-testo h3 {
+.timeline-item:hover .timeline-content h3 {
     color: var(--accent-burgundy);
 }
 
-.card-testo p {
+.timeline-content p {
     font-family: var(--font-sans);
-    font-size: 0.98rem;
+    font-size: 0.96rem;
     line-height: 1.7;
     color: var(--text-muted);
     letter-spacing: 0.01em;
+    text-transform: none !important; /* Disattiva l'uppercase ereditato da bottom-section */
+}
+
+/* Riquadro fotografico grande ed elegante */
+.timeline-img-wrap {
+    width: 100%;
+    height: 290px;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(28, 25, 23, 0.08);
+    border: 1px solid var(--border-subtle);
+    background: #f4eee5;
+    position: relative;
+}
+
+.timeline-img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.timeline-item:hover .timeline-img-wrap img {
+    transform: scale(1.05);
 }
 
 /* --------------------------------------------------------------------------
@@ -765,21 +820,58 @@ h1, h2, h3 {
         font-size: clamp(1.8rem, 6vw, 2.3rem);
     }
 
-    .card-ricordo {
+    /* Timeline su smartphone: filo laterale continuo e tappe a schede */
+    .timeline-viaggio {
+        padding: 1rem 0 2rem;
+    }
+
+    .timeline-viaggio::before {
+        left: 20px;
+        top: 15px;
+        bottom: 15px;
+        transform: none;
+    }
+
+    .timeline-item {
         flex-direction: column;
-        text-align: center;
-        padding: 1.5rem;
-        gap: 1.25rem;
-        margin-bottom: 1.8rem;
+        align-items: stretch;
+        margin-bottom: 3.2rem;
+        padding-left: 50px;
+        gap: 0.9rem;
     }
 
-    .card-img {
+    .timeline-node {
+        left: 20px;
+        top: 0;
+        transform: translate(-50%, 0);
+        width: 36px;
+        height: 36px;
+        font-size: 0.95rem;
+        border-width: 2.5px;
+    }
+
+    .timeline-item:hover .timeline-node {
+        transform: translate(-50%, 0) scale(1.08);
+    }
+
+    .timeline-side {
         width: 100%;
-        height: 220px;
+        padding: 0 !important;
     }
 
-    .card-testo h3 {
-        font-size: 1.55rem;
+    .timeline-content {
+        padding: 1.5rem;
+        border-radius: 14px;
+    }
+
+    .timeline-content h3 {
+        font-size: 1.5rem;
+    }
+
+    .timeline-img-wrap {
+        height: 220px;
+        border-radius: 14px;
+        margin-top: 0.4rem;
     }
 
     /* Nav bar & Schermate */
