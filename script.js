@@ -2,12 +2,11 @@
 const mainScreen = document.getElementById("main-screen");
 const bachecaScreen = document.getElementById("bacheca-screen");
 const galleriaScreen = document.getElementById("galleria-screen");
-const storiaScreen = document.getElementById("storia-screen");
 const cruciverbaScreen = document.getElementById("cruciverba-screen");
 
 // Funzione helper per il cambio schermata fluido su mobile e desktop
 function mostraSchermata(schermataDaMostrare) {
-    [mainScreen, bachecaScreen, galleriaScreen, storiaScreen, cruciverbaScreen].forEach(function(s) {
+    [mainScreen, bachecaScreen, galleriaScreen, cruciverbaScreen].forEach(function(s) {
         if (s) s.classList.add("hidden");
     });
     if (schermataDaMostrare) {
@@ -32,13 +31,7 @@ const btnBackGalleria = document.getElementById("back-from-galleria");
 if (btnGalleria) btnGalleria.addEventListener("click", () => mostraSchermata(galleriaScreen));
 if (btnBackGalleria) btnBackGalleria.addEventListener("click", tornaAlMenu);
 
-// 3. Il Nostro Viaggio
-const btnStoria = document.getElementById("btn-quiz");
-const btnBackStoria = document.getElementById("back-from-storia");
-if (btnStoria) btnStoria.addEventListener("click", () => mostraSchermata(storiaScreen));
-if (btnBackStoria) btnBackStoria.addEventListener("click", tornaAlMenu);
-
-// 4. Cruciverba
+// 3. Cruciverba
 const btnCruciverba = document.getElementById("btn-cruciverba");
 const btnBackCruciverba = document.getElementById("back-from-cruciverba");
 if (btnCruciverba) btnCruciverba.addEventListener("click", () => mostraSchermata(cruciverbaScreen));
