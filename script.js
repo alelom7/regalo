@@ -228,11 +228,11 @@ if ("IntersectionObserver" in window) {
         threshold: 0.08
     });
 
-    document.querySelectorAll(".timeline-item, .card-ricordo").forEach(function(el) {
+    document.querySelectorAll(".glass-card, .magazine-item, .timeline-item, .card-ricordo").forEach(function(el) {
         observerCard.observe(el);
     });
 } else {
-    document.querySelectorAll(".timeline-item, .card-ricordo").forEach(function(el) {
+    document.querySelectorAll(".glass-card, .magazine-item, .timeline-item, .card-ricordo").forEach(function(el) {
         el.classList.add("visibile");
     });
 }
