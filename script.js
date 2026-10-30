@@ -810,7 +810,7 @@ function collegaEventiDragItem(el) {
         });
     });
 
-    // Touch Drag per Smartphone
+    // Touch Support per Smartphone: distingue scorrimento orizzontale vs trascinamento
     el.addEventListener("touchstart", function(e) {
         if (e.target.closest(".top10-item-remove-btn")) return;
         const touch = e.touches[0];
@@ -832,30 +832,37 @@ function collegaEventiDragItem(el) {
         const diffX = Math.abs(touch.clientX - touchDragInfo.startX);
         const diffY = Math.abs(touch.clientY - touchDragInfo.startY);
 
-        // Se si è mosso di almeno 10px, avvia il drag
-        if (!touchDragInfo.dragged && (diffX > 10 || diffY > 10)) {
-            touchDragInfo.dragged = true;
-            const momento = trovaMomentoPerId(touchDragInfo.itemId);
-            const ghost = document.createElement("div");
-            ghost.className = "top10-touch-ghost";
-            ghost.innerHTML = `<span>${momento.icona}</span> <span>${momento.titolo}</span>`;
-            document.body.appendChild(ghost);
-            touchDragInfo.ghostEl = ghost;
+        // Se il movimento è prevalentemente orizzontale, l'utente sta scorrendo le schede per leggerle!
+        // Non bloccare assolutamente lo scorrimento naturale
+        if (!touchDragInfo.dragged) {
+            if (diffX > diffY) {
+                // Lascia scorrere liberamente il carosello a destra/sinistra
+                touchDragInfo = null;
+                return;
+            }
+
+            // Avvia il trascinamento SOLO se il movimento è chiaramente verso il basso (verso la classifica)
+            if (diffY > 18 && diffY > diffX * 1.5) {
+                touchDragInfo.dragged = true;
+                const momento = trovaMomentoPerId(touchDragInfo.itemId);
+                const ghost = document.createElement("div");
+                ghost.className = "top10-touch-ghost";
+                ghost.innerHTML = `<span>${momento.icona}</span> <span>${momento.titolo}</span>`;
+                document.body.appendChild(ghost);
+                touchDragInfo.ghostEl = ghost;
+            }
         }
 
-        if (touchDragInfo.dragged && touchDragInfo.ghostEl) {
-            e.preventDefault(); // Impedisce lo scroll durante il drag
+        if (touchDragInfo && touchDragInfo.dragged && touchDragInfo.ghostEl) {
+            e.preventDefault();
             touchDragInfo.ghostEl.style.left = touch.clientX + "px";
             touchDragInfo.ghostEl.style.top = touch.clientY + "px";
 
-            // Evidenzia slot sotto il dito
             const elemUnder = document.elementFromPoint(touch.clientX, touch.clientY);
             document.querySelectorAll(".slot-drag-over, .pool-drag-over").forEach(n => n.classList.remove("slot-drag-over", "pool-drag-over"));
             if (elemUnder) {
                 const targetSlot = elemUnder.closest(".top10-slot");
                 if (targetSlot) targetSlot.classList.add("slot-drag-over");
-                const targetPool = elemUnder.closest(".top10-pool");
-                if (targetPool) targetPool.classList.add("pool-drag-over");
             }
         }
     }, { passive: false });
@@ -863,7 +870,7 @@ function collegaEventiDragItem(el) {
     el.addEventListener("touchend", function(e) {
         if (!touchDragInfo) return;
 
-        if (touchDragInfo.ghostEl) {
+        if (touchDragInfo.dragged && touchDragInfo.ghostEl) {
             touchDragInfo.ghostEl.remove();
             const touch = e.changedTouches[0];
             const elemUnder = document.elementFromPoint(touch.clientX, touch.clientY);
@@ -874,15 +881,6 @@ function collegaEventiDragItem(el) {
                     const slotIndex = parseInt(targetSlot.dataset.slotIndex, 10);
                     posizionaMomentoInSlot(touchDragInfo.itemId, slotIndex);
                     renderizzaTop10();
-                } else {
-                    const targetPool = elemUnder.closest(".top10-pool, .top10-items-col");
-                    if (targetPool) {
-                        const oldIdx = slotsTop10.indexOf(touchDragInfo.itemId);
-                        if (oldIdx !== -1) {
-                            slotsTop10[oldIdx] = null;
-                            renderizzaTop10();
-                        }
-                    }
                 }
             }
         }

@@ -1723,6 +1723,38 @@ h1, h2, h3 {
     border-radius: 16px;
 }
 
+/* Quadratini dei Momenti (Pool e Slot) */
+.top10-col-title-group {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+}
+
+.top10-scroll-hint {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--accent-burgundy);
+    background: rgba(74, 21, 33, 0.08);
+    padding: 0.2rem 0.6rem;
+    border-radius: 9999px;
+    letter-spacing: 0.02em;
+}
+
+.top10-pool {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 0.85rem;
+    padding: 0.5rem 0.2rem;
+    min-height: 240px;
+    align-content: start;
+}
+
+.top10-pool.pool-drag-over {
+    background: rgba(74, 21, 33, 0.04);
+    border-radius: 16px;
+}
+
 .top10-item {
     background: #ffffff;
     border: 1.5px solid var(--border-subtle);
@@ -1736,8 +1768,9 @@ h1, h2, h3 {
     flex-direction: column;
     gap: 0.35rem;
     box-shadow: 0 2px 6px rgba(28, 25, 23, 0.04);
-    touch-action: none;
+    touch-action: pan-x pan-y;
     position: relative;
+    white-space: normal;
 }
 
 .top10-item:hover {
@@ -1773,16 +1806,19 @@ h1, h2, h3 {
 }
 
 .top10-item-title {
-    font-size: 0.88rem;
+    font-size: 0.9rem;
     font-weight: 700;
     color: var(--text-main);
     line-height: 1.3;
+    white-space: normal;
+    word-break: break-word;
 }
 
 .top10-item-desc {
-    font-size: 0.72rem;
+    font-size: 0.74rem;
     color: var(--text-muted);
     line-height: 1.35;
+    white-space: normal;
 }
 
 /* Quadratino quando è posizionato dentro uno slot */
@@ -1818,22 +1854,21 @@ h1, h2, h3 {
 
 .top10-slot-item-left .top10-item-texts {
     min-width: 0;
+    flex: 1;
 }
 
 .top10-slot-item-left .top10-item-title {
-    font-size: 0.88rem;
+    font-size: 0.86rem;
     font-weight: 700;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    white-space: normal;
+    line-height: 1.25;
 }
 
 .top10-slot-item-left .top10-item-desc {
     font-size: 0.72rem;
     color: var(--text-muted);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    white-space: normal;
+    line-height: 1.25;
 }
 
 .top10-item-remove-btn {
@@ -1980,13 +2015,13 @@ h1, h2, h3 {
         gap: 1rem;
     }
 
-    /* I quadratini passano IN ALTO rispetto alla classifica ed entrano in una barra adesiva (sticky) */
+    /* I quadratini passano IN ALTO ed entrano in una barra adesiva (sticky) fluida */
     .top10-items-col {
         order: -1;
         position: sticky;
         top: 0;
         z-index: 99;
-        background: rgba(255, 255, 255, 0.96);
+        background: rgba(255, 255, 255, 0.97);
         backdrop-filter: blur(14px);
         -webkit-backdrop-filter: blur(14px);
         border: 1.5px solid rgba(74, 21, 33, 0.16);
@@ -2006,24 +2041,27 @@ h1, h2, h3 {
     }
 
     .top10-items-col .top10-hint {
-        display: none; /* Rimosso testo lungo su mobile per non rubare spazio */
+        display: none;
     }
 
-    /* Pool orizzontale a scorrimento rapido con le dita */
+    /* Carosello orizzontale a scorrimento libero, fluido e reattivo */
     .top10-pool {
         display: flex;
         flex-direction: row;
         flex-wrap: nowrap;
         overflow-x: auto;
+        overflow-y: hidden;
         -webkit-overflow-scrolling: touch;
-        gap: 0.65rem;
-        padding: 0.3rem 0.15rem 0.55rem;
+        scroll-snap-type: x mandatory;
+        gap: 0.75rem;
+        padding: 0.35rem 0.2rem 0.65rem;
         min-height: auto;
         scrollbar-width: thin;
+        touch-action: pan-x;
     }
 
     .top10-pool::-webkit-scrollbar {
-        height: 4px;
+        height: 5px;
     }
 
     .top10-pool::-webkit-scrollbar-thumb {
@@ -2031,37 +2069,40 @@ h1, h2, h3 {
         border-radius: 9999px;
     }
 
-    .top10-item {
+    /* Schede ampie, confortevoli e leggibili per intero */
+    .top10-pool .top10-item {
         flex: 0 0 auto;
-        min-width: 145px;
-        max-width: 165px;
-        padding: 0.6rem 0.7rem;
-        border-radius: 14px;
-        gap: 0.2rem;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+        width: 215px;
+        min-width: 215px;
+        max-width: 235px;
+        scroll-snap-align: start;
+        padding: 0.8rem 0.85rem;
+        border-radius: 16px;
+        gap: 0.35rem;
+        box-shadow: 0 2px 8px rgba(74, 21, 33, 0.08);
+        touch-action: pan-x;
+        white-space: normal;
     }
 
     .top10-item-icon {
-        font-size: 1.35rem;
+        font-size: 1.5rem;
     }
 
     .top10-item-title {
-        font-size: 0.82rem;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
+        font-size: 0.88rem;
+        white-space: normal;
+        line-height: 1.3;
+        word-break: break-word;
     }
 
     .top10-item-desc {
-        font-size: 0.68rem;
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-        line-height: 1.25;
+        font-size: 0.74rem;
+        white-space: normal;
+        line-height: 1.35;
+        color: var(--text-muted);
     }
 
-    /* Colonna Tabella Classifica posizionata subito sotto */
+    /* Colonna Tabella Classifica subito sotto */
     .top10-board-col {
         order: 1;
         padding: 1.1rem 0.9rem;
@@ -2073,16 +2114,16 @@ h1, h2, h3 {
     }
 
     .top10-slot {
-        min-height: 52px;
-        padding: 0.35rem 0.55rem;
+        min-height: 56px;
+        padding: 0.4rem 0.6rem;
         gap: 0.55rem;
         border-radius: 14px;
     }
 
     .top10-slot-rank {
-        width: 32px;
-        height: 32px;
-        font-size: 0.8rem;
+        width: 34px;
+        height: 34px;
+        font-size: 0.82rem;
         border-radius: 8px;
     }
 
@@ -2094,11 +2135,13 @@ h1, h2, h3 {
     }
 
     .top10-slot-item-left .top10-item-title {
-        font-size: 0.82rem;
+        font-size: 0.84rem;
+        white-space: normal;
     }
 
     .top10-slot-item-left .top10-item-desc {
-        font-size: 0.68rem;
+        font-size: 0.7rem;
+        white-space: normal;
     }
 
     .top10-slot-empty {
