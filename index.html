@@ -11,7 +11,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=Playfair+Display:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=6">
+    <link rel="stylesheet" href="style.css?v=7">
 </head>
 <body>
     
@@ -36,6 +36,9 @@
             <div class="button-grid">
                 <button class="nav-btn bottone-pulsante" id="btn-galleria">Galleria Fotografica</button>
                 <button class="nav-btn bottone-pulsante" id="btn-cruciverba">Il Cruciverba</button>
+                <button class="nav-btn bottone-pulsante" id="btn-avanti-un-altro">Avanti un altro</button>
+                <button class="nav-btn bottone-pulsante" id="btn-top10">Top 10</button>
+                <button class="nav-btn bottone-pulsante" id="btn-milionario">Milionario</button>
                 <button class="nav-btn bottone-pulsante" id="btn-bacheca">Lascia una Dedica</button>
             </div>
 
@@ -54,17 +57,17 @@
                     <div class="glass-card-overlay">
                         <span class="glass-card-tag">TAPPA 0 • GLI INIZI</span>
                         <h3>Dove tutto ebbe inizio</h3>
-                        <p>dove poteva essere presa la decisione che avrebbe stravolto completamente la nostra vita se non al Valentino Bar? Tra un gin lemon, una crêpes e un piano improvvisato. Due settimane di tempo, zero certezze, una Valentina da convincere a tutti i costi... e l'inizio della nostra vita da fuorisede.</p>
+                        <p>Dove poteva essere presa la decisione che avrebbe stravolto completamente la nostra vita se non al Valentino Bar? Tra un gin lemon, una crêpes e un piano improvvisato. Due settimane di tempo, zero certezze, una Valentina da convincere a tutti i costi... e l'inizio della nostra vita da fuorisede.</p>
                     </div>
                 </div>
 
                 <!-- Card 1 -->
                 <div class="glass-card">
-                    <img src="assets/sfondo.jpeg" alt="Tappa del viaggio" class="glass-card-img">
+                    <img src="assets/disastro.jpeg" alt="Tappa del viaggio" class="glass-card-img">
                     <div class="glass-card-overlay">
-                        <span class="glass-card-tag">TAPPA I • GLI INIZI</span>
-                        <h3>Dove tutto è iniziato</h3>
-                        <p>I primi giorni universitari, i primi corsi insieme e quell'intesa immediata che ha dato il via a un'amicizia e a un percorso indimenticabile.</p>
+                        <span class="glass-card-tag">TAPPA I • DISASTRO</span>
+                        <h3>Esperienza interculturale</h3>
+                        <p>Tra l'ansia generale e i piani di fuga improvvisati la nostra prima esperienza a Parma è stato ufficialmente un disastro! Con le birmane, gli scarafaggi di bambù e i leggendari viaggi sul '2-largo 8 marzo' abbiamo fatto le ossa per qualsiasi futura sfida disopravvivenza.</p>
                     </div>
                 </div>
 
@@ -115,6 +118,79 @@
             <span class="placeholder-tag">IN ARRIVO</span>
             <h3>Scatti & Ricordi</h3>
             <p>La galleria fotografica sarà presto online per rivivere i momenti più belli!</p>
+        </div>
+    </div>
+
+    <div id="milionario-screen" class="screen hidden">
+        <div class="nav-bar">
+            <button class="back-btn" id="back-from-milionario">⬅ Torna al Menu</button>
+            <h2>Il Milionario</h2>
+        </div>
+        <div class="screen-placeholder">
+            <span class="placeholder-tag">IN ARRIVO</span>
+            <h3>Domande & Risposte</h3>
+            <p>Il gioco del milionario sarà presto disponibile per mettere alla prova le tue conoscenze!</p>
+        </div>
+    </div>
+
+    <div id="top10-screen" class="screen hidden">
+        <div class="nav-bar">
+            <button class="back-btn" id="back-from-top10">⬅ Torna al Menu</button>
+            <h2>Top 10</h2>
+        </div>
+        <div class="screen-placeholder">
+            <span class="placeholder-tag">IN ARRIVO</span>
+            <h3>Momenti Iconici</h3>
+            <p>La classifica ufficiale con i momenti più indimenticabili sarà presto online!</p>
+        </div>
+    </div>
+
+        <div id="avanti-un-altro-screen" class="screen hidden">
+        <div class="nav-bar">
+            <button class="back-btn" id="back-from-avanti-un-altro">⬅ Torna al Menu</button>
+            <h2>Avanti un Altro</h2>
+        </div>
+
+        <div class="avanti-container">
+            <!-- Box di Gioco della Scalata -->
+            <div id="avanti-gioco-box" class="avanti-card">
+                <div class="avanti-header">
+                    <span class="avanti-badge">SFIDA DI LAUREA • LA SCALATA</span>
+                    <div class="avanti-progress-info">
+                        <span id="avanti-step-text">Domanda 1 di 7</span>
+                        <span class="avanti-streak-badge">🎯 Vietato sbagliare!</span>
+                    </div>
+                    <div class="avanti-progress-bar-bg">
+                        <div id="avanti-progress-bar" class="avanti-progress-bar-fill"></div>
+                    </div>
+                </div>
+
+                <div class="avanti-body">
+                    <p class="avanti-regola-hint">⚠️ Clicca sulla risposta corretta per avanzare. Un solo errore ti farà ripartire dalla prima domanda!</p>
+                    <h3 id="avanti-domanda-testo" class="avanti-domanda">Caricamento in corso...</h3>
+                    
+                    <div class="avanti-risposte-grid">
+                        <button type="button" class="avanti-btn-risposta" id="avanti-btn-0"></button>
+                        <button type="button" class="avanti-btn-risposta" id="avanti-btn-1"></button>
+                    </div>
+
+                    <div id="avanti-feedback-msg" class="avanti-feedback"></div>
+                </div>
+            </div>
+
+            <!-- Box di Vittoria Finale (nascosto inizialmente) -->
+            <div id="avanti-vittoria-box" class="avanti-card hidden">
+                <div class="avanti-vittoria-content">
+                    <span class="vittoria-icon">🎓🏆🥂</span>
+                    <span class="avanti-badge">TRAGUARDO RAGGIUNTO</span>
+                    <h2>SCALATA COMPLETATA!</h2>
+                    <p class="vittoria-desc">Incredibile! Avete risposto correttamente a tutte le domande senza sbagliare nemmeno una volta! La proclamazione a Dottoresse ad Alta Gradazione è ufficialmente meritatissima!</p>
+                    <div class="vittoria-azioni">
+                        <button type="button" class="nav-btn bottone-pulsante" id="btn-restart-avanti">Rigioca la Scalata</button>
+                        <button type="button" class="back-btn" id="btn-menu-from-avanti">⬅ Torna al Menu</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -228,6 +304,6 @@
 
     <!-- Libreria per i coriandoli (Confetti) -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-    <script src="script.js?v=6"></script>
+    <script src="script.js?v=7"></script>
 </body>
 </html>
