@@ -3,14 +3,13 @@ const mainScreen = document.getElementById("main-screen");
 const bachecaScreen = document.getElementById("bacheca-screen");
 const galleriaScreen = document.getElementById("galleria-screen");
 const cruciverbaScreen = document.getElementById("cruciverba-screen");
-const milionarioScreen = document.getElementById("milionario-screen");
 const top10Screen = document.getElementById("top10-screen");
 const avantiUnAltroScreen = document.getElementById("avanti-un-altro-screen");
 
 
 // Funzione helper per il cambio schermata fluido su mobile e desktop
 function mostraSchermata(schermataDaMostrare) {
-    [mainScreen, bachecaScreen, galleriaScreen, cruciverbaScreen, milionarioScreen, top10Screen, avantiUnAltroScreen].forEach(function(s) {
+    [mainScreen, bachecaScreen, galleriaScreen, cruciverbaScreen, top10Screen, avantiUnAltroScreen].forEach(function(s) {
         if (s) s.classList.add("hidden");
     });
     if (schermataDaMostrare) {
@@ -53,12 +52,6 @@ const btnTop10 = document.getElementById("btn-top10");
 const btnBackTop10 = document.getElementById("back-from-top10");
 // Top10 click handled in top10 section below
 if (btnBackTop10) btnBackTop10.addEventListener("click", tornaAlMenu);
-
-//Milionario
-const btnMilionario = document.getElementById("btn-milionario");
-const btnBackMilionario = document.getElementById("back-from-milionario");
-if (btnMilionario) btnMilionario.addEventListener("click", () => mostraSchermata(milionarioScreen));
-if (btnBackMilionario) btnBackMilionario.addEventListener("click", tornaAlMenu);    
 
 
 // ==========================================
@@ -650,7 +643,10 @@ function renderizzaTop10() {
         else if (rankNum === 2) podioClass = "podio-2";
         else if (rankNum === 3) podioClass = "podio-3";
 
-        slotEl.className = `top10-slot ${podioClass} ${idMomento ? "slot-filled" : ""}`;
+        const isFilled = idMomento !== null;
+        const isReadyToPlace = !isFilled && idMomentoSelezionato !== null;
+
+        slotEl.className = `top10-slot ${podioClass} ${isFilled ? "slot-filled" : ""} ${isReadyToPlace ? "slot-ready-to-place" : ""}`;
         slotEl.dataset.slotIndex = index;
 
         // Badge Posizione
@@ -692,13 +688,17 @@ function renderizzaTop10() {
                 bodyEl.appendChild(itemEl);
             }
         } else {
-            bodyEl.innerHTML = `<span class="top10-slot-empty">📥 Trascina o tocca per posizionare</span>`;
+            if (idMomentoSelezionato) {
+                bodyEl.innerHTML = `<span class="top10-slot-empty slot-ready-text">👉 Tocca per il ${rankNum}° posto</span>`;
+            } else {
+                bodyEl.innerHTML = `<span class="top10-slot-empty">📥 Trascina o tocca per posizionare</span>`;
+            }
         }
 
         slotEl.appendChild(bodyEl);
         collegaEventiDropSlot(slotEl);
 
-        // Click sullo slot per posizionare l'elemento selezionato via tap
+        // Click/Tap sullo slot per posizionare l'elemento selezionato
         slotEl.addEventListener("click", function(e) {
             if (e.target.closest(".top10-item-remove-btn")) return;
             if (idMomentoSelezionato) {
@@ -713,9 +713,12 @@ function renderizzaTop10() {
 
     // 2. Renderizza i Quadratini Disponibili nel Pool
     top10ItemsPool.innerHTML = "";
-    momentiTop10.forEach(momento => {
-        // Se non è già assegnato a nessuno slot, mostralo nel pool
-        if (!slotsTop10.includes(momento.id)) {
+    const momentiDisponibili = momentiTop10.filter(m => !slotsTop10.includes(m.id));
+
+    if (momentiDisponibili.length === 0) {
+        top10ItemsPool.innerHTML = `<div class="top10-pool-empty">🎉 Tutti i 10 momenti sono in classifica!</div>`;
+    } else {
+        momentiDisponibili.forEach(momento => {
             const itemEl = document.createElement("div");
             const isSelected = idMomentoSelezionato === momento.id;
             itemEl.className = `top10-item ${isSelected ? "selected-for-place" : ""}`;
@@ -741,8 +744,8 @@ function renderizzaTop10() {
             });
 
             top10ItemsPool.appendChild(itemEl);
-        }
-    });
+        });
+    }
 
     collegaEventiDropPool(top10ItemsPool);
 
