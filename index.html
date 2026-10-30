@@ -11,7 +11,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=Playfair+Display:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=7">
+    <link rel="stylesheet" href="style.css?v=10">
 </head>
 <body>
     
@@ -117,7 +117,7 @@
         <div class="screen-placeholder">
             <span class="placeholder-tag">IN ARRIVO</span>
             <h3>Scatti & Ricordi</h3>
-            <p>La galleria fotografica sarà presto online per rivivere i momenti più belli!</p>
+            <p>La galleria fotografica!</p>
         </div>
     </div>
 
@@ -133,29 +133,126 @@
         </div>
     </div>
 
-    <div id="top10-screen" class="screen hidden">
+                <div id="top10-screen" class="screen hidden">
         <div class="nav-bar">
             <button class="back-btn" id="back-from-top10">⬅ Torna al Menu</button>
             <h2>Top 10</h2>
         </div>
-        <div class="screen-placeholder">
-            <span class="placeholder-tag">IN ARRIVO</span>
-            <h3>Momenti Iconici</h3>
-            <p>La classifica ufficiale con i momenti più indimenticabili sarà presto online!</p>
+
+        <div class="top10-container">
+            <!-- Box Password di Sblocco -->
+            <div id="top10-lock-box" class="top10-header-card top10-lock-card">
+                <span class="lock-icon">🔐</span>
+                <span class="top10-badge">ACCESSO RISERVATO</span>
+                <h2>AREA SEGRETA</h2>
+                <p class="top10-desc">Questa classifica contiene aneddoti ad altissima gradazione. Inserisci la parola d'ordine segreta per sbloccare la Top 10!</p>
+                
+                <form id="top10-password-form" class="top10-lock-form" onsubmit="return false;">
+                    <div class="lock-input-wrapper">
+                        <input type="password" id="top10-password-input" class="top10-password-input" placeholder="Parola d'ordine..." autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false">
+                        <button type="button" id="top10-toggle-pwd" class="top10-toggle-pwd" title="Mostra/Nascondi password">👁️</button>
+                    </div>
+                    <div id="top10-password-error" class="top10-password-error hidden">❌ Password errata! Riprova.</div>
+                    <div class="top10-lock-azioni">
+                        <button type="submit" id="btn-submit-top10-pwd" class="nav-btn bottone-pulsante">Sblocca Classifica</button>
+                        <button type="button" class="back-btn" id="btn-back-from-top10-lock">⬅ Torna al Menu</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Contenuto della Top 10 (visibile solo dopo sblocco) -->
+            <div id="top10-content-box" class="hidden">
+                <div class="top10-header-card">
+                    <span class="top10-badge">CLASSIFICA UFFICIALE • LAUREA</span>
+                    <h2>La Top 10 dei Momenti Iconici</h2>
+                    <p class="top10-desc">Trascina i quadratini con i ricordi nelle posizioni della tabella per stabilire la classifica definitiva dei nostri anni universitari!</p>
+                </div>
+
+                <div class="top10-layout">
+                    <!-- Colonna Tabella Posizioni (1-10) -->
+                    <div class="top10-board-col">
+                        <div class="top10-col-header">
+                            <h3>🏆 Tabella Posizioni</h3>
+                            <span id="top10-count-badge" class="top10-count-badge">0 / 10 Posizionati</span>
+                        </div>
+                        <div class="top10-slots-list" id="top10-slots-container">
+                            <!-- Generati dinamicamente da JS -->
+                        </div>
+                    </div>
+
+                    <!-- Colonna Quadratini Disponibili -->
+                    <div class="top10-items-col">
+                        <div class="top10-col-header">
+                            <h3>✨ Momenti Disponibili</h3>
+                            <button type="button" id="btn-reset-top10" class="top10-btn-reset" title="Ripristina la classifica">🔄 Reset</button>
+                        </div>
+                        <p class="top10-hint">💡 <em>Trascina</em> oppure <em>tocca</em> un momento e poi tocca la posizione desiderata.</p>
+                        <div class="top10-pool" id="top10-items-pool">
+                            <!-- Generati dinamicamente da JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card di Classifica Completata -->
+                <div id="top10-complete-box" class="top10-complete-card hidden">
+                    <span class="vittoria-icon">🏆👑🥂</span>
+                    <span class="top10-badge">VERDETTO STABILITO</span>
+                    <h2>TOP 10 COMPLETATA!</h2>
+                    <p class="top10-complete-desc">Avete ufficialmente stilato la storia dei momenti più memorabili di questo incredibile percorso insieme!</p>
+                    <div class="top10-azioni">
+                        <button type="button" class="nav-btn bottone-pulsante" id="btn-restart-top10">Riorganizza la Classifica</button>
+                        <button type="button" class="back-btn" id="btn-menu-from-top10">⬅ Torna al Menu</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
-        <div id="avanti-un-altro-screen" class="screen hidden">
+    <div id="avanti-un-altro-screen" class="screen hidden">
         <div class="nav-bar">
             <button class="back-btn" id="back-from-avanti-un-altro">⬅ Torna al Menu</button>
             <h2>Avanti un Altro</h2>
         </div>
 
         <div class="avanti-container">
+            <!-- Box di Intro / Avvio Gioco -->
+            <div id="avanti-intro-box" class="avanti-card">
+                <div class="avanti-intro-content">
+                    <span class="intro-icon">⏱️🎯🍷</span>
+                    <span class="avanti-badge">SFIDA DI LAUREA • AVANTI UN ALTRO</span>
+                    <h2>IL GIOCO DELLA SCALATA</h2>
+                    <p class="avanti-intro-desc">Mettetevi alla prova con la scalata di Avanti un altro! Le regole sono semplici ma spietate:</p>
+                    <div class="avanti-rules-list">
+                        <div class="rule-item">
+                            <span class="rule-icon">⏱️</span>
+                            <div><strong>5 Minuti di tempo:</strong> il timer parte non appena premi "Inizia il gioco". Riuscirai a completare tutte le domande prima che scada?</div>
+                        </div>
+                        <div class="rule-item">
+                            <span class="rule-icon">⚠️</span>
+                            <div><strong>Regola di Avanti un Altro:</strong> per avanzare devi cliccare sulla risposta <u>SBAGLIATA</u>!</div>
+                        </div>
+                        <div class="rule-item">
+                            <span class="rule-icon">🎯</span>
+                            <div><strong>Vietato sbagliare:</strong> un solo errore ti farà ripartire dalla prima domanda, mentre il timer continua a scorrere!</div>
+                        </div>
+                    </div>
+                    <div class="avanti-intro-azioni">
+                        <button type="button" class="nav-btn bottone-pulsante" id="btn-start-avanti">Inizia il gioco</button>
+                        <button type="button" class="back-btn" id="btn-menu-from-intro">⬅ Torna al Menu</button>
+                    </div>
+                </div>
+            </div>
+
             <!-- Box di Gioco della Scalata -->
-            <div id="avanti-gioco-box" class="avanti-card">
+            <div id="avanti-gioco-box" class="avanti-card hidden">
                 <div class="avanti-header">
-                    <span class="avanti-badge">SFIDA DI LAUREA • LA SCALATA</span>
+                    <div class="avanti-header-top">
+                        <span class="avanti-badge">SFIDA DI LAUREA • LA SCALATA</span>
+                        <div class="avanti-timer-pill" id="avanti-timer-pill">
+                            <span class="timer-icon">⏱️</span>
+                            <span id="avanti-timer-display" class="timer-countdown">05:00</span>
+                        </div>
+                    </div>
                     <div class="avanti-progress-info">
                         <span id="avanti-step-text">Domanda 1 di 7</span>
                         <span class="avanti-streak-badge">🎯 Vietato sbagliare!</span>
@@ -166,7 +263,7 @@
                 </div>
 
                 <div class="avanti-body">
-                    <p class="avanti-regola-hint">⚠️ Clicca sulla risposta corretta per avanzare. Un solo errore ti farà ripartire dalla prima domanda!</p>
+                    <p class="avanti-regola-hint">⚠️ Clicca sulla risposta SBAGLIATA per avanzare. Un solo errore ti farà ripartire dalla prima domanda!</p>
                     <h3 id="avanti-domanda-testo" class="avanti-domanda">Caricamento in corso...</h3>
                     
                     <div class="avanti-risposte-grid">
@@ -184,10 +281,27 @@
                     <span class="vittoria-icon">🎓🏆🥂</span>
                     <span class="avanti-badge">TRAGUARDO RAGGIUNTO</span>
                     <h2>SCALATA COMPLETATA!</h2>
-                    <p class="vittoria-desc">Incredibile! Avete risposto correttamente a tutte le domande senza sbagliare nemmeno una volta! La proclamazione a Dottoresse ad Alta Gradazione è ufficialmente meritatissima!</p>
+                    <div class="avanti-vittoria-tempo" id="avanti-vittoria-tempo">
+                        ⏱️ Tempo rimasto: <strong id="avanti-tempo-rimasto-vittoria">00:00</strong>
+                    </div>
+                    <p class="vittoria-desc">Incredibile! Avete completato la scalata entro i 5 minuti senza sbagliare! La proclamazione a Dottoresse ad Alta Gradazione è ufficialmente meritatissima!</p>
                     <div class="vittoria-azioni">
-                        <button type="button" class="nav-btn bottone-pulsante" id="btn-restart-avanti">Rigioca la Scalata</button>
+                        <button type="button" class="nav-btn bottone-pulsante" id="btn-restart-avanti">Inizia il gioco</button>
                         <button type="button" class="back-btn" id="btn-menu-from-avanti">⬅ Torna al Menu</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Box di Sconfitta / Hai Perso (nascosto inizialmente) -->
+            <div id="avanti-perso-box" class="avanti-card hidden">
+                <div class="avanti-perso-content">
+                    <span class="perso-icon">⏰💥🥀</span>
+                    <span class="avanti-badge badge-perso">TEMPO SCADUTO</span>
+                    <h2>HAI PERSO!</h2>
+                    <p class="perso-desc">I 5 minuti a disposizione sono terminati prima di riuscire a completare tutte le domande della scalata. Le vere Dottoresse però non si arrendono mai!</p>
+                    <div class="perso-azioni">
+                        <button type="button" class="nav-btn bottone-pulsante" id="btn-retry-avanti">Inizia il gioco</button>
+                        <button type="button" class="back-btn" id="btn-menu-from-perso">⬅ Torna al Menu</button>
                     </div>
                 </div>
             </div>
@@ -304,6 +418,6 @@
 
     <!-- Libreria per i coriandoli (Confetti) -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-    <script src="script.js?v=7"></script>
+    <script src="script.js?v=10"></script>
 </body>
 </html>
