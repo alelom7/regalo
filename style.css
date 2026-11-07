@@ -293,139 +293,161 @@ h1, h2, h3 {
 }
 
 /* --------------------------------------------------------------------------
-   3. SEZIONE: RIVIVI IL NOSTRO VIAGGIO (CARD IMMERSIVA & GLASSMORPHISM)
+   3. SEZIONE: RIVIVI IL NOSTRO VIAGGIO (TIMELINE VERTICALE EDITORIALE)
    -------------------------------------------------------------------------- */
-.glass-viaggio-grid {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 3.5rem;
-    max-width: 960px;
-    margin: 0 auto;
-    padding: 1.5rem 0 5rem;
-    width: 100%;
-}
-
-.glass-card {
+.timeline-viaggio {
     position: relative;
-    border-radius: 28px;
-    overflow: hidden;
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 2.5rem 0 4.5rem;
     width: 100%;
-    height: 580px;
-    box-shadow: 0 16px 45px rgba(28, 25, 23, 0.12);
-    border: 1px solid rgba(223, 213, 191, 0.4);
-    background: #1c1917;
-    cursor: default;
-    opacity: 0;
-    transform: translateY(30px);
-    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s ease, border-color 0.5s ease, opacity 0.6s ease;
 }
 
-.glass-card.visibile {
+/* La linea verticale centrale (filo bordeaux/dorato sottile) */
+.timeline-viaggio::before {
+    content: "";
+    position: absolute;
+    top: 40px;
+    bottom: 40px;
+    left: 50%;
+    width: 2px;
+    background: linear-gradient(to bottom, #dfd5bf 0%, #4a1521 25%, #4a1521 75%, #dfd5bf 100%);
+    transform: translateX(-50%);
+    z-index: 1;
+}
+
+/* Ogni tappa del viaggio con apparizione morbida a scorrimento */
+.timeline-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-bottom: 5.5rem;
+    width: 100%;
+    opacity: 0;
+    transform: translateY(35px);
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease;
+}
+
+.timeline-item.visibile {
     opacity: 1;
     transform: translateY(0);
 }
 
-.glass-card-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center 30%;
-    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-@media (hover: hover) and (pointer: fine) {
-    .glass-card:hover {
-        transform: translateY(-8px);
-        box-shadow: 0 24px 55px rgba(74, 21, 33, 0.3);
-        border-color: rgba(223, 213, 191, 0.8);
-    }
-
-    .glass-card:hover .glass-card-img {
-        transform: scale(1.04);
-    }
-
-    .glass-card:hover .glass-card-overlay {
-        background: linear-gradient(
-            to bottom,
-            rgba(0, 0, 0, 0.05) 0%,
-            rgba(31, 4, 10, 0.25) 25%,
-            rgba(35, 4, 11, 0.85) 55%,
-            rgba(25, 3, 8, 0.96) 75%,
-            rgba(18, 2, 5, 0.99) 100%
-        );
-    }
-
-    .glass-card:hover .glass-card-overlay h3 {
-        color: #fbf9f5;
-    }
-}
-
-/* Sfumatura cinematografica bordeaux/notte con overlay */
-.glass-card-overlay {
+/* Nodo circolare con il numero della tappa al centro */
+.timeline-node {
     position: absolute;
-    inset: 0;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--accent-burgundy);
+    color: var(--accent-gold);
+    border: 3px solid #ffffff;
+    box-shadow: 0 4px 16px rgba(74, 21, 33, 0.28);
     display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    padding: 3.2rem 2.8rem;
-    background: linear-gradient(
-        to bottom,
-        rgba(0, 0, 0, 0) 0%,
-        rgba(15, 2, 5, 0.25) 25%,
-        rgba(15, 2, 5, 0.82) 55%,
-        rgba(15, 2, 5, 0.95) 75%,
-        rgba(10, 1, 4, 0.98) 100%
-    );
-    color: #ffffff;
-    text-align: left;
-    transition: background 0.4s ease;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-serif);
+    font-size: 1.15rem;
+    font-weight: 600;
+    z-index: 3;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
 }
 
-.glass-card-tag {
+.timeline-item:hover .timeline-node {
+    transform: translate(-50%, -50%) scale(1.15);
+    box-shadow: 0 8px 24px rgba(74, 21, 33, 0.4);
+}
+
+/* Le due metà della riga */
+.timeline-side {
+    width: 50%;
+    box-sizing: border-box;
+}
+
+.timeline-left {
+    padding-right: 4rem;
+}
+
+.timeline-right {
+    padding-left: 4rem;
+}
+
+/* Card testuale con didascalia */
+.timeline-content {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 20px;
+    padding: 2.2rem 2.4rem;
+    box-shadow: 0 4px 24px rgba(28, 25, 23, 0.04);
+    text-align: left;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease, border-color 0.4s ease;
+}
+
+.timeline-item:hover .timeline-content {
+    transform: translateY(-4px);
+    box-shadow: 0 14px 34px rgba(28, 25, 23, 0.08);
+    border-color: #d8d1c4;
+}
+
+.timeline-tag {
     font-family: var(--font-sans);
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.18em;
-    color: #f7e7ce;
-    display: inline-flex;
-    align-items: center;
-    padding: 0.35rem 0.85rem;
-    background: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border: 1px solid rgba(223, 213, 191, 0.35);
-    border-radius: 999px;
-    margin-bottom: 0.85rem;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
-    width: fit-content;
+    color: var(--accent-burgundy);
+    display: inline-block;
+    margin-bottom: 0.65rem;
 }
 
-.glass-card-overlay h3 {
+.timeline-content h3 {
     font-family: var(--font-serif);
-    font-size: 2.5rem;
-    color: #ffffff;
+    font-size: 1.85rem;
+    color: var(--text-main);
     margin-bottom: 0.85rem;
-    font-weight: 600;
-    line-height: 1.2;
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9), 0 4px 16px rgba(0, 0, 0, 0.75);
+    font-weight: 400;
+    line-height: 1.25;
     transition: color 0.3s ease;
 }
 
-.glass-card:hover .glass-card-overlay h3 {
-    color: #fbf9f5;
+.timeline-item:hover .timeline-content h3 {
+    color: var(--accent-burgundy);
 }
 
-.glass-card-overlay p {
+.timeline-content p {
     font-family: var(--font-sans);
-    font-size: 1.05rem;
+    font-size: 0.98rem;
     line-height: 1.75;
-    color: #f7f3ec;
+    color: var(--text-muted);
     letter-spacing: 0.01em;
     text-transform: none !important;
-    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
-    max-width: 780px;
+}
+
+/* Riquadro fotografico grande ed elegante */
+.timeline-img-wrap {
+    width: 100%;
+    height: 310px;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(28, 25, 23, 0.08);
+    border: 1px solid var(--border-subtle);
+    background: #f4eee5;
+    position: relative;
+}
+
+.timeline-img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    display: block;
+}
+
+.timeline-item:hover .timeline-img-wrap img {
+    transform: scale(1.05);
 }
 
 /* --------------------------------------------------------------------------
@@ -947,63 +969,64 @@ h1, h2, h3 {
         font-size: clamp(1.8rem, 6vw, 2.3rem);
     }
 
-    /* Card Immersiva Glassmorphism su smartphone */
-    .glass-viaggio-grid {
-        gap: 2.2rem;
-        padding: 0.5rem 0 3.5rem;
-        width: 100%;
+    /* Timeline su smartphone: filo laterale continuo e tappe a schede */
+    .timeline-viaggio {
+        padding: 1rem 0 2.5rem;
     }
 
-    /* Card da smartphone: foto pulita sopra e didascalia sotto separata */
-    .glass-card {
-        height: auto;
-        min-height: auto;
-        display: flex;
+    .timeline-viaggio::before {
+        left: 20px;
+        top: 20px;
+        bottom: 20px;
+        transform: none;
+    }
+
+    .timeline-item {
         flex-direction: column;
-        background: linear-gradient(175deg, #24050d 0%, #150207 100%);
-        border-radius: 24px;
-        overflow: hidden;
+        align-items: stretch;
+        margin-bottom: 3.2rem;
+        padding-left: 50px;
+        gap: 0.85rem;
+    }
+
+    .timeline-node {
+        left: 20px;
+        top: 0;
+        transform: translate(-50%, 0);
+        width: 36px;
+        height: 36px;
+        font-size: 0.95rem;
+        border-width: 2.5px;
+    }
+
+    .timeline-item:hover .timeline-node {
+        transform: translate(-50%, 0) scale(1.08);
+    }
+
+    .timeline-side {
         width: 100%;
-        border: 1px solid rgba(223, 213, 191, 0.35);
-        box-shadow: 0 14px 38px rgba(28, 25, 23, 0.12);
+        padding: 0 !important;
     }
 
-    .glass-card-img {
-        width: 100%;
-        height: 270px;
-        object-fit: cover;
-        display: block;
-        flex-shrink: 0;
+    .timeline-content {
+        padding: 1.5rem 1.4rem;
+        border-radius: 16px;
     }
 
-    .glass-card-overlay {
-        position: static;
-        inset: auto;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        padding: 1.6rem 1.4rem 1.8rem;
-        background: transparent;
-        color: #ffffff;
-    }
-
-    .glass-card-tag {
-        margin-bottom: 0.75rem;
-    }
-
-    .glass-card-overlay h3 {
-        font-size: 1.65rem;
+    .timeline-content h3 {
+        font-size: 1.5rem;
         line-height: 1.25;
-        margin-bottom: 0.75rem;
-        color: #ffffff;
-        text-shadow: none;
     }
 
-    .glass-card-overlay p {
-        font-size: 0.96rem;
-        line-height: 1.65;
-        color: #f4eee5;
-        text-shadow: none;
+    .timeline-content p {
+        font-size: 0.94rem;
+        line-height: 1.6;
+    }
+
+    .timeline-img-wrap {
+        height: 230px;
+        border-radius: 16px;
+        margin-top: 0.4rem;
     }
 
     /* Nav bar & Schermate */

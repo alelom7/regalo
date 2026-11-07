@@ -722,16 +722,8 @@ if (btnMenuFromPerso) {
 // ==========================================
 
 const momentiTop10 = [
-    { id: "m1", titolo: "Le Birmane sul Balcone", icona: "🦗", desc: "Gli scarafaggi di bambù e la convivenza estrema" },
-    { id: "m2", titolo: "Caffettiamo con Balletto", icona: "☕", desc: "Lo sculettamento improvviso prima del caffè" },
-    { id: "m3", titolo: "Il Bus 2 - Largo 8 Marzo", icona: "🚌", desc: "I viaggi infiniti tra nebbia e ritardi a Parma" },
-    { id: "m4", titolo: "Gin Lemon al Valentino Bar", icona: "🍸", desc: "Dove tutto ebbe inizio tra crêpes e decisioni matte" },
-    { id: "m5", titolo: "Il Cane Immaginario", icona: "🐶", desc: "Vale: 'Lo prendiamo solo se si chiama Heetsina'" },
-    { id: "m6", titolo: "Caduta col Poliziotto", icona: "👮‍♀️", desc: "Sara o Antonella? La figura più epica di sempre" },
-    { id: "m7", titolo: "Brindisi: Cuore, Sesso e...", icona: "🥂", desc: "Il terzo augurio solenne: SUCCESSO!" },
-    { id: "m8", titolo: "Serata Giovedrink", icona: "💃", desc: "Ballo scatenato, musica alta e risate fino all'alba" },
-    { id: "m9", titolo: "Ansia Notturna Pre-Esame", icona: "📚", desc: "Notte in bianco a ripetere disperate sui libri" },
-    { id: "m10", titolo: "Tesi Stampata all'Ultimo", icona: "🎓", desc: "La folle corsa in copisteria con l'ansia a mille" }
+    { id: "m1", titolo: "mmm", icona: "🦗", desc: "nnnnn" },
+    { id: "m2", titolo: "ciao", icona: "☕", desc: "gggg" }
 ];
 
 // Stato classifica: 10 posizioni (indice 0 = 1° posto, 9 = 10° posto). Contiene l'ID del momento o null.

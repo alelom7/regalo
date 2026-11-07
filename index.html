@@ -11,7 +11,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=Playfair+Display:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=14">
+    <link rel="stylesheet" href="style.css?v=15">
 </head>
 <body>
     
@@ -48,44 +48,72 @@
                 <div class="viaggio-divider"></div>
             </div>
 
-            <div class="glass-viaggio-grid">
-
-                <!-- Card 0 -->
-                <div class="glass-card">
-                    <img src="assets/valentinobar.jpg" alt="Tappa del viaggio" class="glass-card-img">
-                    <div class="glass-card-overlay">
-                        <span class="glass-card-tag">TAPPA 0 • GLI INIZI</span>
-                        <h3>Dove tutto ebbe inizio</h3>
-                        <p>Dove poteva essere presa la decisione che avrebbe stravolto completamente la nostra vita se non al Valentino Bar? Tra un gin lemon, una crêpes e un piano improvvisato. Due settimane di tempo, zero certezze, una Valentina da convincere a tutti i costi... e l'inizio della nostra vita da fuorisede.</p>
+            <div class="timeline-viaggio">
+                <!-- Tappa 0 -->
+                <div class="timeline-item">
+                    <div class="timeline-node">0</div>
+                    <div class="timeline-side timeline-left">
+                        <div class="timeline-content">
+                            <span class="timeline-tag">TAPPA 0 • GLI INIZI</span>
+                            <h3>Dove tutto ebbe inizio</h3>
+                            <p>Dove poteva essere presa la decisione che avrebbe stravolto completamente la nostra vita se non al Valentino Bar? Tra un gin lemon, una crêpes e un piano improvvisato. Due settimane di tempo, zero certezze, una Valentina da convincere a tutti i costi... e l'inizio della nostra vita da fuorisede.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-side timeline-right">
+                        <div class="timeline-img-wrap">
+                            <img src="assets/valentinobar.jpg" alt="Tappa del viaggio" style="object-position: center 30%;">
+                        </div>
                     </div>
                 </div>
 
-                <!-- Card 1 -->
-                <div class="glass-card">
-                    <img src="assets/disastro.jpeg" alt="Tappa del viaggio" class="glass-card-img">
-                    <div class="glass-card-overlay">
-                        <span class="glass-card-tag">TAPPA I • DISASTRO</span>
-                        <h3>Esperienza interculturale</h3>
-                        <p>Tra l'ansia generale e i piani di fuga improvvisati la nostra prima esperienza a Parma è stato ufficialmente un disastro! Con le birmane, gli scarafaggi di bambù e i leggendari viaggi sul '2-largo 8 marzo' abbiamo fatto le ossa per qualsiasi futura sfida disopravvivenza.</p>
+                <!-- Tappa 1 -->
+                <div class="timeline-item timeline-inverted">
+                    <div class="timeline-node">1</div>
+                    <div class="timeline-side timeline-left">
+                        <div class="timeline-img-wrap">
+                            <img src="assets/disastro.jpeg" alt="Tappa del viaggio">
+                        </div>
+                    </div>
+                    <div class="timeline-side timeline-right">
+                        <div class="timeline-content">
+                            <span class="timeline-tag">TAPPA I • DISASTRO</span>
+                            <h3>Esperienza interculturale</h3>
+                            <p>Tra l'ansia generale e i piani di fuga improvvisati la nostra prima esperienza a Parma è stato ufficialmente un disastro! Con le birmane, gli scarafaggi di bambù e i leggendari viaggi sul '2-largo 8 marzo' abbiamo fatto le ossa per qualsiasi futura sfida disopravvivenza.</p>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Card 2 -->
-                <div class="glass-card">
-                    <img src="assets/giovedrink.png" alt="Tappa del viaggio" class="glass-card-img" style="object-position: center 70%;">
-                    <div class="glass-card-overlay">
-                        <span class="glass-card-tag">TAPPA II • GIOVEDRINK</span>
-                        <h3>Serate dimenticabili</h3>
-                        <p>Nonostante il disagio, il primo anno non è andato poi così male! Siamo riuscite a sfogare il nostro nervosismo nell'alcool e nelle serate, una in particolare ci ha accompagnato per tutto il nostro percorso da matricole, ogni settimana, non importavano le lezioni o gli esami che ci aspettavano il giorno dopo, noi eravamo sempre lì...</p>
+                <!-- Tappa 2 -->
+                <div class="timeline-item">
+                    <div class="timeline-node">2</div>
+                    <div class="timeline-side timeline-left">
+                        <div class="timeline-content">
+                            <span class="timeline-tag">TAPPA II • GIOVEDRINK</span>
+                            <h3>Serate dimenticabili</h3>
+                            <p>Nonostante il disagio, il primo anno non è andato poi così male! Siamo riuscite a sfogare il nostro nervosismo nell'alcool e nelle serate, una in particolare ci ha accompagnato per tutto il nostro percorso da matricole, ogni settimana, non importavano le lezioni o gli esami che ci aspettavano il giorno dopo, noi eravamo sempre lì...</p>
+                        </div>
+                    </div>
+                    <div class="timeline-side timeline-right">
+                        <div class="timeline-img-wrap">
+                            <img src="assets/giovedrink.png" alt="Tappa del viaggio" style="object-position: center 70%;">
+                        </div>
                     </div>
                 </div>
 
-                <div class="glass-card">
-                    <img src="assets/pranzi.jpeg" alt="Tappa del viaggio" class="glass-card-img" style="object-position: center 60%;">
-                    <div class="glass-card-overlay">
-                        <span class="glass-card-tag">TAPPA III • PUGLIESI DA TARANTELLA</span>
-                        <h3>I primi pranzi in famiglia</h3>
-                        <p>Il secondo anno ha visto nascere ufficialmente il nostro gruppo "Pugliesi da tarantella". Tra pranzi e festini, la nostra nuova casa ha smesso di essere solo quattro mura, diventando un rifugio colmo di ricordi incancellabili. </p>
+                <!-- Tappa 3 -->
+                <div class="timeline-item timeline-inverted">
+                    <div class="timeline-node">3</div>
+                    <div class="timeline-side timeline-left">
+                        <div class="timeline-img-wrap">
+                            <img src="assets/pranzi.jpeg" alt="Tappa del viaggio" style="object-position: center 60%;">
+                        </div>
+                    </div>
+                    <div class="timeline-side timeline-right">
+                        <div class="timeline-content">
+                            <span class="timeline-tag">TAPPA III • PUGLIESI DA TARANTELLA</span>
+                            <h3>I primi pranzi in famiglia</h3>
+                            <p>Il secondo anno ha visto nascere ufficialmente il nostro gruppo "Pugliesi da tarantella". Tra pranzi e festini, la nostra nuova casa ha smesso di essere solo quattro mura, diventando un rifugio colmo di ricordi incancellabili.</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -429,6 +457,6 @@
 
     <!-- Libreria per i coriandoli (Confetti) -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-    <script src="script.js?v=14"></script>
+    <script src="script.js?v=15"></script>
 </body>
 </html>
