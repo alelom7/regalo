@@ -11,7 +11,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=Playfair+Display:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=12">
+    <link rel="stylesheet" href="style.css?v=13">
 </head>
 <body>
     
@@ -72,21 +72,20 @@
 
                 <!-- Card 2 -->
                 <div class="glass-card">
-                    <img src="assets/WhatsApp Image 2026-07-09 at 01.29.12.jpeg" alt="Tappa del viaggio" class="glass-card-img">
+                    <img src="assets/giovedrink.png" alt="Tappa del viaggio" class="glass-card-img" style="object-position: center 70%;">
                     <div class="glass-card-overlay">
-                        <span class="glass-card-tag">TAPPA II • ANEDDOTI & RISATE</span>
-                        <h3>Le nostre avventure</h3>
-                        <p>...</p>
+                        <span class="glass-card-tag">TAPPA II • GIOVEDRINK</span>
+                        <h3>Serate dimenticabili</h3>
+                        <p>Nonostante il disagio, il primo anno non è andato poi così male! Siamo riuscite a sfogare il nostro nervosismo nell'alcool e nelle serate, una in particolare ci ha accompagnato per tutto il nostro percorso da matricole, ogni settimana, non importavano le lezioni o gli esami che ci aspettavano il giorno dopo, noi eravamo sempre lì...</p>
                     </div>
                 </div>
 
-                <!-- Card 3 -->
                 <div class="glass-card">
-                    <img src="assets/sfondo.jpeg" alt="Tappa del viaggio" class="glass-card-img">
+                    <img src="assets/pranzi.jpeg" alt="Tappa del viaggio" class="glass-card-img" style="object-position: center 60%;">
                     <div class="glass-card-overlay">
-                        <span class="glass-card-tag">TAPPA III • IL TRAGUARDO</span>
-                        <h3>Dottoresse ad Alta Gradazione</h3>
-                        <p>!</p>
+                        <span class="glass-card-tag">TAPPA III • PUGLIESI DA TARANTELLA</span>
+                        <h3>I primi pranzi in famiglia</h3>
+                        <p>Il secondo anno ha visto nascere ufficialmente il nostro gruppo "Pugliesi da tarantella". Tra pranzi e festini, la nostra nuova casa ha smesso di essere solo quattro mura, diventando un rifugio colmo di ricordi incancellabili. </p>
                     </div>
                 </div>
             </div>
@@ -306,13 +305,33 @@
         </div>
 
         <div class="game-container">
+            <!-- BANNER INDIZIO ATTIVO PER SMARTPHONE E SCHERMI PICCOLI -->
+            <div class="cruciverba-banner-indizio" id="cruciverba-banner-indizio">
+                <div class="banner-indizio-header">
+                    <span class="banner-indizio-tag">PAROLA <span id="banner-num">1</span> DI 5</span>
+                    <div class="banner-indizio-pills">
+                        <button type="button" class="indizio-pill attiva" data-target-row="1" aria-label="Vai a parola 1">1</button>
+                        <button type="button" class="indizio-pill" data-target-row="2" aria-label="Vai a parola 2">2</button>
+                        <button type="button" class="indizio-pill" data-target-row="3" aria-label="Vai a parola 3">3</button>
+                        <button type="button" class="indizio-pill" data-target-row="4" aria-label="Vai a parola 4">4</button>
+                        <button type="button" class="indizio-pill" data-target-row="5" aria-label="Vai a parola 5">5</button>
+                    </div>
+                </div>
+                <div class="banner-indizio-body">
+                    <button type="button" class="banner-nav-btn" id="btn-prev-indizio" aria-label="Indizio precedente">&#10094;</button>
+                    <p id="banner-testo-indizio" class="banner-indizio-testo">1. Se valentina inizia a ballare, sai già cosa sta per domandare: tra un sorriso e una sculettata, parte la frase tanto amata.</p>
+                    <button type="button" class="banner-nav-btn" id="btn-next-indizio" aria-label="Indizio successivo">&#10095;</button>
+                </div>
+                <button type="button" class="btn-toggle-tutte-domande" id="btn-toggle-tutte-domande">Mostra tutti gli indizi &#9662;</button>
+            </div>
+
             <div class="cruciverba-split">
-                <div class="cruciverba-domande">    
-                    <p>1. Se valentina inizia a ballare, sai già cosa sta per domandare: tra un sorriso e una sculettata, parte la frase tanto amata.</p>
-                    <p>2. Non eran gatti né animali lontane, ma come chiamavamo le nostre birmane?</p>
-                    <p>3. Un cane tanto sognato da me e Babbetta con passione, ma Vale poneva sempre una condizione: se mai fosse arrivato quel cagnolino speciale, quale nome doveva avere per essere ufficiale?</p>
-                    <p>4. È il nostro brindisi più speciale, ormai diventato tradizionale: dopo cuore e sesso con tanto trasporto, qual è il terzo augurio che porta conforto?</p>
-                    <p>5. Il primo anno aveva un appuntamento fisso, tra balli, risate e qualche tipo mai visto: tra personaggi strani e storie da raccontare, quale locale ci faceva sempre ritornare?</p>
+                <div class="cruciverba-domande" id="cruciverba-domande-lista">    
+                    <p data-row="1" class="domanda-item attiva"><strong>1.</strong> Se valentina inizia a ballare, sai già cosa sta per domandare: tra un sorriso e una sculettata, parte la frase tanto amata.</p>
+                    <p data-row="2" class="domanda-item"><strong>2.</strong> Non eran gatti né animali lontane, ma come chiamavamo le nostre birmane?</p>
+                    <p data-row="3" class="domanda-item"><strong>3.</strong> Un cane tanto sognato da me e Babbetta con passione, ma Vale poneva sempre una condizione: se mai fosse arrivato quel cagnolino speciale, quale nome doveva avere per essere ufficiale?</p>
+                    <p data-row="4" class="domanda-item"><strong>4.</strong> È il nostro brindisi più speciale, ormai diventato tradizionale: dopo cuore e sesso con tanto trasporto, qual è il terzo augurio che porta conforto?</p>
+                    <p data-row="5" class="domanda-item"><strong>5.</strong> Il primo anno aveva un appuntamento fisso, tra balli, risate e qualche tipo mai visto: tra personaggi strani e storie da raccontare, quale locale ci faceva sempre ritornare?</p>
                 </div>
 
                 <div class="cruciverba-griglia">
@@ -402,6 +421,7 @@
                         <span class="riga-status"></span>
                     </div>
                 </div>
+            </div>
             <p id="risultato-cruciverba"></p>
         </div>
 
@@ -409,6 +429,6 @@
 
     <!-- Libreria per i coriandoli (Confetti) -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-    <script src="script.js?v=12"></script>
+    <script src="script.js?v=13"></script>
 </body>
 </html>

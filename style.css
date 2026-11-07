@@ -349,9 +349,10 @@ h1, h2, h3 {
         background: linear-gradient(
             to bottom,
             rgba(0, 0, 0, 0.05) 0%,
-            rgba(31, 4, 10, 0.15) 40%,
-            rgba(35, 4, 11, 0.78) 72%,
-            rgba(20, 2, 6, 0.98) 100%
+            rgba(31, 4, 10, 0.25) 25%,
+            rgba(35, 4, 11, 0.85) 55%,
+            rgba(25, 3, 8, 0.96) 75%,
+            rgba(18, 2, 5, 0.99) 100%
         );
     }
 
@@ -371,9 +372,10 @@ h1, h2, h3 {
     background: linear-gradient(
         to bottom,
         rgba(0, 0, 0, 0) 0%,
-        rgba(0, 0, 0, 0) 45%,
-        rgba(25, 3, 8, 0.72) 75%,
-        rgba(15, 2, 5, 0.96) 100%
+        rgba(15, 2, 5, 0.25) 25%,
+        rgba(15, 2, 5, 0.82) 55%,
+        rgba(15, 2, 5, 0.95) 75%,
+        rgba(10, 1, 4, 0.98) 100%
     );
     color: #ffffff;
     text-align: left;
@@ -382,14 +384,22 @@ h1, h2, h3 {
 
 .glass-card-tag {
     font-family: var(--font-sans);
-    font-size: 0.78rem;
-    font-weight: 600;
+    font-size: 0.75rem;
+    font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.22em;
-    color: var(--accent-gold);
-    display: inline-block;
-    margin-bottom: 0.75rem;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+    letter-spacing: 0.18em;
+    color: #f7e7ce;
+    display: inline-flex;
+    align-items: center;
+    padding: 0.35rem 0.85rem;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(223, 213, 191, 0.35);
+    border-radius: 999px;
+    margin-bottom: 0.85rem;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+    width: fit-content;
 }
 
 .glass-card-overlay h3 {
@@ -397,9 +407,9 @@ h1, h2, h3 {
     font-size: 2.5rem;
     color: #ffffff;
     margin-bottom: 0.85rem;
-    font-weight: 400;
+    font-weight: 600;
     line-height: 1.2;
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9), 0 4px 16px rgba(0, 0, 0, 0.75);
     transition: color 0.3s ease;
 }
 
@@ -411,10 +421,10 @@ h1, h2, h3 {
     font-family: var(--font-sans);
     font-size: 1.05rem;
     line-height: 1.75;
-    color: #f4eee5;
+    color: #f7f3ec;
     letter-spacing: 0.01em;
     text-transform: none !important;
-    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
     max-width: 780px;
 }
 
@@ -532,6 +542,138 @@ h1, h2, h3 {
     flex-grow: 1;
 }
 
+/* Banner Indizio Attivo (in primo piano su smartphone per avere tutto in una schermata) */
+.cruciverba-banner-indizio {
+    display: none; /* Nascosto su desktop con schermo ampio */
+    background: #ffffff;
+    border: 1px solid var(--border-subtle);
+    border-radius: 16px;
+    padding: 0.85rem 1rem 0.65rem;
+    box-shadow: 0 4px 16px rgba(28, 25, 23, 0.05);
+    margin-bottom: 0.85rem;
+    transition: all 0.25s ease;
+}
+
+.banner-indizio-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-bottom: 0.55rem;
+    padding-bottom: 0.45rem;
+    border-bottom: 1px solid #f2ede4;
+}
+
+.banner-indizio-tag {
+    font-family: var(--font-sans);
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--accent-burgundy);
+    white-space: nowrap;
+}
+
+.banner-indizio-pills {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.indizio-pill {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 1px solid var(--border-input);
+    background: #fbf9f5;
+    color: var(--text-main);
+    font-family: var(--font-sans);
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    padding: 0;
+}
+
+.indizio-pill.attiva {
+    background: var(--accent-burgundy);
+    color: #ffffff;
+    border-color: var(--accent-burgundy);
+    box-shadow: 0 2px 8px rgba(74, 21, 33, 0.25);
+    transform: scale(1.08);
+}
+
+.indizio-pill.risolta {
+    background: #205c2a !important;
+    color: #ffffff !important;
+    border-color: #205c2a !important;
+}
+
+.banner-indizio-body {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    min-height: 48px;
+}
+
+.banner-nav-btn {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 1px solid var(--border-input);
+    background: #ffffff;
+    color: var(--text-main);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: all 0.2s ease;
+}
+
+.banner-nav-btn:hover {
+    background: var(--accent-burgundy);
+    color: #ffffff;
+    border-color: var(--accent-burgundy);
+}
+
+.banner-indizio-testo {
+    font-family: var(--font-sans);
+    font-size: 0.88rem;
+    line-height: 1.45;
+    color: var(--text-main);
+    margin: 0;
+    text-align: center;
+    flex: 1;
+    font-weight: 500;
+}
+
+.btn-toggle-tutte-domande {
+    display: block;
+    width: 100%;
+    margin-top: 0.45rem;
+    padding-top: 0.35rem;
+    border: none;
+    border-top: 1px dashed #eae5db;
+    background: transparent;
+    font-family: var(--font-sans);
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    cursor: pointer;
+    letter-spacing: 0.05em;
+    text-align: center;
+    transition: color 0.2s ease;
+}
+
+.btn-toggle-tutte-domande:hover {
+    color: var(--accent-burgundy);
+}
+
 .cruciverba-split {
     display: flex;
     flex-direction: row;
@@ -554,8 +696,17 @@ h1, h2, h3 {
     line-height: 1.7;
     color: var(--text-main);
     margin-bottom: 1.5rem;
-    padding-left: 1rem;
+    padding: 0.6rem 0.8rem 0.6rem 1rem;
     border-left: 2px solid var(--accent-gold);
+    border-radius: 0 8px 8px 0;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.cruciverba-domande p.attiva {
+    border-left: 3px solid var(--accent-burgundy);
+    background: rgba(74, 21, 33, 0.04);
+    font-weight: 600;
 }
 
 .cruciverba-griglia {
@@ -814,9 +965,10 @@ h1, h2, h3 {
         background: linear-gradient(
             to bottom,
             rgba(0, 0, 0, 0) 0%,
-            rgba(0, 0, 0, 0) 36%,
-            rgba(25, 3, 8, 0.76) 68%,
-            rgba(15, 2, 5, 0.98) 100%
+            rgba(15, 2, 5, 0.25) 20%,
+            rgba(15, 2, 5, 0.82) 50%,
+            rgba(15, 2, 5, 0.95) 72%,
+            rgba(10, 1, 4, 0.99) 100%
         );
     }
 
@@ -855,32 +1007,50 @@ h1, h2, h3 {
         height: 100dvh;
     }
 
-    /* Cruciverba mobile elegante a schede */
+    /* Cruciverba mobile compatto: indizio attivo in alto e griglia subito visibile nella stessa schermata */
     .game-container {
-        padding: 1.8rem 1rem 3rem;
+        padding: 0.75rem 0.65rem 2rem;
+    }
+
+    .cruciverba-banner-indizio {
+        display: block;
     }
 
     .cruciverba-split {
         flex-direction: column;
-        gap: 1.8rem;
-        margin-bottom: 1.5rem;
+        gap: 0;
+        margin-bottom: 0.5rem;
     }
 
+    /* La lista cumulativa di 5 domande viene nascosta su mobile per non rubare spazio vitale alla griglia */
     .cruciverba-domande {
+        display: none;
         flex: 1;
         width: 100%;
         max-width: 100%;
     }
 
+    .cruciverba-domande.aperto-mobile {
+        display: block;
+        margin: 0.6rem 0 0.9rem;
+        animation: screenEntrata 0.3s ease;
+    }
+
     .cruciverba-domande p {
-        font-size: 0.92rem;
-        line-height: 1.55;
-        margin-bottom: 0.75rem;
-        padding: 0.75rem 0.9rem;
+        font-size: 0.86rem;
+        line-height: 1.45;
+        margin-bottom: 0.5rem;
+        padding: 0.6rem 0.8rem;
         background: #ffffff;
         border-radius: 8px;
-        border-left: 3px solid var(--accent-burgundy);
+        border-left: 3px solid var(--accent-gold);
         box-shadow: 0 1px 4px rgba(28, 25, 23, 0.04);
+        cursor: pointer;
+    }
+
+    .cruciverba-domande p.attiva {
+        border-left-color: var(--accent-burgundy);
+        background: #fffdf9;
     }
 
     .cruciverba-griglia {
@@ -889,38 +1059,47 @@ h1, h2, h3 {
         padding: 0;
     }
 
-    /* Ogni parola diventa una card autonoma touch-friendly */
+    /* Ogni riga è una scheda compatta con bordo attivo illuminato */
     .cruciverba-riga {
         flex-wrap: wrap !important;
         justify-content: space-between;
         align-items: center;
         background: #ffffff;
-        padding: 0.85rem 0.9rem;
-        border-radius: 14px;
-        border: 1px solid var(--border-subtle);
-        box-shadow: 0 2px 8px rgba(28, 25, 23, 0.04);
-        margin: 12px 0;
-        gap: 8px;
+        padding: 0.45rem 0.65rem 0.5rem;
+        border-radius: 12px;
+        border: 1.5px solid var(--border-subtle);
+        box-shadow: 0 2px 6px rgba(28, 25, 23, 0.03);
+        margin: 6px 0;
+        gap: 4px;
+        transition: all 0.2s ease;
+        cursor: pointer;
+    }
+
+    .cruciverba-riga.riga-attiva {
+        border-color: var(--accent-burgundy);
+        background: #fffdf9;
+        box-shadow: 0 0 0 2px rgba(74, 21, 33, 0.12), 0 4px 14px rgba(74, 21, 33, 0.08);
     }
 
     .riga-badge {
         order: 1;
-        width: 28px;
-        height: 28px;
-        font-size: 0.82rem;
+        width: 24px;
+        height: 24px;
+        font-size: 0.75rem;
     }
 
     .btn-check-riga {
         order: 2;
         margin-left: auto;
-        padding: 0.45rem 1.05rem;
-        font-size: 0.72rem;
+        padding: 0.35rem 0.85rem;
+        font-size: 0.7rem;
+        letter-spacing: 0.08em;
     }
 
     .riga-status {
         order: 3;
-        min-width: 22px;
-        font-size: 1.05rem;
+        min-width: 20px;
+        font-size: 0.95rem;
     }
 
     .crossword-grid {
@@ -928,17 +1107,17 @@ h1, h2, h3 {
         width: 100%;
         justify-content: center;
         flex-wrap: nowrap;
-        gap: 3px;
-        margin: 8px 0 2px 0;
+        gap: 2.5px;
+        margin: 4px 0 0 0;
         overflow-x: auto;
         padding-bottom: 2px;
     }
 
     .cell {
-        width: clamp(26px, 6.8vw, 36px);
-        height: clamp(34px, 8.8vw, 42px);
+        width: clamp(23px, 6.8vw, 30px);
+        height: clamp(31px, 8.5vw, 36px);
         font-size: 16px; /* OBBLIGATORIO: previene lo zoom automatico invasivo di iOS Safari */
-        border-radius: 5px;
+        border-radius: 4px;
         font-weight: 700;
     }
 }
@@ -949,19 +1128,25 @@ h1, h2, h3 {
     }
 
     .cell {
-        width: clamp(23px, 6.4vw, 30px);
-        height: 35px;
+        width: clamp(21px, 6.4vw, 28px);
+        height: 32px;
         font-size: 16px; /* Non scendere sotto 16px su mobile */
         border-radius: 4px;
     }
 
     .cruciverba-riga {
-        padding: 0.75rem 0.6rem;
+        padding: 0.4rem 0.5rem;
+        margin: 5px 0;
     }
 
     .btn-check-riga {
-        padding: 0.4rem 0.85rem;
-        font-size: 0.68rem;
+        padding: 0.3rem 0.7rem;
+        font-size: 0.65rem;
+    }
+
+    .banner-indizio-testo {
+        font-size: 0.82rem;
+        line-height: 1.35;
     }
 
     .screen-placeholder {

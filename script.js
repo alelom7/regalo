@@ -38,7 +38,10 @@ if (btnBackGalleria) btnBackGalleria.addEventListener("click", tornaAlMenu);
 // 3. Cruciverba
 const btnCruciverba = document.getElementById("btn-cruciverba");
 const btnBackCruciverba = document.getElementById("back-from-cruciverba");
-if (btnCruciverba) btnCruciverba.addEventListener("click", () => mostraSchermata(cruciverbaScreen));
+if (btnCruciverba) btnCruciverba.addEventListener("click", () => {
+    mostraSchermata(cruciverbaScreen);
+    impostaParolaAttiva(1, false);
+});
 if (btnBackCruciverba) btnBackCruciverba.addEventListener("click", tornaAlMenu);
 
 //Avanti un altro
@@ -100,6 +103,13 @@ function controllaRiga(rigaEl) {
         }
         if (status) {
             status.innerText = "✨";
+        }
+        // Segna la pillola in cima come risolta
+        const numRiga = rigaEl.dataset.row;
+        const pillRisolta = document.querySelector(`.indizio-pill[data-target-row="${numRiga}"]`);
+        if (pillRisolta) {
+            pillRisolta.classList.add("risolta");
+            pillRisolta.innerHTML = `${numRiga} ✓`;
         }
     } else {
         if (btn) {
@@ -171,6 +181,121 @@ document.querySelectorAll(".btn-check-riga").forEach(function(btn) {
 
 
 // ==========================================
+// GESTIONE INDIZI INTERATTIVI & CRUCIVERBA COMPATTO (Mobile & Desktop)
+// ==========================================
+
+const elencoDomandeCruciverba = [
+    { num: 1, testo: "1. Se valentina inizia a ballare, sai già cosa sta per domandare: tra un sorriso e una sculettata, parte la frase tanto amata." },
+    { num: 2, testo: "2. Non eran gatti né animali lontane, ma come chiamavamo le nostre birmane?" },
+    { num: 3, testo: "3. Un cane tanto sognato da me e Babbetta con passione, ma Vale poneva sempre una condizione: se mai fosse arrivato quel cagnolino speciale, quale nome doveva avere per essere ufficiale?" },
+    { num: 4, testo: "4. È il nostro brindisi più speciale, ormai diventato tradizionale: dopo cuore e sesso con tanto trasporto, qual è il terzo augurio che porta conforto?" },
+    { num: 5, testo: "5. Il primo anno aveva un appuntamento fisso, tra balli, risate e qualche tipo mai visto: tra personaggi strani e storie da raccontare, quale locale ci faceva sempre ritornare?" }
+];
+
+let parolaCruciverbaAttiva = 1;
+
+function impostaParolaAttiva(num, focusCell = false) {
+    parolaCruciverbaAttiva = parseInt(num, 10);
+
+    // 1. Aggiorna Banner attivo in alto
+    const bannerNum = document.getElementById("banner-num");
+    const bannerTesto = document.getElementById("banner-testo-indizio");
+    if (bannerNum) bannerNum.innerText = parolaCruciverbaAttiva;
+    if (bannerTesto) {
+        const item = elencoDomandeCruciverba.find(d => d.num === parolaCruciverbaAttiva);
+        if (item) {
+            bannerTesto.style.opacity = "0.3";
+            setTimeout(() => {
+                bannerTesto.innerText = item.testo;
+                bannerTesto.style.opacity = "1";
+            }, 120);
+        }
+    }
+
+    // 2. Aggiorna stato pillole
+    document.querySelectorAll(".indizio-pill").forEach(p => {
+        p.classList.toggle("attiva", parseInt(p.dataset.targetRow, 10) === parolaCruciverbaAttiva);
+    });
+
+    // 3. Evidenzia la riga corrispondente nella griglia
+    document.querySelectorAll(".cruciverba-riga").forEach(r => {
+        const isCurrent = parseInt(r.dataset.row, 10) === parolaCruciverbaAttiva;
+        r.classList.toggle("riga-attiva", isCurrent);
+    });
+
+    // 4. Evidenzia la domanda nella lista desktop
+    document.querySelectorAll(".cruciverba-domande p").forEach(p => {
+        const isCurrent = parseInt(p.dataset.row, 10) === parolaCruciverbaAttiva;
+        p.classList.toggle("attiva", isCurrent);
+    });
+
+    // 5. Se richiesto, porta il cursore nella prima cella vuota
+    if (focusCell) {
+        const rigaEl = document.querySelector(`.cruciverba-riga[data-row="${parolaCruciverbaAttiva}"]`);
+        if (rigaEl) {
+            const celle = Array.from(rigaEl.querySelectorAll(".cell"));
+            let cellaBersaglio = celle.find(c => c.value.trim() === "");
+            if (!cellaBersaglio && celle.length > 0) cellaBersaglio = celle[0];
+            if (cellaBersaglio) {
+                cellaBersaglio.focus();
+                cellaBersaglio.select();
+            }
+        }
+    }
+}
+
+// Click sulle pillole numeriche in alto
+document.querySelectorAll(".indizio-pill").forEach(pill => {
+    pill.addEventListener("click", function() {
+        const targetRow = this.dataset.targetRow;
+        impostaParolaAttiva(targetRow, true);
+    });
+});
+
+// Frecce precedente / successivo nel banner
+const btnPrevIndizio = document.getElementById("btn-prev-indizio");
+const btnNextIndizio = document.getElementById("btn-next-indizio");
+
+if (btnPrevIndizio) {
+    btnPrevIndizio.addEventListener("click", function() {
+        let prev = parolaCruciverbaAttiva - 1;
+        if (prev < 1) prev = 5;
+        impostaParolaAttiva(prev, true);
+    });
+}
+
+if (btnNextIndizio) {
+    btnNextIndizio.addEventListener("click", function() {
+        let next = parolaCruciverbaAttiva + 1;
+        if (next > 5) next = 1;
+        impostaParolaAttiva(next, true);
+    });
+}
+
+// Toggle per mostrare / nascondere tutte le domande
+const btnToggleTutte = document.getElementById("btn-toggle-tutte-domande");
+const listaDomandeDesktop = document.getElementById("cruciverba-domande-lista");
+
+if (btnToggleTutte && listaDomandeDesktop) {
+    btnToggleTutte.addEventListener("click", function() {
+        listaDomandeDesktop.classList.toggle("aperto-mobile");
+        if (listaDomandeDesktop.classList.contains("aperto-mobile")) {
+            btnToggleTutte.innerText = "Nascondi tutti gli indizi ▴";
+        } else {
+            btnToggleTutte.innerText = "Mostra tutti gli indizi ▾";
+        }
+    });
+}
+
+// Click sui paragrafi delle domande (desktop)
+document.querySelectorAll(".cruciverba-domande p").forEach(p => {
+    p.addEventListener("click", function() {
+        const row = this.dataset.row;
+        if (row) impostaParolaAttiva(row, true);
+    });
+});
+
+// ==========================================
 // AUTOFOCUS & DIGITAZIONE CRUCIVERBA (Mobile & Desktop)
 // ==========================================
 
@@ -179,12 +304,22 @@ const tutteLeRigheCruciverba = document.querySelectorAll(".cruciverba-riga");
 tutteLeRigheCruciverba.forEach(function(riga) {
     const celleDellaRiga = Array.from(riga.querySelectorAll(".cell"));
 
+    // Tap su qualsiasi punto della riga la attiva
+    riga.addEventListener("click", function(e) {
+        if (!e.target.classList.contains("btn-check-riga")) {
+            impostaParolaAttiva(riga.dataset.row, false);
+        }
+    });
+
     celleDellaRiga.forEach(function(cellaAttuale, indiceNellaRiga) {
         
         // 1. Quando la cella riceve il focus (tap su smartphone o click), seleziona il testo esistente
-        // In questo modo digitare una nuova lettera la sostituisce subito senza dover prima cancellare!
+        // ed attiva la parola nel banner
         cellaAttuale.addEventListener("focus", function() {
             cellaAttuale.select();
+            if (riga.dataset.row) {
+                impostaParolaAttiva(riga.dataset.row, false);
+            }
         });
 
         // 2. Quando l'utente inserisce un carattere
@@ -297,17 +432,17 @@ const domandeAvantiUnAltro = [
         ]
     },
     {
-        domanda: "Qual è il terzo solenne elemento del nostro brindisi: 'Cuore, Sesso e...'?",
+        domanda: "Cristian o Babbetta, chi dei due finge di essere un supereroe?",
         opzioni: [
-            { testo: "Successo!", corretta: true },
-            { testo: "Sonno arretrato", corretta: false }
+            { testo: "Cristian", corretta: true },
+            { testo: "Babbetta", corretta: false }
         ]
     },
     {
-        domanda: "E adesso che siete ufficialmente Dottoresse ad Alta Gradazione, cosa vi spetta di diritto?",
+        domanda: "Maledette o Benedette, qual è l'aggettivo più usato da mamma Vittoria?",
         opzioni: [
-            { testo: "Festeggiamenti sfrenati, risate e fiumi di brindisi!", corretta: true },
-            { testo: "Tornare a studiare per un esame lunedì mattina", corretta: false }
+            { testo: "Benedette", corretta: true },
+            { testo: "Maledette", corretta: false }
         ]
     }
 ];
