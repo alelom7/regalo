@@ -444,7 +444,78 @@ const domandeAvantiUnAltro = [
             { testo: "Benedette", corretta: true },
             { testo: "Maledette", corretta: false }
         ]
+    },
+    {
+        domanda: "Carlo Conti o Casper, a chi dei due somiglia Valentina a fine agosto?",
+        opzioni: [
+            { testo: "Carlo Conti", corretta: false },
+            { testo: "Casper", corretta: true }
+        ]
+    },
+    {
+        domanda: "Anthony o Ultimo, chi ascolta più spesso Valentina?",
+        opzioni: [
+            { testo: "Ultimo", corretta: true },
+            { testo: "Anthony", corretta: false }
+        ]
+    },
+    {
+        domanda: "Un cane o un serpente, quale dei due vorrebbe coccolare Babbetta?",
+        opzioni: [
+            { testo: "Un cane", corretta: false },
+            { testo: "Un serpente", corretta: true }
+        ]
+    },
+    {
+        domanda: "Canberra o Sydney, qual è la capitale dell'Australia?",
+        opzioni: [
+            { testo: "Canberra", corretta: false },
+            { testo: "Sydney", corretta: true }    
+        ]
+    },
+    {
+        domanda: "Il Nilo o il Congo, qual è il fiume più lungo del mondo?",
+        opzioni: [
+            { testo: "Il Nilo", corretta: false },
+            { testo: "Il Congo", corretta: true }
+        ]
+    },
+    {
+        domanda: "Polizia o Finanza, quale dei due ancora non ha bussato alla porta di casa nostra?",
+        opzioni: [ 
+            { testo: "Polizia", corretta: true },
+            { testo: "Finanza", corretta: false }
+        ]   
+    },
+    {
+        domanda: "Lunedì o Martedì, quale dei due è a forma di cacca di Nuvola??",
+        opzioni: [
+            { testo: "Lunedì", corretta: false },
+            { testo: "Martedì", corretta: true }
+        ]
+    },
+    {
+        domanda: "Una marca o un simbolo matematico, cosa è MiuMiu per Mario?",
+        opzioni: [
+            { testo: "Una marca", corretta: true },
+            { testo: "Un simbolo matematico", corretta: false }
+        ]
+    },
+    {
+        domanda: "Christian o Bobo, chi è stato vittima delle pettole?",
+        opzioni: [
+            { testo: "Christian", corretta: false },
+            { testo: "Bobo", corretta: true }
+        ]
+    },
+    {
+        domanda: "Cinese o Giapponese, com'è il nostro cuore preferito?",
+        opzioni: [
+            { testo: "Cinese", corretta: false },
+            { testo: "Giapponese", corretta: true }
+        ]
     }
+
 ];
 
 const TEMPO_TOTALE_AVANTI = 5 * 60; // 5 minuti = 300 secondi
