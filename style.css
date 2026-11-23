@@ -517,6 +517,743 @@ h1, h2, h3 {
     -webkit-overflow-scrolling: touch;
 }
 
+/* --------------------------------------------------------------------------
+   4.1 GALLERIA FOTOGRAFICA (QUIET LUXURY / SLIDER & GRIGLIA)
+   -------------------------------------------------------------------------- */
+#galleria-screen {
+    min-height: 100vh;
+    min-height: 100dvh;
+    background-color: var(--bg-body);
+}
+
+.galleria-container {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 2.2rem 1.5rem 4rem;
+}
+
+.galleria-header-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 24px;
+    box-shadow: 0 8px 32px rgba(28, 25, 23, 0.05);
+    padding: 2.2rem 2rem;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.galleria-badge {
+    display: inline-block;
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: var(--accent-burgundy);
+    background: rgba(74, 21, 33, 0.07);
+    padding: 0.45rem 1.2rem;
+    border-radius: 9999px;
+    margin-bottom: 0.8rem;
+}
+
+.galleria-header-card h2 {
+    font-family: var(--font-serif);
+    font-size: 2.2rem;
+    color: var(--accent-burgundy);
+    margin: 0.4rem 0 0.8rem;
+}
+
+.galleria-desc {
+    color: var(--text-muted);
+    font-size: 1rem;
+    line-height: 1.55;
+    max-width: 620px;
+    margin: 0 auto 1.5rem;
+}
+
+.galleria-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.2rem;
+    flex-wrap: wrap;
+    margin-top: 1.2rem;
+}
+
+.btn-galleria-action {
+    background: var(--accent-burgundy);
+    color: #ffffff;
+    border: 1px solid var(--accent-burgundy);
+    padding: 0.72rem 1.8rem;
+    border-radius: 9999px;
+    font-family: var(--font-sans);
+    font-size: 0.88rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    box-shadow: 0 4px 16px rgba(74, 21, 33, 0.22);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.btn-galleria-action:hover {
+    background: var(--accent-burgundy-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(74, 21, 33, 0.32);
+}
+
+.btn-galleria-action:active {
+    transform: scale(0.97);
+}
+
+.galleria-view-toggle {
+    display: inline-flex;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-subtle);
+    border-radius: 9999px;
+    padding: 4px;
+    gap: 4px;
+}
+
+.view-toggle-btn {
+    background: transparent;
+    border: none;
+    padding: 0.5rem 1.15rem;
+    border-radius: 9999px;
+    font-family: var(--font-sans);
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.view-toggle-btn.active {
+    background: #ffffff;
+    color: var(--accent-burgundy);
+    font-weight: 600;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.galleria-toast {
+    background: var(--accent-burgundy);
+    color: #ffffff;
+    padding: 0.8rem 1.6rem;
+    border-radius: 9999px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-align: center;
+    max-width: 480px;
+    margin: 0 auto 1.5rem;
+    box-shadow: 0 8px 24px rgba(74, 21, 33, 0.25);
+    animation: toastEntrata 0.3s ease;
+}
+
+@keyframes toastEntrata {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.galleria-upload-spinner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.85rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 14px;
+    padding: 1rem 1.5rem;
+    margin: 0 auto 1.5rem;
+    max-width: 440px;
+    color: var(--text-main);
+    font-size: 0.9rem;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+}
+
+.spinner-circle {
+    width: 22px;
+    height: 22px;
+    border: 3px solid var(--border-subtle);
+    border-top-color: var(--accent-burgundy);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* SLIDER CARD */
+.slider-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 24px;
+    box-shadow: 0 8px 32px rgba(28, 25, 23, 0.05);
+    padding: 1.6rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+.slider-info-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 0.3rem;
+}
+
+.slider-counter-badge {
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent-burgundy);
+    background: rgba(74, 21, 33, 0.08);
+    padding: 0.4rem 1rem;
+    border-radius: 9999px;
+}
+
+.slider-tools {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.slider-tool-btn {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-subtle);
+    color: var(--text-main);
+    font-family: var(--font-sans);
+    font-size: 0.78rem;
+    font-weight: 500;
+    border-radius: 9999px;
+    padding: 0.45rem 0.95rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.slider-tool-btn:hover {
+    background: #ffffff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.slider-tool-btn.danger {
+    color: #dc2626;
+    border-color: rgba(220, 38, 38, 0.25);
+    background: #fef2f2;
+}
+
+.slider-tool-btn.danger:hover {
+    background: #fee2e2;
+}
+
+/* STAGE PRINCIPALE DELLA FOTO */
+.slider-stage {
+    position: relative;
+    width: 100%;
+    height: 520px;
+    max-height: 68vh;
+    background: #141210;
+    border-radius: 18px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: inset 0 0 24px rgba(0, 0, 0, 0.45);
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: pan-y;
+}
+
+.slider-viewport {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    cursor: zoom-in;
+}
+
+.slider-img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    transition: opacity 0.22s cubic-bezier(0.16, 1, 0.3, 1), transform 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.slider-img.anim-next {
+    opacity: 0;
+    transform: translateX(25px);
+}
+
+.slider-img.anim-prev {
+    opacity: 0;
+    transform: translateX(-25px);
+}
+
+.slider-overlay-hint {
+    position: absolute;
+    bottom: 12px;
+    right: 14px;
+    background: rgba(0, 0, 0, 0.65);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    color: #ffffff;
+    font-size: 0.72rem;
+    padding: 0.28rem 0.75rem;
+    border-radius: 9999px;
+    pointer-events: none;
+    opacity: 0.85;
+    transition: opacity 0.2s;
+}
+
+.slider-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: rgba(251, 249, 245, 0.88);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    color: var(--text-main);
+    font-size: 1.3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    z-index: 10;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.slider-arrow.prev {
+    left: 14px;
+}
+
+.slider-arrow.next {
+    right: 14px;
+}
+
+.slider-arrow:hover {
+    background: #ffffff;
+    transform: translateY(-50%) scale(1.1);
+    color: var(--accent-burgundy);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.28);
+}
+
+.slider-arrow:active {
+    transform: translateY(-50%) scale(0.95);
+}
+
+.slider-meta {
+    text-align: center;
+    padding: 0.4rem 0.5rem 0;
+}
+
+.slider-foto-titolo {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    color: var(--accent-burgundy);
+    font-weight: 400;
+    margin-bottom: 0.25rem;
+}
+
+.slider-foto-sub {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+/* NASTRO DELLE MINIATURE */
+.slider-thumbnails-wrap {
+    background: var(--bg-body);
+    border: 1px solid var(--border-subtle);
+    border-radius: 16px;
+    padding: 1rem;
+    margin-top: 0.4rem;
+}
+
+.thumbnails-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.76rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text-muted);
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    padding: 0 0.3rem;
+}
+
+.swipe-hint {
+    font-size: 0.7rem;
+    font-weight: 500;
+    opacity: 0.75;
+    text-transform: none;
+    letter-spacing: normal;
+}
+
+.slider-thumbnails-track {
+    display: flex;
+    gap: 0.75rem;
+    overflow-x: auto;
+    padding: 4px 2px 10px;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+}
+
+.slider-thumbnails-track::-webkit-scrollbar {
+    height: 6px;
+}
+
+.slider-thumbnails-track::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.slider-thumbnails-track::-webkit-scrollbar-thumb {
+    background: var(--border-subtle);
+    border-radius: 9999px;
+}
+
+.thumb-item {
+    flex: 0 0 76px;
+    height: 76px;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 2.5px solid transparent;
+    cursor: pointer;
+    opacity: 0.55;
+    transition: all 0.22s ease;
+    background: #1a1715;
+    position: relative;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.thumb-item:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+}
+
+.thumb-item.active {
+    border-color: var(--accent-burgundy);
+    opacity: 1;
+    transform: scale(1.06);
+    box-shadow: 0 4px 14px rgba(74, 21, 33, 0.25);
+}
+
+.thumb-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.slider-gesture-hint {
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    padding: 0.2rem 0;
+}
+
+/* GRIGLIA FOTOGRAFICA */
+.galleria-grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1.25rem;
+    margin-top: 1rem;
+}
+
+.grid-photo-card {
+    background: var(--bg-card);
+    border-radius: 18px;
+    overflow: hidden;
+    border: 1px solid var(--border-subtle);
+    box-shadow: 0 4px 18px rgba(28, 25, 23, 0.04);
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    display: flex;
+    flex-direction: column;
+}
+
+.grid-photo-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 28px rgba(74, 21, 33, 0.12);
+    border-color: var(--accent-burgundy);
+}
+
+.grid-photo-img-wrap {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    background: #181513;
+}
+
+.grid-photo-img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.35s ease;
+}
+
+.grid-photo-card:hover .grid-photo-img-wrap img {
+    transform: scale(1.06);
+}
+
+.grid-photo-info {
+    padding: 0.85rem 1rem;
+}
+
+.grid-photo-title {
+    font-family: var(--font-serif);
+    font-size: 0.96rem;
+    color: var(--text-main);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.grid-photo-sub {
+    font-size: 0.76rem;
+    color: var(--text-muted);
+    margin-top: 3px;
+}
+
+/* STATO VUOTO */
+.galleria-empty-state {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 24px;
+    padding: 3.5rem 2rem;
+    text-align: center;
+    box-shadow: 0 8px 32px rgba(28, 25, 23, 0.05);
+}
+
+.galleria-empty-state .empty-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.galleria-empty-state h3 {
+    font-family: var(--font-serif);
+    font-size: 1.8rem;
+    color: var(--accent-burgundy);
+    margin-bottom: 0.5rem;
+}
+
+.galleria-empty-state p {
+    color: var(--text-muted);
+    font-size: 0.98rem;
+    max-width: 480px;
+    margin: 0 auto 1.5rem;
+}
+
+/* LIGHTBOX */
+.galleria-lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 999999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.lightbox-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(15, 12, 10, 0.94);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+.lightbox-btn {
+    position: absolute;
+    z-index: 10;
+    background: rgba(255, 255, 255, 0.16);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    color: #ffffff;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.lightbox-btn:hover {
+    background: rgba(255, 255, 255, 0.32);
+    transform: scale(1.1);
+}
+
+.lightbox-btn.close {
+    top: 20px;
+    right: 20px;
+    width: 44px;
+    height: 44px;
+    font-size: 1.2rem;
+}
+
+.lightbox-btn.prev {
+    top: 50%;
+    left: 20px;
+    transform: translateY(-50%);
+    width: 52px;
+    height: 52px;
+    font-size: 1.4rem;
+}
+
+.lightbox-btn.next {
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+    width: 52px;
+    height: 52px;
+    font-size: 1.4rem;
+}
+
+.lightbox-img-wrap {
+    position: relative;
+    z-index: 5;
+    max-width: 90vw;
+    max-height: 85vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.lightbox-img-wrap img {
+    max-width: 90vw;
+    max-height: 78vh;
+    object-fit: contain;
+    border-radius: 12px;
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.7);
+}
+
+.lightbox-caption {
+    color: #ffffff;
+    text-align: center;
+    margin-top: 1rem;
+    font-size: 0.92rem;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    justify-content: center;
+}
+
+.lightbox-counter {
+    background: rgba(255, 255, 255, 0.18);
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+}
+
+/* RESPONSIVE MEDIA QUERIES PER LA GALLERIA */
+@media screen and (max-width: 820px) {
+    .galleria-container {
+        padding: 1.2rem 0.9rem 3rem;
+    }
+
+    .galleria-header-card {
+        padding: 1.8rem 1.2rem;
+        border-radius: 20px;
+        margin-bottom: 1.4rem;
+    }
+
+    .galleria-header-card h2 {
+        font-size: 1.8rem;
+    }
+
+    .slider-card {
+        padding: 1rem 0.85rem;
+        border-radius: 20px;
+    }
+
+    .slider-stage {
+        height: 380px;
+        max-height: 52vh;
+        border-radius: 14px;
+    }
+
+    .slider-arrow {
+        width: 42px;
+        height: 42px;
+        font-size: 1.1rem;
+    }
+
+    .slider-arrow.prev {
+        left: 8px;
+    }
+
+    .slider-arrow.next {
+        right: 8px;
+    }
+
+    .thumb-item {
+        flex: 0 0 62px;
+        height: 62px;
+        border-radius: 10px;
+    }
+
+    .galleria-grid-container {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.75rem;
+    }
+
+    .lightbox-btn.prev {
+        left: 8px;
+        width: 44px;
+        height: 44px;
+        font-size: 1.2rem;
+    }
+
+    .lightbox-btn.next {
+        right: 8px;
+        width: 44px;
+        height: 44px;
+        font-size: 1.2rem;
+    }
+
+    .lightbox-btn.close {
+        top: 12px;
+        right: 12px;
+        width: 40px;
+        height: 40px;
+    }
+}
+
 /* Placeholder per schermate in arrivo */
 .screen-placeholder {
     max-width: 520px;
@@ -601,6 +1338,7 @@ h1, h2, h3 {
     display: flex;
     align-items: center;
     gap: 6px;
+    flex-wrap: wrap;
 }
 
 .indizio-pill {
@@ -697,61 +1435,222 @@ h1, h2, h3 {
     color: var(--accent-burgundy);
 }
 
-.cruciverba-split {
+/* Struttura a 3 colonne per il Cruciverba: Indizi SX - Griglia Centrata - Indizi DX */
+.cruciverba-layout {
     display: flex;
     flex-direction: row;
     align-items: flex-start;
-    justify-content: space-between;
-    margin-bottom: 3rem;
-    gap: 3.5rem;
+    justify-content: center;
+    gap: 1.8rem;
+    width: 100%;
+    max-width: 1540px;
+    margin: 0 auto 3rem;
+    position: relative;
 }
 
+/* Colonne laterali degli indizi (Sinistra e Destra) */
 .cruciverba-domande {
-    flex: 0.38;
-    min-width: 280px;
-    max-width: 380px;
+    width: 250px;
+    min-width: 210px;
+    max-width: 270px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
     text-align: left;
+    position: relative;
+    z-index: 10;
 }
 
-.cruciverba-domande p {
+.col-indizi-tag {
     font-family: var(--font-sans);
-    font-size: 0.98rem;
-    line-height: 1.7;
-    color: var(--text-main);
-    margin-bottom: 1.5rem;
-    padding: 0.6rem 0.8rem 0.6rem 1rem;
-    border-left: 2px solid var(--accent-gold);
-    border-radius: 0 8px 8px 0;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--accent-burgundy);
+    margin-bottom: 0.25rem;
+    padding: 0 0.35rem;
+    display: flex;
+    align-items: center;
+}
+
+.cruciverba-col-dx .col-indizi-tag {
+    justify-content: flex-end;
+}
+
+/* Slot fisso per ciascun indizio: evita scatti e sbalzi nel layout quando una voce si allarga */
+.domanda-item {
+    position: relative;
+    height: 48px;
+    width: 100%;
     cursor: pointer;
+}
+
+/* Contenitore interno dell'indizio */
+.domanda-item-content {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    min-height: 48px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    background: #ffffff;
+    border: 1px solid var(--border-subtle);
+    border-radius: 12px;
+    padding: 0.6rem 0.85rem;
+    box-shadow: 0 2px 8px rgba(28, 25, 23, 0.04);
+    transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 5;
+    overflow: hidden;
+}
+
+/* Colonna sinistra: ancorata a sinistra, bordo dorato a sinistra */
+.cruciverba-col-sx .domanda-item-content {
+    left: 0;
+    right: auto;
+    border-left: 3.5px solid var(--accent-gold);
+}
+
+/* Colonna destra: ancorata a destra, bordo dorato a destra */
+.cruciverba-col-dx .domanda-item-content {
+    right: 0;
+    left: auto;
+    border-right: 3.5px solid var(--accent-gold);
+}
+
+/* Badge numerico indizio */
+.domanda-badge {
+    background: #fbf9f5;
+    color: var(--accent-burgundy);
+    font-family: var(--font-sans);
+    font-size: 0.76rem;
+    font-weight: 700;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border: 1px solid var(--border-input);
     transition: all 0.2s ease;
 }
 
-.cruciverba-domande p.attiva {
-    border-left: 3px solid var(--accent-burgundy);
-    background: rgba(74, 21, 33, 0.04);
+/* Testo dell'indizio: inizialmente mostra solo l'inizio con "..." (troncamento) */
+.domanda-testo {
+    font-family: var(--font-sans);
+    font-size: 0.84rem;
+    line-height: 1.45;
+    color: var(--text-main);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex: 1;
+    min-width: 0;
+}
+
+/* HOVER: SOLO QUANDO SI PASSA IL CURSORE SOPRA, SI ALLARGA E SI LEGGE TUTTA LA DESCRIZIONE! */
+.cruciverba-col-sx .domanda-item:hover .domanda-item-content,
+.cruciverba-col-sx .domanda-item:focus-within .domanda-item-content {
+    width: 175%;
+    max-width: 460px;
+    border-left-color: var(--accent-burgundy);
+    background: #ffffff;
+    box-shadow: 0 14px 38px rgba(74, 21, 33, 0.18), 0 3px 10px rgba(0, 0, 0, 0.08);
+    z-index: 100;
+    transform: translateY(-2px);
+    overflow: visible;
+}
+
+.cruciverba-col-sx .domanda-item:hover .domanda-testo,
+.cruciverba-col-sx .domanda-item:focus-within .domanda-testo {
+    white-space: normal;
+    overflow: visible;
+    text-overflow: clip;
+}
+
+.cruciverba-col-dx .domanda-item:hover .domanda-item-content,
+.cruciverba-col-dx .domanda-item:focus-within .domanda-item-content {
+    width: 175%;
+    max-width: 460px;
+    border-right-color: var(--accent-burgundy);
+    background: #ffffff;
+    box-shadow: 0 14px 38px rgba(74, 21, 33, 0.18), 0 3px 10px rgba(0, 0, 0, 0.08);
+    z-index: 100;
+    transform: translateY(-2px);
+    overflow: visible;
+}
+
+.cruciverba-col-dx .domanda-item:hover .domanda-testo,
+.cruciverba-col-dx .domanda-item:focus-within .domanda-testo {
+    white-space: normal;
+    overflow: visible;
+    text-overflow: clip;
+}
+
+.domanda-item:hover .domanda-badge,
+.domanda-item:focus-within .domanda-badge {
+    background: var(--accent-burgundy);
+    color: #ffffff;
+    border-color: var(--accent-burgundy);
+}
+
+/* STATO ATTIVO: evidenziato quando la parola è selezionata nella griglia */
+.cruciverba-col-sx .domanda-item.attiva .domanda-item-content {
+    border-left-color: var(--accent-burgundy);
+    background: #fffdf9;
+    box-shadow: 0 4px 14px rgba(74, 21, 33, 0.08);
+}
+
+.cruciverba-col-dx .domanda-item.attiva .domanda-item-content {
+    border-right-color: var(--accent-burgundy);
+    background: #fffdf9;
+    box-shadow: 0 4px 14px rgba(74, 21, 33, 0.08);
+}
+
+.domanda-item.attiva .domanda-badge {
+    background: var(--accent-burgundy);
+    color: #ffffff;
+    border-color: var(--accent-burgundy);
+}
+
+.domanda-item.attiva .domanda-testo {
     font-weight: 600;
 }
 
-.cruciverba-griglia {
+/* COLONNA CENTRALE: GRIGLIA CRUCIVERBA (RIGOROSAMENTE CENTRATA) */
+.cruciverba-griglia-col {
     flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    max-width: 880px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.cruciverba-griglia {
     display: flex;
     flex-direction: column;
     align-items: center;
     position: relative;
     width: 100%;
-    overflow-x: auto; /* Impedisce che la riga si rompa */
-    padding: 0.5rem 0;
+    padding: 0.25rem 0;
 }
 
-/* Ogni riga è rigorosamente su una sola linea: numero, caselle e bottone affiancati */
+/* Righe del cruciverba centrate e mai spezzate su desktop */
 .cruciverba-riga {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 12px;
-    margin: 10px 0;
+    gap: 8px;
+    margin: 6px 0;
     width: 100%;
-    flex-wrap: nowrap !important; /* MAI andare a capo: il bottone sta sempre di fianco */
+    flex-wrap: nowrap !important; /* MAI spezzare la riga su desktop */
+    transition: all 0.2s ease;
 }
 
 /* Badge numerico discreto ed elegante */
@@ -759,10 +1658,10 @@ h1, h2, h3 {
     background: var(--text-main);
     color: #ffffff;
     font-family: var(--font-sans);
-    font-size: 0.8rem;
+    font-size: 0.78rem;
     font-weight: 600;
-    width: 30px;
-    height: 30px;
+    width: 26px;
+    height: 26px;
     border-radius: 50%;
     display: inline-flex;
     align-items: center;
@@ -774,17 +1673,17 @@ h1, h2, h3 {
 /* Pulsante Verifica a Capsula di fianco alla parola */
 .btn-check-riga {
     font-family: var(--font-sans);
-    padding: 0.55rem 1.3rem;
-    font-size: 0.78rem;
+    padding: 0.42rem 0.95rem;
+    font-size: 0.74rem;
     font-weight: 500;
-    letter-spacing: 0.12em;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
     color: #ffffff;
     background: var(--text-main);
     border: 1px solid var(--text-main);
     border-radius: 9999px;
     cursor: pointer;
-    box-shadow: 0 3px 8px rgba(28, 25, 23, 0.1);
+    box-shadow: 0 2px 6px rgba(28, 25, 23, 0.08);
     transition: all 0.25s ease;
     flex-shrink: 0;
     white-space: nowrap;
@@ -794,7 +1693,7 @@ h1, h2, h3 {
     background: var(--accent-burgundy);
     border-color: var(--accent-burgundy);
     transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(74, 21, 33, 0.2);
+    box-shadow: 0 5px 14px rgba(74, 21, 33, 0.2);
 }
 
 .btn-check-riga.parola-esatta {
@@ -805,9 +1704,9 @@ h1, h2, h3 {
 }
 
 .riga-status {
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: bold;
-    min-width: 24px;
+    min-width: 20px;
     text-align: center;
     flex-shrink: 0;
 }
@@ -816,48 +1715,97 @@ h1, h2, h3 {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 3px;
-    margin: 4px 0;
+    gap: 2.5px;
+    margin: 2px 0;
     flex-shrink: 0;
 }
 
-/* Caselle del cruciverba proporzionate per stare comode su una sola riga */
+/* Caselle del cruciverba proporzionate per far entrare perfettamente anche la riga 9 (17 lettere) senza tagli */
 .cell {
-    width: 42px;
-    height: 42px;
+    width: 29px;
+    height: 35px;
     font-family: var(--font-sans);
-    font-size: 1.45rem;
+    font-size: 1.18rem;
     font-weight: 600;
     text-align: center;
     text-transform: uppercase;
     background: #ffffff;
     border: 1px solid var(--border-input);
-    border-radius: 6px;
+    border-radius: 5px;
     color: var(--text-main);
     outline: none;
     transition: all 0.2s ease;
     flex-shrink: 0;
+    padding: 0;
 }
 
 .cell:focus {
     background-color: #faf7f2;
     border-color: var(--accent-burgundy);
-    box-shadow: 0 0 0 3px rgba(74, 21, 33, 0.08);
+    box-shadow: 0 0 0 2.5px rgba(74, 21, 33, 0.1);
 }
 
-/* Celle speciali: tono champagne dorato anziché viola fluo */
-.cell-special {
-    background-color: #f1e9dc;
-    border-color: #cfc2ad;
-    color: var(--accent-burgundy);
+/* Celle speciali: tono champagne dorato */
+.cell-special,
+.cell[class*="cell-special"] {
+    background-color: #f1e9dc !important;
+    border-color: #cfc2ad !important;
+    color: var(--accent-burgundy) !important;
 }
 
-/* Risultato esatto: verde salvia morbido */
+.cell-special:focus,
+.cell[class*="cell-special"]:focus {
+    background-color: #e8ded0 !important;
+    border-color: var(--accent-burgundy) !important;
+    box-shadow: 0 0 0 2.5px rgba(74, 21, 33, 0.14);
+}
+
+/* Media query tablet e schermi intermedi (851px - 1180px) */
+@media screen and (max-width: 1180px) and (min-width: 851px) {
+    .cruciverba-layout {
+        gap: 1.1rem;
+    }
+    .cruciverba-domande {
+        width: 195px;
+        min-width: 180px;
+    }
+    .cell {
+        width: 24px;
+        height: 31px;
+        font-size: 1.05rem;
+    }
+    .btn-check-riga {
+        padding: 0.35rem 0.75rem;
+        font-size: 0.68rem;
+    }
+    .cruciverba-col-sx .domanda-item:hover .domanda-item-content,
+    .cruciverba-col-sx .domanda-item:focus-within .domanda-item-content,
+    .cruciverba-col-dx .domanda-item:hover .domanda-item-content,
+    .cruciverba-col-dx .domanda-item:focus-within .domanda-item-content {
+        width: 190%;
+        max-width: 380px;
+    }
+}
+
+/* Risultato esatto: le caselle NON diventano verdi, mantenendo
+   la chiara distinzione cromatica tra celle normali e speciali */
 .corretto {
-    background-color: #edf5ee !important;
-    border-color: #82b58d !important;
-    color: #205c2a !important;
     animation: cellBounce 0.4s ease;
+}
+
+/* Celle normali quando corrette: mantengono il fondo bianco senza diventare verdi */
+.cell.corretto {
+    background-color: #ffffff;
+    border-color: var(--border-input);
+    color: var(--text-main);
+}
+
+/* Celle speciali quando corrette: preservano il tono champagne dorato */
+.cell-special.corretto,
+.cell[class*="cell-special"].corretto {
+    background-color: #f1e9dc !important;
+    border-color: #cfc2ad !important;
+    color: var(--accent-burgundy) !important;
 }
 
 /* Risultato errato: rosa cipria morbido */
@@ -1066,41 +2014,49 @@ h1, h2, h3 {
         display: block;
     }
 
-    .cruciverba-split {
+    .cruciverba-layout {
         flex-direction: column;
+        align-items: center;
         gap: 0;
         margin-bottom: 0.5rem;
     }
 
-    /* La lista cumulativa di 5 domande viene nascosta su mobile per non rubare spazio vitale alla griglia */
+    /* Le colonne laterali su mobile sono nascoste di default per fare spazio alla griglia */
     .cruciverba-domande {
         display: none;
-        flex: 1;
         width: 100%;
         max-width: 100%;
     }
 
-    .cruciverba-domande.aperto-mobile {
-        display: block;
-        margin: 0.6rem 0 0.9rem;
+    .cruciverba-layout.mostra-tutti-indizi .cruciverba-domande {
+        display: flex;
+        margin: 0.6rem 0;
         animation: screenEntrata 0.3s ease;
     }
 
-    .cruciverba-domande p {
-        font-size: 0.86rem;
-        line-height: 1.45;
+    .cruciverba-layout.mostra-tutti-indizi .domanda-item {
+        height: auto;
+        min-height: 44px;
         margin-bottom: 0.5rem;
-        padding: 0.6rem 0.8rem;
-        background: #ffffff;
-        border-radius: 8px;
-        border-left: 3px solid var(--accent-gold);
-        box-shadow: 0 1px 4px rgba(28, 25, 23, 0.04);
-        cursor: pointer;
     }
 
-    .cruciverba-domande p.attiva {
-        border-left-color: var(--accent-burgundy);
-        background: #fffdf9;
+    .cruciverba-layout.mostra-tutti-indizi .domanda-item-content {
+        position: relative;
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow: visible;
+        border-radius: 10px;
+    }
+
+    .cruciverba-layout.mostra-tutti-indizi .domanda-testo {
+        white-space: normal;
+        overflow: visible;
+        text-overflow: clip;
+    }
+
+    .cruciverba-griglia-col {
+        width: 100%;
+        max-width: 100%;
     }
 
     .cruciverba-griglia {
@@ -1164,11 +2120,24 @@ h1, h2, h3 {
     }
 
     .cell {
-        width: clamp(23px, 6.8vw, 30px);
-        height: clamp(31px, 8.5vw, 36px);
+        width: clamp(21px, 6vw, 29px);
+        height: clamp(29px, 8vw, 35px);
         font-size: 16px; /* OBBLIGATORIO: previene lo zoom automatico invasivo di iOS Safari */
         border-radius: 4px;
         font-weight: 700;
+    }
+
+    /* RIGA 9 SPECIFICA: 17 caselle proporzionate per non essere mai tagliate su schermi compatti */
+    .cruciverba-riga[data-row="9"] .crossword-grid {
+        gap: 1.5px;
+    }
+
+    .cruciverba-riga[data-row="9"] .cell {
+        width: clamp(14px, 4.4vw, 21px);
+        height: clamp(24px, 6.4vw, 32px);
+        font-size: 13px;
+        border-radius: 3px;
+        padding: 0;
     }
 }
 
@@ -1177,9 +2146,19 @@ h1, h2, h3 {
         gap: 2px;
     }
 
+    .cruciverba-riga[data-row="9"] .crossword-grid {
+        gap: 1px;
+    }
+
+    .cruciverba-riga[data-row="9"] .cell {
+        width: clamp(13px, 4.2vw, 17px);
+        height: 25px;
+        font-size: 12px;
+    }
+
     .cell {
-        width: clamp(21px, 6.4vw, 28px);
-        height: 32px;
+        width: clamp(20px, 5.8vw, 26px);
+        height: 30px;
         font-size: 16px; /* Non scendere sotto 16px su mobile */
         border-radius: 4px;
     }

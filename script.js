@@ -20,6 +20,7 @@ function mostraSchermata(schermataDaMostrare) {
 
 function tornaAlMenu() {
     fermaTimerAvanti();
+    if (typeof chiudiLightbox === "function") chiudiLightbox();
     mostraSchermata(mainScreen);
 }
 
@@ -32,7 +33,10 @@ if (btnBackBacheca) btnBackBacheca.addEventListener("click", tornaAlMenu);
 // 2. Galleria Fotografica
 const btnGalleria = document.getElementById("btn-galleria");
 const btnBackGalleria = document.getElementById("back-from-galleria");
-if (btnGalleria) btnGalleria.addEventListener("click", () => mostraSchermata(galleriaScreen));
+if (btnGalleria) btnGalleria.addEventListener("click", () => {
+    mostraSchermata(galleriaScreen);
+    if (typeof inizializzaGalleria === "function") inizializzaGalleria();
+});
 if (btnBackGalleria) btnBackGalleria.addEventListener("click", tornaAlMenu);
 
 // 3. Cruciverba
@@ -75,7 +79,7 @@ function controllaRiga(rigaEl) {
 
     celle.forEach(function(cella) {
         const letteraInserita = cella.value.trim().toUpperCase();
-        const letteraEsatta = (cella.dataset.answer || "").toUpperCase();
+        const letteraEsatta = (cella.dataset.answer || "").trim().toUpperCase();
 
         if (letteraInserita !== "") {
             rigaVuota = false;
@@ -133,7 +137,7 @@ function controllaVittoriaTotale() {
     tutteLeRighe.forEach(function(riga) {
         const celle = riga.querySelectorAll(".cell");
         celle.forEach(function(cella) {
-            if (cella.value.trim().toUpperCase() !== (cella.dataset.answer || "").toUpperCase()) {
+            if (cella.value.trim().toUpperCase() !== (cella.dataset.answer || "").trim().toUpperCase()) {
                 tutteVinte = false;
             }
         });
@@ -185,28 +189,51 @@ document.querySelectorAll(".btn-check-riga").forEach(function(btn) {
 // ==========================================
 
 const elencoDomandeCruciverba = [
-    { num: 1, testo: "1. Se valentina inizia a ballare, sai già cosa sta per domandare: tra un sorriso e una sculettata, parte la frase tanto amata." },
-    { num: 2, testo: "2. Non eran gatti né animali lontane, ma come chiamavamo le nostre birmane?" },
-    { num: 3, testo: "3. Un cane tanto sognato da me e Babbetta con passione, ma Vale poneva sempre una condizione: se mai fosse arrivato quel cagnolino speciale, quale nome doveva avere per essere ufficiale?" },
-    { num: 4, testo: "4. È il nostro brindisi più speciale, ormai diventato tradizionale: dopo cuore e sesso con tanto trasporto, qual è il terzo augurio che porta conforto?" },
-    { num: 5, testo: "5. Il primo anno aveva un appuntamento fisso, tra balli, risate e qualche tipo mai visto: tra personaggi strani e storie da raccontare, quale locale ci faceva sempre ritornare?" }
+    { num: 1, testo: "1. È il nostro brindisi più speciale, ormai diventato tradizionale: dopo cuore e sesso con tanto trasporto, qual è il terzo augurio che porta conforto?" },
+    { num: 2, testo: "2. Un linguaggio segreto fatto di segni e astrazione, che portò entrambe sull'orlo della disperazione: tra bilanci e mercati era l'intrusa spietata, la prova maledetta sempre rimandata." },
+    { num: 3, testo: "3. Abitante dei boschi dal potere incantato, ma in centro a Parma rubò la scena al locale affollato: Babbetta ne vestì le sembianze alate, finendo su whatsapp tra mille risate. Cosa era?" },
+    { num: 4, testo: "4. Accessorio poco glamour per la notte scatenata, ma vitale per Babbetta nella stagione gelata: un piccolo quadrato morbido e discreto, che salvava i suoi occhi da quel vento indiscreto." },
+    { num: 5, testo: "5. Il primo anno aveva un appuntamento fisso, tra balli, risate e qualche tipo mai visto: tra personaggi strani e storie da raccontare, quale locale ci faceva sempre ritornare?" },
+    { num: 6, testo: "6. Un cane tanto sognato da me e Babbetta con passione, ma Vale poneva sempre una condizione: se mai fosse arrivato quel cagnolino speciale, quale nome doveva avere per essere ufficiale?" },
+    { num: 7, testo: "7. Visti dal vivo in una pista dal nome celeste, con quel motivetto a farci girare le teste, ricordiamo quei giorni d’oro: che nome ci davamo, essendo fan di loro?" },
+    { num: 8, testo: "8. Non eran gatti né animali lontane, ma come chiamavamo le nostre birmane?" },
+    { num: 9, testo: "9. Tra un pranzo, un festino e un bicchiere di vino, è nato per caso il nostro destino. Un nome inventato così per scherzare, ma ormai è un marchio che non può cambiare: qual è?" },
+    { num: 10, testo: "10. Porta il nome di una terra antica e lontana, ma per Babbetta è una dolce ossessione quotidiana: dopo ogni pasto la pretende a gran voce, per chiudere il pranzetto in modo sano e veloce." },
+    { num: 11, testo: "11. Sembra innocuo, dolce e quasi infantile ma con la vodka diventa un tranello sottile: in un giovedì fu la sua rovina, facendo barcollare la povera Valentina." }
 ];
 
 let parolaCruciverbaAttiva = 1;
 
+function ottieniTestoIndizio(num) {
+    const numInt = parseInt(num, 10);
+    const itemDomanda = document.querySelector(`.domanda-item[data-row="${numInt}"]`);
+    if (itemDomanda) {
+        const testoEl = itemDomanda.querySelector(".domanda-testo");
+        if (testoEl) {
+            return `${numInt}. ${testoEl.innerText.trim()}`;
+        }
+        return itemDomanda.innerText.trim();
+    }
+    const item = elencoDomandeCruciverba.find(d => d.num === numInt);
+    return item ? item.testo : "";
+}
+
 function impostaParolaAttiva(num, focusCell = false) {
     parolaCruciverbaAttiva = parseInt(num, 10);
+    const totRighe = document.querySelectorAll(".cruciverba-riga").length || 11;
 
     // 1. Aggiorna Banner attivo in alto
     const bannerNum = document.getElementById("banner-num");
     const bannerTesto = document.getElementById("banner-testo-indizio");
+    const bannerTot = document.getElementById("banner-tot");
     if (bannerNum) bannerNum.innerText = parolaCruciverbaAttiva;
+    if (bannerTot) bannerTot.innerText = totRighe;
     if (bannerTesto) {
-        const item = elencoDomandeCruciverba.find(d => d.num === parolaCruciverbaAttiva);
-        if (item) {
+        const testoIndizio = ottieniTestoIndizio(parolaCruciverbaAttiva);
+        if (testoIndizio) {
             bannerTesto.style.opacity = "0.3";
             setTimeout(() => {
-                bannerTesto.innerText = item.testo;
+                bannerTesto.innerText = testoIndizio;
                 bannerTesto.style.opacity = "1";
             }, 120);
         }
@@ -223,10 +250,10 @@ function impostaParolaAttiva(num, focusCell = false) {
         r.classList.toggle("riga-attiva", isCurrent);
     });
 
-    // 4. Evidenzia la domanda nella lista desktop
-    document.querySelectorAll(".cruciverba-domande p").forEach(p => {
-        const isCurrent = parseInt(p.dataset.row, 10) === parolaCruciverbaAttiva;
-        p.classList.toggle("attiva", isCurrent);
+    // 4. Evidenzia la domanda nelle colonne laterali (sia a sinistra che a destra)
+    document.querySelectorAll(".domanda-item").forEach(item => {
+        const isCurrent = parseInt(item.dataset.row, 10) === parolaCruciverbaAttiva;
+        item.classList.toggle("attiva", isCurrent);
     });
 
     // 5. Se richiesto, porta il cursore nella prima cella vuota
@@ -258,28 +285,30 @@ const btnNextIndizio = document.getElementById("btn-next-indizio");
 
 if (btnPrevIndizio) {
     btnPrevIndizio.addEventListener("click", function() {
+        const tot = document.querySelectorAll(".cruciverba-riga").length || 11;
         let prev = parolaCruciverbaAttiva - 1;
-        if (prev < 1) prev = 5;
+        if (prev < 1) prev = tot;
         impostaParolaAttiva(prev, true);
     });
 }
 
 if (btnNextIndizio) {
     btnNextIndizio.addEventListener("click", function() {
+        const tot = document.querySelectorAll(".cruciverba-riga").length || 11;
         let next = parolaCruciverbaAttiva + 1;
-        if (next > 5) next = 1;
+        if (next > tot) next = 1;
         impostaParolaAttiva(next, true);
     });
 }
 
-// Toggle per mostrare / nascondere tutte le domande
+// Toggle per mostrare / nascondere tutti gli indizi (su mobile)
 const btnToggleTutte = document.getElementById("btn-toggle-tutte-domande");
-const listaDomandeDesktop = document.getElementById("cruciverba-domande-lista");
+const layoutBox = document.getElementById("cruciverba-layout-box");
 
-if (btnToggleTutte && listaDomandeDesktop) {
+if (btnToggleTutte && layoutBox) {
     btnToggleTutte.addEventListener("click", function() {
-        listaDomandeDesktop.classList.toggle("aperto-mobile");
-        if (listaDomandeDesktop.classList.contains("aperto-mobile")) {
+        layoutBox.classList.toggle("mostra-tutti-indizi");
+        if (layoutBox.classList.contains("mostra-tutti-indizi")) {
             btnToggleTutte.innerText = "Nascondi tutti gli indizi ▴";
         } else {
             btnToggleTutte.innerText = "Mostra tutti gli indizi ▾";
@@ -287,9 +316,9 @@ if (btnToggleTutte && listaDomandeDesktop) {
     });
 }
 
-// Click sui paragrafi delle domande (desktop)
-document.querySelectorAll(".cruciverba-domande p").forEach(p => {
-    p.addEventListener("click", function() {
+// Click sugli indizi (sia a sinistra che a destra)
+document.querySelectorAll(".domanda-item").forEach(item => {
+    item.addEventListener("click", function() {
         const row = this.dataset.row;
         if (row) impostaParolaAttiva(row, true);
     });
@@ -325,6 +354,15 @@ tutteLeRigheCruciverba.forEach(function(riga) {
         // 2. Quando l'utente inserisce un carattere
         cellaAttuale.addEventListener("input", function() {
             cellaAttuale.classList.remove("sbagliato");
+            cellaAttuale.classList.remove("corretto");
+
+            const btnRiga = riga.querySelector(".btn-check-riga");
+            const statusRiga = riga.querySelector(".riga-status");
+            if (btnRiga && btnRiga.classList.contains("parola-esatta")) {
+                btnRiga.classList.remove("parola-esatta");
+                btnRiga.innerText = "Verifica";
+                if (statusRiga) statusRiga.innerText = "";
+            }
 
             // Garantisce sempre il maiuscolo e prende l'ultimo carattere inserito
             const rawVal = cellaAttuale.value.trim().toUpperCase();
@@ -1246,5 +1284,699 @@ if (top10TogglePwd && top10PasswordInput) {
 
 if (btnBackFromTop10Lock) {
     btnBackFromTop10Lock.addEventListener("click", tornaAlMenu);
+}
+
+// ==========================================================================
+// SEZIONE GALLERIA FOTOGRAFICA (SCORRIMENTO, UPLOAD & GESTIONE)
+// ==========================================================================
+
+// Elenco foto predefinite caricate dalla cartella assets
+const FOTO_PREDEFINITE = [
+    {
+        id: "predefinita-1",
+        src: "assets/cinqueterre.jpeg",
+        titolo: "Gita in Liguria",
+        isCustom: false
+    },
+    {
+        id: "predefinita-2",
+        src: "assets/perletti.jpeg",
+        titolo: "Perletti in azione",
+        isCustom: false
+    },
+    {
+        id: "predefinita-3",
+        src: "assets/paul.jpeg",
+        titolo: "noi e Paul",
+        isCustom: false
+    },
+    {
+        id: "predefinita-4",
+        src: "assets/astro.jpeg",
+        titolo: "incontri all'astro",
+        isCustom: false
+    },
+    {
+        id: "predefinita-5",
+        src: "assets/giove.jpeg",
+        titolo: "Le bimbe del giovedrink",
+        isCustom: false
+    },
+    {
+        id: "predefinita-6",
+        src: "assets/noe.jpeg",
+        titolo: "Noe & Vale",
+        isCustom: false
+    },
+    {
+        id: "predefinita-7",
+        src: "assets/noe2.jpeg",
+        titolo: "Noe a Taranto",
+        isCustom: false
+    },
+    {
+        id: "predefinita-8",
+        src: "assets/ladypizza.jpeg",
+        titolo: "Tappa fissa da Lady Pizza",
+        isCustom: false
+    },
+    {
+        id: "predefinita-9",
+        src: "assets/ttlegirls.mp4",
+        titolo: "TTLE Girls",
+        tipo: "video",
+        isCustom: false
+    },
+];
+
+// Stato della Galleria
+let galleriaFoto = [];
+let indiceFotoCorrente = 0;
+let galleriaInizializzata = false;
+let vistaAttivaGalleria = "slider";
+let lightboxAperto = false;
+
+// Gestione IndexedDB per il salvataggio persistente delle foto caricate
+const DB_NAME_GALLERIA = "GalleriaFotograficaLaurea";
+const DB_VERSION_GALLERIA = 1;
+const STORE_NAME_GALLERIA = "foto_caricate";
+
+function apriDatabaseGalleria() {
+    return new Promise((resolve) => {
+        if (!window.indexedDB) {
+            resolve(null);
+            return;
+        }
+        try {
+            const req = window.indexedDB.open(DB_NAME_GALLERIA, DB_VERSION_GALLERIA);
+            req.onupgradeneeded = function(e) {
+                const db = e.target.result;
+                if (!db.objectStoreNames.contains(STORE_NAME_GALLERIA)) {
+                    db.createObjectStore(STORE_NAME_GALLERIA, { keyPath: "id" });
+                }
+            };
+            req.onsuccess = function(e) {
+                resolve(e.target.result);
+            };
+            req.onerror = function() {
+                resolve(null);
+            };
+        } catch (err) {
+            resolve(null);
+        }
+    });
+}
+
+async function caricaFotoDaDatabase() {
+    const db = await apriDatabaseGalleria();
+    if (!db) return [];
+    return new Promise((resolve) => {
+        try {
+            const tx = db.transaction(STORE_NAME_GALLERIA, "readonly");
+            const store = tx.objectStore(STORE_NAME_GALLERIA);
+            const req = store.getAll();
+            req.onsuccess = () => resolve(req.result || []);
+            req.onerror = () => resolve([]);
+        } catch (e) {
+            resolve([]);
+        }
+    });
+}
+
+async function salvaFotoInDatabase(fotoObj) {
+    const db = await apriDatabaseGalleria();
+    if (!db) return false;
+    return new Promise((resolve) => {
+        try {
+            const tx = db.transaction(STORE_NAME_GALLERIA, "readwrite");
+            const store = tx.objectStore(STORE_NAME_GALLERIA);
+            store.put(fotoObj);
+            tx.oncomplete = () => resolve(true);
+            tx.onerror = () => resolve(false);
+        } catch (e) {
+            resolve(false);
+        }
+    });
+}
+
+async function eliminaFotoDaDatabase(id) {
+    const db = await apriDatabaseGalleria();
+    if (!db) return false;
+    return new Promise((resolve) => {
+        try {
+            const tx = db.transaction(STORE_NAME_GALLERIA, "readwrite");
+            const store = tx.objectStore(STORE_NAME_GALLERIA);
+            store.delete(id);
+            tx.oncomplete = () => resolve(true);
+            tx.onerror = () => resolve(false);
+        } catch (e) {
+            resolve(false);
+        }
+    });
+}
+
+// Ridimensionamento e compressione client-side delle immagini per performance ottimali
+function ottimizzaImmagine(file, maxDim = 1600, qualita = 0.85) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const img = new Image();
+            img.onload = function() {
+                let width = img.width;
+                let height = img.height;
+
+                if (width > maxDim || height > maxDim) {
+                    if (width > height) {
+                        height = Math.round((height * maxDim) / width);
+                        width = maxDim;
+                    } else {
+                        width = Math.round((width * maxDim) / height);
+                        height = maxDim;
+                    }
+                }
+
+                const canvas = document.createElement("canvas");
+                canvas.width = width;
+                canvas.height = height;
+                const ctx = canvas.getContext("2d");
+                ctx.drawImage(img, 0, 0, width, height);
+
+                const dataUrl = canvas.toDataURL("image/jpeg", qualita);
+                resolve(dataUrl);
+            };
+            img.onerror = () => reject(new Error("Errore nel caricamento immagine"));
+            img.src = e.target.result;
+        };
+        reader.onerror = () => reject(new Error("Errore nella lettura del file"));
+        reader.readAsDataURL(file);
+    });
+}
+
+// Mostra un messaggio toast temporaneo
+let timerToastGalleria = null;
+function mostraToastGalleria(messaggio, durata = 3500) {
+    const toast = document.getElementById("galleria-toast");
+    if (!toast) return;
+    toast.textContent = messaggio;
+    toast.classList.remove("hidden");
+    if (timerToastGalleria) clearTimeout(timerToastGalleria);
+    timerToastGalleria = setTimeout(() => {
+        toast.classList.add("hidden");
+    }, durata);
+}
+
+// Inizializza la galleria (carica dati ed eventi)
+async function inizializzaGalleria() {
+    await ricaricaFotoGalleria();
+
+    if (!galleriaInizializzata) {
+        impostaAscoltatoriGalleria();
+        galleriaInizializzata = true;
+    }
+}
+
+// Recupera foto predefinite + foto salvate nel DB
+async function ricaricaFotoGalleria() {
+    const fotoSalvate = await caricaFotoDaDatabase();
+    galleriaFoto = [...FOTO_PREDEFINITE, ...fotoSalvate];
+    
+
+    const sliderView = document.getElementById("galleria-slider-view");
+    const gridView = document.getElementById("galleria-grid-view");
+    const emptyState = document.getElementById("galleria-empty-state");
+    const countEl = document.getElementById("thumbnails-count");
+
+    if (countEl) countEl.textContent = galleriaFoto.length;
+
+    if (galleriaFoto.length === 0) {
+        if (sliderView) sliderView.classList.add("hidden");
+        if (gridView) gridView.classList.add("hidden");
+        if (emptyState) emptyState.classList.remove("hidden");
+        return;
+    }
+
+    if (emptyState) emptyState.classList.add("hidden");
+    if (vistaAttivaGalleria === "slider") {
+        if (sliderView) sliderView.classList.remove("hidden");
+        if (gridView) gridView.classList.add("hidden");
+    } else {
+        if (sliderView) sliderView.classList.add("hidden");
+        if (gridView) gridView.classList.remove("hidden");
+    }
+
+    if (indiceFotoCorrente >= galleriaFoto.length) {
+        indiceFotoCorrente = galleriaFoto.length - 1;
+    }
+    if (indiceFotoCorrente < 0) {
+        indiceFotoCorrente = 0;
+    }
+
+    aggiornaFotoSlider(indiceFotoCorrente);
+    renderizzaMiniature();
+    renderizzaGriglia();
+}
+
+// Mostra la foto attiva nello slider principale
+function aggiornaFotoSlider(index, direzioneAnim = null) {
+    if (galleriaFoto.length === 0) return;
+
+    indiceFotoCorrente = (index + galleriaFoto.length) % galleriaFoto.length;
+    const foto = galleriaFoto[indiceFotoCorrente];
+
+    const imgEl = document.getElementById("slider-active-img");
+    let videoEl = document.getElementById("slider-active-video");
+    const isVideo = foto.tipo === "video";
+
+    const counterEl = document.getElementById("slider-counter");
+    const titoloEl = document.getElementById("slider-foto-titolo");
+    const subEl = document.getElementById("slider-foto-sub");
+    const btnElimina = document.getElementById("btn-elimina-foto");
+
+    if (imgEl && imgEl.parentElement) {
+        if (!videoEl) {
+            videoEl = document.createElement("video");
+            videoEl.id = "slider-active-video";
+            videoEl.controls = true;
+            videoEl.playsInline = true;
+            videoEl.preload = "metadata";
+            videoEl.className = imgEl.className;
+            imgEl.parentElement.insertBefore(videoEl, imgEl.nextSibling);
+        }
+
+        if (isVideo) {
+            imgEl.classList.add("hidden");
+            videoEl.classList.remove("hidden");
+            videoEl.src = foto.src;
+        } else {
+            videoEl.pause();
+            videoEl.classList.add("hidden");
+            imgEl.classList.remove("hidden");
+
+            if (direzioneAnim === "next") {
+                imgEl.classList.add("anim-next");
+                setTimeout(() => {
+                    imgEl.src = foto.src;
+                    imgEl.classList.remove("anim-next");
+                }, 120);
+            } else if (direzioneAnim === "prev") {
+                imgEl.classList.add("anim-prev");
+                setTimeout(() => {
+                    imgEl.src = foto.src;
+                    imgEl.classList.remove("anim-prev");
+                }, 120);
+            } else {
+                imgEl.src = foto.src;
+            }
+        }
+    }
+
+    if (counterEl) {
+        counterEl.textContent = `Foto ${indiceFotoCorrente + 1} di ${galleriaFoto.length}`;
+    }
+
+    if (titoloEl) {
+        titoloEl.textContent = foto.titolo || `Foto ${indiceFotoCorrente + 1}`;
+    }
+
+    if (subEl) {
+        subEl.textContent = foto.sottotitolo || "";
+    }
+
+    // Mostra il tasto elimina solo per le foto caricate dall'utente
+    if (btnElimina) {
+        if (foto.isCustom) {
+            btnElimina.classList.remove("hidden");
+        } else {
+            btnElimina.classList.add("hidden");
+        }
+    }
+
+    // Aggiorna miniatura attiva e scrolla
+    evidenziaMiniatura(indiceFotoCorrente);
+
+    // Se il lightbox è aperto, aggiorna anche la vista a tutto schermo
+    if (lightboxAperto) {
+        aggiornaFotoLightbox(indiceFotoCorrente);
+    }
+}
+
+// Scorre alla foto successiva
+function fotoSuccessiva() {
+    if (galleriaFoto.length <= 1) return;
+    aggiornaFotoSlider(indiceFotoCorrente + 1, "next");
+}
+
+// Scorre alla foto precedente
+function fotoPrecedente() {
+    if (galleriaFoto.length <= 1) return;
+    aggiornaFotoSlider(indiceFotoCorrente - 1, "prev");
+}
+
+// Renderizza il nastro orizzontale di miniature
+function renderizzaMiniature() {
+    const track = document.getElementById("slider-thumbnails-track");
+    if (!track) return;
+
+    track.innerHTML = "";
+    galleriaFoto.forEach((foto, i) => {
+        const item = document.createElement("div");
+        item.className = `thumb-item ${i === indiceFotoCorrente ? "active" : ""}`;
+        item.dataset.index = i;
+        item.title = foto.titolo || `Foto ${i + 1}`;
+
+        let mediaEl;
+        if (foto.tipo === "video") {
+            mediaEl = document.createElement("video");
+            mediaEl.src = foto.src;
+            mediaEl.preload = "metadata";
+            mediaEl.muted = true;
+            mediaEl.playsInline = true;
+        } else {
+                mediaEl = document.createElement("img");
+                mediaEl.src = foto.src;
+                mediaEl.alt = foto.titolo || `Miniatura ${i + 1}`;
+                mediaEl.loading = "lazy";
+            }
+
+
+
+item.appendChild(mediaEl); 
+        item.addEventListener("click", () => {
+            aggiornaFotoSlider(i);
+        });
+
+        track.appendChild(item);
+    });
+}
+
+// Evidenzia la miniatura attiva e la scrolla al centro
+function evidenziaMiniatura(index) {
+    const track = document.getElementById("slider-thumbnails-track");
+    if (!track) return;
+
+    const items = track.querySelectorAll(".thumb-item");
+    items.forEach((item, i) => {
+        if (i === index) {
+            item.classList.add("active");
+            item.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+        } else {
+            item.classList.remove("active");
+        }
+    });
+}
+
+// Renderizza la vista a griglia di tutte le foto
+function renderizzaGriglia() {
+    const container = document.getElementById("galleria-grid-container");
+    if (!container) return;
+
+    container.innerHTML = "";
+    galleriaFoto.forEach((foto, i) => {
+        const card = document.createElement("div");
+        card.className = "grid-photo-card";
+        card.dataset.index = i;
+
+        const mediaHtml = foto.tipo === "video"
+            ? `<video src="${foto.src}" preload="metadata" muted playsinline></video>`
+            : `<img src="${foto.src}" alt="${foto.titolo || 'Foto'}" loading="lazy">`;
+
+        card.innerHTML = `
+            <div class="grid-photo-img-wrap">
+                ${mediaHtml}
+            </div>
+            <div class="grid-photo-info">
+                <h4 class="grid-photo-title">${foto.titolo || 'Senza titolo'}</h4>
+                <p class="grid-photo-sub">${foto.sottotitolo || ''}</p>
+            </div>
+        `;
+
+        card.addEventListener("click", () => {
+            cambiaVistaGalleria("slider");
+            aggiornaFotoSlider(i);
+        });
+
+        container.appendChild(card);
+    });
+}
+
+// Cambia vista tra Slider e Griglia
+function cambiaVistaGalleria(vista) {
+    vistaAttivaGalleria = vista;
+    const sliderView = document.getElementById("galleria-slider-view");
+    const gridView = document.getElementById("galleria-grid-view");
+    const btnSlider = document.getElementById("btn-view-slider");
+    const btnGrid = document.getElementById("btn-view-grid");
+
+    if (vista === "slider") {
+        if (sliderView) sliderView.classList.remove("hidden");
+        if (gridView) gridView.classList.add("hidden");
+        if (btnSlider) btnSlider.classList.add("active");
+        if (btnGrid) btnGrid.classList.remove("active");
+        aggiornaFotoSlider(indiceFotoCorrente);
+    } else {
+        if (sliderView) sliderView.classList.add("hidden");
+        if (gridView) gridView.classList.remove("hidden");
+        if (btnSlider) btnSlider.classList.remove("active");
+        if (btnGrid) btnGrid.classList.add("active");
+    }
+}
+
+// Gestione Lightbox a tutto schermo
+function apriLightbox() {
+    if (galleriaFoto.length === 0) return;
+    const lightbox = document.getElementById("galleria-lightbox");
+    if (!lightbox) return;
+
+    lightbox.classList.remove("hidden");
+    lightboxAperto = true;
+    aggiornaFotoLightbox(indiceFotoCorrente);
+}
+
+function chiudiLightbox() {
+    const lightbox = document.getElementById("galleria-lightbox");
+    if (!lightbox) return;
+    lightbox.classList.add("hidden");
+    lightboxAperto = false;
+}
+
+function aggiornaFotoLightbox(index) {
+    if (galleriaFoto.length === 0) return;
+    const foto = galleriaFoto[index];
+    const img = document.getElementById("lightbox-img");
+    const counter = document.getElementById("lightbox-counter");
+    const title = document.getElementById("lightbox-title");
+
+    if (img) img.src = foto.src;
+    if (counter) counter.textContent = `${index + 1} / ${galleriaFoto.length}`;
+    if (title) title.textContent = foto.titolo || "";
+}
+
+// Impostazione di tutti gli Event Listener della Galleria
+function impostaAscoltatoriGalleria() {
+    const btnCarica = document.getElementById("btn-carica-foto");
+    const btnEmptyCarica = document.getElementById("btn-empty-carica");
+    const fileInput = document.getElementById("galleria-file-input");
+    const btnPrev = document.getElementById("slider-btn-prev");
+    const btnNext = document.getElementById("slider-btn-next");
+    const viewport = document.getElementById("slider-viewport");
+    const btnFullscreen = document.getElementById("btn-fullscreen-foto");
+    const btnElimina = document.getElementById("btn-elimina-foto");
+    const btnViewSlider = document.getElementById("btn-view-slider");
+    const btnViewGrid = document.getElementById("btn-view-grid");
+
+    // Click per aprire il file picker
+    const apriFilePicker = () => {
+        if (fileInput) fileInput.click();
+    };
+    if (btnCarica) btnCarica.addEventListener("click", apriFilePicker);
+    if (btnEmptyCarica) btnEmptyCarica.addEventListener("click", apriFilePicker);
+
+    // Caricamento dei file selezionati
+    if (fileInput) {
+        fileInput.addEventListener("change", async function(e) {
+            const files = Array.from(e.target.files || []);
+            if (files.length === 0) return;
+
+            const spinner = document.getElementById("galleria-upload-spinner");
+            const spinnerText = document.getElementById("galleria-upload-spinner-text");
+
+            if (spinner) spinner.classList.remove("hidden");
+            if (spinnerText) spinnerText.textContent = `Salvataggio di ${files.length} foto in corso...`;
+
+            let contatoreSalvate = 0;
+            const indicePartenzaNuoveFoto = galleriaFoto.length;
+
+            for (let i = 0; i < files.length; i++) {
+                const f = files[i];
+                try {
+                    const dataUrl = await ottimizzaImmagine(f, 1600, 0.85);
+                    const nomePulito = f.name.replace(/\.[^/.]+$/, "");
+                    const dataOggi = new Date().toLocaleDateString("it-IT", { day: "numeric", month: "short", year: "numeric" });
+                    
+                    const nuovaFoto = {
+                        id: "custom-" + Date.now() + "-" + Math.random().toString(36).substr(2, 6),
+                        src: dataUrl,
+                        titolo: nomePulito,
+                        sottotitolo: `Caricata il ${dataOggi}`,
+                        isCustom: true,
+                        timestamp: Date.now()
+                    };
+
+                    await salvaFotoInDatabase(nuovaFoto);
+                    contatoreSalvate++;
+                } catch (err) {
+                    console.error("Errore elaborazione foto:", err);
+                }
+            }
+
+            if (spinner) spinner.classList.add("hidden");
+            fileInput.value = ""; // Resetta per permettere di ricaricare lo stesso file se necessario
+
+            if (contatoreSalvate > 0) {
+                // Ricarica tutte le foto
+                await ricaricaFotoGalleria();
+                // Sposta lo slider alla prima nuova foto caricata
+                aggiornaFotoSlider(indicePartenzaNuoveFoto);
+
+                mostraToastGalleria(`🎉 ${contatoreSalvate} ${contatoreSalvate === 1 ? 'foto aggiunta' : 'foto aggiunte'} alla galleria!`);
+
+                // Esplosione coriandoli se la libreria confetti è presente
+                if (typeof confetti === "function") {
+                    confetti({
+                        particleCount: 50,
+                        spread: 60,
+                        origin: { y: 0.7 }
+                    });
+                }
+            } else {
+                mostraToastGalleria("Impossibile caricare le foto selezionate. Riprova.");
+            }
+        });
+    }
+
+    // Navigazione frecce slider
+    if (btnPrev) btnPrev.addEventListener("click", fotoPrecedente);
+    if (btnNext) btnNext.addEventListener("click", fotoSuccessiva);
+
+    // Click sulla foto o sul tasto ingrandisci per aprire il lightbox
+    if (viewport) viewport.addEventListener("click", apriLightbox);
+    if (btnFullscreen) btnFullscreen.addEventListener("click", apriLightbox);
+
+    // Tasto elimina foto caricata
+    if (btnElimina) {
+        btnElimina.addEventListener("click", async () => {
+            const foto = galleriaFoto[indiceFotoCorrente];
+            if (!foto || !foto.isCustom) return;
+
+            const conferma = confirm(`Vuoi davvero rimuovere "${foto.titolo || 'questa foto'}" dalla galleria?`);
+            if (!conferma) return;
+
+            await eliminaFotoDaDatabase(foto.id);
+            mostraToastGalleria("Foto rimossa dalla galleria.");
+            await ricaricaFotoGalleria();
+        });
+    }
+
+    // Toggle Vista Slider / Griglia
+    if (btnViewSlider) btnViewSlider.addEventListener("click", () => cambiaVistaGalleria("slider"));
+    if (btnViewGrid) btnViewGrid.addEventListener("click", () => cambiaVistaGalleria("grid"));
+
+    // GESTIONE SWIPE TOUCH PER SMARTPHONE SULLO SLIDER
+    const stage = document.getElementById("slider-stage");
+    if (stage) {
+        let touchStartX = 0;
+        let touchStartY = 0;
+        let touchStartTime = 0;
+
+        stage.addEventListener("touchstart", function(e) {
+            if (e.touches.length === 1) {
+                touchStartX = e.touches[0].clientX;
+                touchStartY = e.touches[0].clientY;
+                touchStartTime = Date.now();
+            }
+        }, { passive: true });
+
+        stage.addEventListener("touchend", function(e) {
+            if (e.changedTouches.length === 1) {
+                const touchEndX = e.changedTouches[0].clientX;
+                const touchEndY = e.changedTouches[0].clientY;
+                const deltaX = touchEndX - touchStartX;
+                const deltaY = touchEndY - touchStartY;
+
+                // Rileva swipe orizzontale
+                if (Math.abs(deltaX) > 35 && Math.abs(deltaX) > Math.abs(deltaY) * 1.3) {
+                    if (deltaX < 0) {
+                        fotoSuccessiva();
+                    } else {
+                        fotoPrecedente();
+                    }
+                }
+            }
+        }, { passive: true });
+    }
+
+    // GESTIONE LIGHTBOX
+    const lbClose = document.getElementById("lightbox-close");
+    const lbBackdrop = document.getElementById("lightbox-backdrop");
+    const lbPrev = document.getElementById("lightbox-prev");
+    const lbNext = document.getElementById("lightbox-next");
+    const lbWrap = document.getElementById("lightbox-img-wrap");
+
+    if (lbClose) lbClose.addEventListener("click", chiudiLightbox);
+    if (lbBackdrop) lbBackdrop.addEventListener("click", chiudiLightbox);
+    if (lbPrev) lbPrev.addEventListener("click", (e) => {
+        e.stopPropagation();
+        fotoPrecedente();
+    });
+    if (lbNext) lbNext.addEventListener("click", (e) => {
+        e.stopPropagation();
+        fotoSuccessiva();
+    });
+
+    // Swipe nel Lightbox su smartphone
+    if (lbWrap) {
+        let lbTouchStartX = 0;
+        let lbTouchStartY = 0;
+
+        lbWrap.addEventListener("touchstart", function(e) {
+            if (e.touches.length === 1) {
+                lbTouchStartX = e.touches[0].clientX;
+                lbTouchStartY = e.touches[0].clientY;
+            }
+        }, { passive: true });
+
+        lbWrap.addEventListener("touchend", function(e) {
+            if (e.changedTouches.length === 1) {
+                const deltaX = e.changedTouches[0].clientX - lbTouchStartX;
+                const deltaY = e.changedTouches[0].clientY - lbTouchStartY;
+
+                if (Math.abs(deltaX) > 40 && Math.abs(deltaX) > Math.abs(deltaY)) {
+                    if (deltaX < 0) {
+                        fotoSuccessiva();
+                    } else {
+                        fotoPrecedente();
+                    }
+                }
+            }
+        }, { passive: true });
+    }
+
+    // NAVIGAZIONE TASTIERA (Frecce Sinistra / Destra / Esc)
+    window.addEventListener("keydown", function(e) {
+        const galleriaVisibile = galleriaScreen && !galleriaScreen.classList.contains("hidden");
+        if (!galleriaVisibile) return;
+
+        if (e.key === "ArrowLeft") {
+            fotoPrecedente();
+        } else if (e.key === "ArrowRight") {
+            fotoSuccessiva();
+        } else if (e.key === "Escape") {
+            if (lightboxAperto) {
+                chiudiLightbox();
+            } else {
+                tornaAlMenu();
+            }
+        }
+    });
 }
 

@@ -11,7 +11,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=Playfair+Display:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=16">
+    <link rel="stylesheet" href="style.css?v=19">
 </head>
 <body>
     
@@ -37,7 +37,6 @@
                 <button class="nav-btn bottone-pulsante" id="btn-galleria">Galleria Fotografica</button>
                 <button class="nav-btn bottone-pulsante" id="btn-cruciverba">Il Cruciverba</button>
                 <button class="nav-btn bottone-pulsante" id="btn-avanti-un-altro">Avanti un altro</button>
-                <button class="nav-btn bottone-pulsante" id="btn-top10">Top 10</button>
                 <button class="nav-btn bottone-pulsante" id="btn-bacheca">Lascia una Dedica</button>
             </div>
 
@@ -138,92 +137,137 @@
     <div id="galleria-screen" class="screen hidden">
         <div class="nav-bar">
             <button class="back-btn" id="back-from-galleria">⬅ Torna al Menu</button>
-            <h2>Galleria</h2>
+            <h2>Galleria Fotografica</h2>
         </div>
-        <div class="screen-placeholder">
-            <span class="placeholder-tag">IN ARRIVO</span>
-            <h3>Scatti & Ricordi</h3>
-            <p>La galleria fotografica!</p>
+
+        <div class="galleria-container">
+            <!-- Header Galleria -->
+
+                <span class="galleria-badge">SCATTI & RICORDI</span>
+                <h2>Galleria dei Ricordi</h2>
+                
+            <p class="galleria-desc">Sfoglia tutti i ricordi del nostro percorso universitario o carica nuovi scatti direttamente dal tuo smartphone o computer!</p>
+                
+                <div class="galleria-toolbar">
+                    <input type="file" id="galleria-file-input" accept="image/*,video/*" multiple style="display: none;">
+                    <button type="button" id="btn-carica-foto" class="btn-galleria-action primary">
+                        <span class="btn-icon">📷</span> Carica Foto
+                    </button>
+                    <div class="galleria-view-toggle">
+                        <button type="button" id="btn-view-slider" class="view-toggle-btn active" title="Modalità Scorrimento">
+                            <span>🖼️ Scorri</span>
+                        </button>
+                        <button type="button" id="btn-view-grid" class="view-toggle-btn" title="Modalità Griglia">
+                            <span>▦ Griglia</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Toast di Notifica -->
+            <div id="galleria-toast" class="galleria-toast hidden"></div>
+
+            <!-- Spinner di elaborazione upload -->
+            <div id="galleria-upload-spinner" class="galleria-upload-spinner hidden">
+                <div class="spinner-circle"></div>
+                <span id="galleria-upload-spinner-text">Ottimizzazione e salvataggio foto in corso...</span>
+            </div>
+
+            <!-- VISTA 1: SLIDER / SCORRIMENTO -->
+            <div id="galleria-slider-view" class="galleria-slider-view">
+                <div class="slider-card">
+                    <!-- Info Bar sopra la foto -->
+                    <div class="slider-info-bar">
+                        <span id="slider-counter" class="slider-counter-badge">Foto 1 di 1</span>
+                        <div class="slider-tools">
+                            <button type="button" id="btn-elimina-foto" class="slider-tool-btn danger hidden" title="Elimina questa foto">
+                                🗑️ Elimina
+                            </button>
+                            <button type="button" id="btn-fullscreen-foto" class="slider-tool-btn" title="Schermo intero">
+                                ⛶ Ingrandisci
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Stage Principale della foto con frecce di scorrimento -->
+                    <div class="slider-stage" id="slider-stage">
+                        <button type="button" id="slider-btn-prev" class="slider-arrow prev" aria-label="Foto precedente" title="Precedente">
+                            <span>❮</span>
+                        </button>
+
+                        <div class="slider-viewport" id="slider-viewport" title="Tocca per ingrandire a tutto schermo">
+                            <img id="slider-active-img" src="" alt="Foto della galleria" class="slider-img" draggable="false">
+                            <div class="slider-overlay-hint">
+                                <span>🔍 Tocca per ingrandire</span>
+                            </div>
+                        </div>
+
+                        <button type="button" id="slider-btn-next" class="slider-arrow next" aria-label="Foto successiva" title="Successiva">
+                            <span>❯</span>
+                        </button>
+                    </div>
+
+                    <!-- Didascalia e Titolo foto corrente -->
+                    <div class="slider-meta">
+                        <h4 id="slider-foto-titolo" class="slider-foto-titolo"></h4>
+                        <p id="slider-foto-sub" class="slider-foto-sub"></p>
+                    </div>
+
+                    <!-- Nastro miniature orizzontale scorrevole -->
+                    <div class="slider-thumbnails-wrap">
+                        <div class="thumbnails-header">
+                            <span>Tutte le foto (<span id="thumbnails-count">0</span>)</span>
+                            <span class="swipe-hint">👈 Trascina le miniature 👉</span>
+                        </div>
+                        <div id="slider-thumbnails-track" class="slider-thumbnails-track">
+                            <!-- Popolato dinamicamente -->
+                        </div>
+                    </div>
+
+                    <!-- Indicazioni touch per smartphone -->
+                    <div class="slider-gesture-hint">
+                        <span>💡 Scorri con il dito a destra o sinistra per cambiare foto rapidamente</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VISTA 2: GRIGLIA FOTOGRAFICA -->
+            <div id="galleria-grid-view" class="galleria-grid-view hidden">
+                <div id="galleria-grid-container" class="galleria-grid-container">
+                    <!-- Popolato dinamicamente -->
+                </div>
+            </div>
+
+            <!-- STATO VUOTO -->
+            <div id="galleria-empty-state" class="galleria-empty-state hidden">
+                <div class="empty-icon">📷</div>
+                <h3>Nessuna foto presente</h3>
+                <p>Non ci sono ancora foto nella galleria. Clicca su "Carica Foto" per aggiungere i tuoi ricordi!</p>
+                <button type="button" id="btn-empty-carica" class="btn-galleria-action primary">
+                    Carica Foto Ora
+                </button>
+            </div>
+        </div>
+
+        <!-- LIGHTBOX A TUTTO SCHERMO -->
+        <div id="galleria-lightbox" class="galleria-lightbox hidden">
+            <div class="lightbox-backdrop" id="lightbox-backdrop"></div>
+            <button type="button" id="lightbox-close" class="lightbox-btn close" title="Chiudi (Esc)">✕</button>
+            <button type="button" id="lightbox-prev" class="lightbox-btn nav-btn-lb prev" title="Foto precedente">❮</button>
+            <div class="lightbox-img-wrap" id="lightbox-img-wrap">
+                <img id="lightbox-img" src="" alt="Foto a tutto schermo">
+                <div class="lightbox-caption">
+                    <span id="lightbox-counter" class="lightbox-counter"></span>
+                    <span id="lightbox-title" class="lightbox-title"></span>
+                </div>
+            </div>
+            <button type="button" id="lightbox-next" class="lightbox-btn nav-btn-lb next" title="Foto successiva">❯</button>
         </div>
     </div>
 
 
     <div id="top10-screen" class="screen hidden">
-        <div class="nav-bar">
-            <button class="back-btn" id="back-from-top10">⬅ Torna al Menu</button>
-            <h2>Top 10</h2>
-        </div>
-
-        <div class="top10-container">
-            <!-- Box Password di Sblocco -->
-            <div id="top10-lock-box" class="top10-header-card top10-lock-card">
-                <span class="lock-icon">🔐</span>
-                <span class="top10-badge">ACCESSO RISERVATO</span>
-                <h2>AREA SEGRETA</h2>
-                <p class="top10-desc">Questa classifica contiene aneddoti ad altissima gradazione. Inserisci la parola d'ordine segreta per sbloccare la Top 10!</p>
-                
-                <form id="top10-password-form" class="top10-lock-form" onsubmit="return false;">
-                    <div class="lock-input-wrapper">
-                        <input type="password" id="top10-password-input" class="top10-password-input" placeholder="Parola d'ordine..." autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false">
-                        <button type="button" id="top10-toggle-pwd" class="top10-toggle-pwd" title="Mostra/Nascondi password">👁️</button>
-                    </div>
-                    <div id="top10-password-error" class="top10-password-error hidden">❌ Password errata! Riprova.</div>
-                    <div class="top10-lock-azioni">
-                        <button type="submit" id="btn-submit-top10-pwd" class="nav-btn bottone-pulsante">Sblocca Classifica</button>
-                        <button type="button" class="back-btn" id="btn-back-from-top10-lock">⬅ Torna al Menu</button>
-                    </div>
-                </form>
-            </div>
-
-            <!-- Contenuto della Top 10 (visibile solo dopo sblocco) -->
-            <div id="top10-content-box" class="hidden">
-                <div class="top10-header-card">
-                    <span class="top10-badge">CLASSIFICA UFFICIALE • LAUREA</span>
-                    <h2>La Top 10 dei Momenti Iconici</h2>
-                    <p class="top10-desc">Trascina i quadratini con i ricordi nelle posizioni della tabella per stabilire la classifica definitiva dei nostri anni universitari!</p>
-                </div>
-
-                <div class="top10-layout">
-                    <!-- Colonna Tabella Posizioni (1-10) -->
-                    <div class="top10-board-col">
-                        <div class="top10-col-header">
-                            <h3>🏆 Tabella Posizioni</h3>
-                            <span id="top10-count-badge" class="top10-count-badge">0 / 10 Posizionati</span>
-                        </div>
-                        <div class="top10-slots-list" id="top10-slots-container">
-                            <!-- Generati dinamicamente da JS -->
-                        </div>
-                    </div>
-
-                    <!-- Colonna Quadratini Disponibili -->
-                    <div class="top10-items-col">
-                        <div class="top10-col-header">
-                            <div class="top10-col-title-group">
-                                <h3>✨ Momenti Disponibili</h3>
-                                <span class="top10-scroll-hint">👈 Scorri per leggere 👉</span>
-                            </div>
-                            <button type="button" id="btn-reset-top10"  class="top10-btn-reset" title="Ripristina la classifica">🔄 Reset</button>
-                        </div>
-                        <p class="top10-hint">💡 <em>Trascina</em> oppure <em>tocca</em> un momento e poi tocca la posizione desiderata.</p>
-                        <div class="top10-pool" id="top10-items-pool">
-                            <!-- Generati dinamicamente da JS -->
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Card di Classifica Completata -->
-                <div id="top10-complete-box" class="top10-complete-card hidden">
-                    <span class="vittoria-icon">🏆👑🥂</span>
-                    <span class="top10-badge">VERDETTO STABILITO</span>
-                    <h2>TOP 10 COMPLETATA!</h2>
-                    <p class="top10-complete-desc">Avete ufficialmente stilato la storia dei momenti più memorabili di questo incredibile percorso insieme!</p>
-                    <div class="top10-azioni">
-                        <button type="button" class="nav-btn bottone-pulsante" id="btn-restart-top10">Riorganizza la Classifica</button>
-                        <button type="button" class="back-btn" id="btn-menu-from-top10">⬅ Torna al Menu</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+    
     </div>
 
     <div id="avanti-un-altro-screen" class="screen hidden">
@@ -334,95 +378,87 @@
 
         <div class="game-container">
             <!-- BANNER INDIZIO ATTIVO PER SMARTPHONE E SCHERMI PICCOLI -->
+            <!-- BANNER INDIZIO ATTIVO PER SMARTPHONE E SCHERMI PICCOLI -->
             <div class="cruciverba-banner-indizio" id="cruciverba-banner-indizio">
                 <div class="banner-indizio-header">
-                    <span class="banner-indizio-tag">PAROLA <span id="banner-num">1</span> DI 5</span>
+                    <span class="banner-indizio-tag">PAROLA <span id="banner-num">1</span> DI <span id="banner-tot">11</span></span>
                     <div class="banner-indizio-pills">
                         <button type="button" class="indizio-pill attiva" data-target-row="1" aria-label="Vai a parola 1">1</button>
                         <button type="button" class="indizio-pill" data-target-row="2" aria-label="Vai a parola 2">2</button>
                         <button type="button" class="indizio-pill" data-target-row="3" aria-label="Vai a parola 3">3</button>
                         <button type="button" class="indizio-pill" data-target-row="4" aria-label="Vai a parola 4">4</button>
                         <button type="button" class="indizio-pill" data-target-row="5" aria-label="Vai a parola 5">5</button>
+                        <button type="button" class="indizio-pill" data-target-row="6" aria-label="Vai a parola 6">6</button>
+                        <button type="button" class="indizio-pill" data-target-row="7" aria-label="Vai a parola 7">7</button>
+                        <button type="button" class="indizio-pill" data-target-row="8" aria-label="Vai a parola 8">8</button>
+                        <button type="button" class="indizio-pill" data-target-row="9" aria-label="Vai a parola 9">9</button>
+                        <button type="button" class="indizio-pill" data-target-row="10" aria-label="Vai a parola 10">10</button>
+                        <button type="button" class="indizio-pill" data-target-row="11" aria-label="Vai a parola 11">11</button>
                     </div>
                 </div>
                 <div class="banner-indizio-body">
                     <button type="button" class="banner-nav-btn" id="btn-prev-indizio" aria-label="Indizio precedente">&#10094;</button>
-                    <p id="banner-testo-indizio" class="banner-indizio-testo">1. Se valentina inizia a ballare, sai già cosa sta per domandare: tra un sorriso e una sculettata, parte la frase tanto amata.</p>
+                    <p id="banner-testo-indizio" class="banner-indizio-testo">1. È il nostro brindisi più speciale, ormai diventato tradizionale: dopo cuore e sesso con tanto trasporto, qual è il terzo augurio che porta conforto?</p>
                     <button type="button" class="banner-nav-btn" id="btn-next-indizio" aria-label="Indizio successivo">&#10095;</button>
                 </div>
                 <button type="button" class="btn-toggle-tutte-domande" id="btn-toggle-tutte-domande">Mostra tutti gli indizi &#9662;</button>
             </div>
 
-            <div class="cruciverba-split">
-                <div class="cruciverba-domande" id="cruciverba-domande-lista">    
-                    <p data-row="1" class="domanda-item attiva"><strong>1.</strong> Se valentina inizia a ballare, sai già cosa sta per domandare: tra un sorriso e una sculettata, parte la frase tanto amata.</p>
-                    <p data-row="2" class="domanda-item"><strong>2.</strong> Non eran gatti né animali lontane, ma come chiamavamo le nostre birmane?</p>
-                    <p data-row="3" class="domanda-item"><strong>3.</strong> Un cane tanto sognato da me e Babbetta con passione, ma Vale poneva sempre una condizione: se mai fosse arrivato quel cagnolino speciale, quale nome doveva avere per essere ufficiale?</p>
-                    <p data-row="4" class="domanda-item"><strong>4.</strong> È il nostro brindisi più speciale, ormai diventato tradizionale: dopo cuore e sesso con tanto trasporto, qual è il terzo augurio che porta conforto?</p>
-                    <p data-row="5" class="domanda-item"><strong>5.</strong> Il primo anno aveva un appuntamento fisso, tra balli, risate e qualche tipo mai visto: tra personaggi strani e storie da raccontare, quale locale ci faceva sempre ritornare?</p>
-                    <p data-row="6" class="domanda-item"><strong>6.</strong> Tra un pranzo, un festino e un bicchiere di vino, è nato per caso il nostro destino. Un nome inventato così per scherzare, ma ormai è un marchio che non può cambiare: qual è? </p>
-                    <p data-row="7" class="domanda-item"><strong>7.</strong> Visti dal vivo in una pista dal nome celeste, con quel motivetto a farci girare le teste, ricordiamo quei giorni d’oro: che nome ci davamo, essendo fan di loro?</p>
-                    <p data-row="8" class="domanda-item"><strong>8.</strong> Sembra innocuo, dolce e quasi infantile ma con la vodka diventa un tranello sottile: in un giovedì fu la sua rovina, facendo barcollare la povera Valentina. </p>
-                    <p data-row="9" class="domanda-item"><strong>9.</strong> Porta il nome di una terra antica e lontana, ma per Babbetta è una dolce ossessione quotidiana: dopo ogni pasto la pretende a gran voce, per chiudere il pranzetto in modo sano e veloce.</p>
-                    <p data-row="10" class="domanda-item"><strong>10.</strong> Abitante dei boschi dal potere incantato, ma in centro a Parma rubò la scena al locale affollato: Babbetta ne vestì le sembianze alate, finendo su whatsapp tra mille risate. Cosa era? </p>
-                    <p data-row="11" class="domanda-item"><strong>11.</strong> Un linguaggio segreto fatto di segni e astrazione, che portò entrambe sull'orlo della disperazione: tra bilanci e mercati era l'intrusa spietata, la prova maledetta sempre rimandata. </p>  
-                    <p data-row="12" class="domanda-item"><strong>12.</strong> Accessorio poco glamour per la notte scatenata, ma vitale per Babbetta nella stagione gelata: un piccolo quadrato morbido e discreto, che salvava i suoi occhi da quel vento indiscreto.</p>
+            <!-- LAYOUT A 3 COLONNE: INDIZI SX - GRIGLIA CENTRATA - INDIZI DX -->
+            <div class="cruciverba-layout" id="cruciverba-layout-box">
+                <!-- COLONNA SINISTRA (Indizi 1 - 6) -->
+                <div class="cruciverba-domande cruciverba-col-sx" id="cruciverba-domande-sx">
+                    <span class="col-indizi-tag">Indizi 1 – 6</span>
+                    
+                    <div class="domanda-item" data-row="1" title="Passa il cursore per leggere tutto">
+                        <div class="domanda-item-content">
+                            <span class="domanda-badge">1</span>
+                            <span class="domanda-testo">È il nostro brindisi più speciale, ormai diventato tradizionale: dopo cuore e sesso con tanto trasporto, qual è il terzo augurio che porta conforto?</span>
+                        </div>
+                    </div>
+                    
+                    <div class="domanda-item" data-row="2" title="Passa il cursore per leggere tutto">
+                        <div class="domanda-item-content">
+                            <span class="domanda-badge">2</span>
+                            <span class="domanda-testo">Un linguaggio segreto fatto di segni e astrazione, che portò entrambe sull'orlo della disperazione: tra bilanci e mercati era l'intrusa spietata, la prova maledetta sempre rimandata.</span>
+                        </div>
+                    </div>
+                    
+                    <div class="domanda-item" data-row="3" title="Passa il cursore per leggere tutto">
+                        <div class="domanda-item-content">
+                            <span class="domanda-badge">3</span>
+                            <span class="domanda-testo">Abitante dei boschi dal potere incantato, ma in centro a Parma rubò la scena al locale affollato: Babbetta ne vestì le sembianze alate, finendo su whatsapp tra mille risate. Cosa era?</span>
+                        </div>
+                    </div>
+                    
+                    <div class="domanda-item" data-row="4" title="Passa il cursore per leggere tutto">
+                        <div class="domanda-item-content">
+                            <span class="domanda-badge">4</span>
+                            <span class="domanda-testo">Accessorio poco glamour per la notte scatenata, ma vitale per Babbetta nella stagione gelata: un piccolo quadrato morbido e discreto, che salvava i suoi occhi da quel vento indiscreto.</span>
+                        </div>
+                    </div>
+                    
+                    <div class="domanda-item" data-row="5" title="Passa il cursore per leggere tutto">
+                        <div class="domanda-item-content">
+                            <span class="domanda-badge">5</span>
+                            <span class="domanda-testo">Il primo anno aveva un appuntamento fisso, tra balli, risate e qualche tipo mai visto: tra personaggi strani e storie da raccontare, quale locale ci faceva sempre ritornare?</span>
+                        </div>
+                    </div>
+                    
+                    <div class="domanda-item" data-row="6" title="Passa il cursore per leggere tutto">
+                        <div class="domanda-item-content">
+                            <span class="domanda-badge">6</span>
+                            <span class="domanda-testo">Un cane tanto sognato da me e Babbetta con passione, ma Vale poneva sempre una condizione: se mai fosse arrivato quel cagnolino speciale, quale nome doveva avere per essere ufficiale?</span>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="cruciverba-griglia">
-                    <!-- Riga 1: CAFFETTIAMO -->
+                <!-- COLONNA CENTRALE: GRIGLIA CRUCIVERBA (CENTRATA) -->
+                <div class="cruciverba-griglia-col">
+                    <div class="cruciverba-griglia" id="cruciverba-griglia-wrap">
+                    <!-- Riga 1: SUCCESSO -->
                     <div class="cruciverba-riga" data-row="1">
                         <span class="riga-badge">1</span>
-                        <div class="crossword-grid">
-                            <input type="text" class="cell" maxlength="1" data-answer="C" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
-                            <input type="text" class="cell" maxlength="1" data-answer="A" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
-                            <input type="text" class="cell" maxlength="1" data-answer="F" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
-                            <input type="text" class="cell" maxlength="1" data-answer="F" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
-                            <input type="text" class="cell" maxlength="1" data-answer="E" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
-                            <input type="text" class="cell" maxlength="1" data-answer="T" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
-                            <input type="text" class="cell" maxlength="1" data-answer="T" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
-                            <input type="text" class="cell" maxlength="1" data-answer="I" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
-                            <input type="text" class="cell" maxlength="1" data-answer="A" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
-                            <input type="text" class="cell" maxlength="1" data-answer="M" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
-                            <input type="text" class="cell" maxlength="1" data-answer="O" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="done">
-                        </div>
-                        <button type="button" class="btn-check-riga nav-btn bottone-pulsante">Verifica</button>
-                        <span class="riga-status"></span>
-                    </div>
-
-                    <!-- Riga 2: SUJI -->
-                    <div class="cruciverba-riga" data-row="2">
-                        <span class="riga-badge">2</span>
-                        <div class="crossword-grid">
-                            <input type="text" class="cell" maxlength="1" data-answer="S" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
-                            <input type="text" class="cell" maxlength="1" data-answer="U" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
-                            <input type="text" class="cell" maxlength="1" data-answer="J" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
-                            <input type="text" class="cell" maxlength="1" data-answer="I" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="done">
-                        </div>
-                        <button type="button" class="btn-check-riga nav-btn bottone-pulsante">Verifica</button>
-                        <span class="riga-status"></span>
-                    </div>
-
-                    <!-- Riga 3: HEETSINA -->
-                    <div class="cruciverba-riga" data-row="3">
-                        <span class="riga-badge">3</span>
-                        <div class="crossword-grid">
-                            <input type="text" class="cell" maxlength="1" data-answer="H" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
-                            <input type="text" class="cell" maxlength="1" data-answer="E" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
-                            <input type="text" class="cell" maxlength="1" data-answer="E" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
-                            <input type="text" class="cell" maxlength="1" data-answer="T" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
-                            <input type="text" class="cell" maxlength="1" data-answer="S" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
-                            <input type="text" class="cell" maxlength="1" data-answer="I" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
-                            <input type="text" class="cell" maxlength="1" data-answer="N" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
-                            <input type="text" class="cell" maxlength="1" data-answer="A" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="done">
-                        </div>
-                        <button type="button" class="btn-check-riga nav-btn bottone-pulsante">Verifica</button>
-                        <span class="riga-status"></span>
-                    </div>
-
-                    <!-- Riga 4: SUCCESSO -->
-                    <div class="cruciverba-riga" data-row="4">
-                        <span class="riga-badge">4</span>
                         <div class="crossword-grid">
                             <input type="text" class="cell" maxlength="1" data-answer="S" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
                             <input type="text" class="cell" maxlength="1" data-answer="U" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
@@ -432,6 +468,57 @@
                             <input type="text" class="cell" maxlength="1" data-answer="S" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
                             <input type="text" class="cell" maxlength="1" data-answer="S" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
                             <input type="text" class="cell" maxlength="1" data-answer="O" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="done">
+                        </div>
+                        <button type="button" class="btn-check-riga nav-btn bottone-pulsante">Verifica</button>
+                        <span class="riga-status"></span>
+                    </div>
+
+                    <!-- Riga 2: MATEMATICA-->
+                      <div class="cruciverba-riga" data-row="2">
+                        <span class="riga-badge">2</span>
+                        <div class="crossword-grid">
+                            <input type="text" class="cell" maxlength="1" data-answer="M" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
+                            <input type="text" class="cell cell-special" maxlength="1" data-answer="A" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
+                            <input type= "text"class= "cell" maxlength= "1 "data-answer= "T"autocomplete= "off "autocorrect= "off "autocapitalize= "characters "spellcheck= "false "inputmode= "text ">
+                            <input type= "text"class= "cell" maxlength= "1 "data-answer= "E"autocomplete= "off "autocorrect= "off "autocapitalize= "characters "spellcheck= "false "inputmode= "text ">
+                            <input type= "text"class= "cell" maxlength= "1"data-answer= "M"autocomplete= "off "autocorrect= "off "autocapitalize= "characters "spellcheck= "false "inputmode= "text ">
+                            <input type= "text"class= "cell" maxlength= "1" data-answer= "A" autocomplete= "off" autocorrect= "off" autocapitalize= "characters" spellcheck= "false" inputmode= "text">
+                            <input type= "text"class= "cell" maxlength= "1" data-answer= "T" autocomplete= "off" autocorrect= "off" autocapitalize= "characters" spellcheck= "false" inputmode= "text">
+                            <input type= "text"class= "cell" maxlength= "1" data-answer= "I" autocomplete= "off" autocorrect= "off" autocapitalize= "characters" spellcheck= "false" inputmode= "text">   
+                            <input type= "text"class= "cell" maxlength= "1" data-answer= "C" autocomplete= "off" autocorrect= "off" autocapitalize= "characters" spellcheck= "false" inputmode= "text">   
+                            <input type= "text"class= "cell" maxlength= "1" data-answer= "A" autocomplete= "off" autocorrect= "off" autocapitalize= "characters" spellcheck= "false" inputmode= "text">   
+                        </div>
+                        <button type="button" class="btn-check-riga nav-btn bottone-pulsante">Verifica</button>
+                        <span class="riga-status"></span>   
+                    </div>
+
+                    <!-- Riga 3: FATA -->
+                    <div class="cruciverba-riga" data-row="3">
+                        <span class="riga-badge">3</span>
+                        <div class="crossword-grid">
+                            <input type="text" class="cell cell-special" maxlength="1" data-answer="F" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
+                            <input type="text" class="cell" maxlength="1" data-answer="A" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
+                            <input type= "text"class= "cell" maxlength= "1" data-answer= "T" autocomplete= "off "autocorrect= "off "autocapitalize= "characters "spellcheck= "false "inputmode= "text ">
+                            <input type= "text"class= "cell" maxlength= "1" data-answer= "A" autocomplete= "off "autocorrect= "off "autocapitalize= "characters "spellcheck= "false "inputmode= "text ">
+                        </div>
+                        <button type="button" class="btn-check-riga nav-btn bottone-pulsante">Verifica</button>
+                        <span class="riga-status"></span>
+                    </div>
+
+                    <!--Riga 4: FAZZOLETTO-->
+                    <div class="cruciverba-riga" data-row="4">
+                        <span class="riga-badge">4</span>
+                        <div class="crossword-grid">
+                            <input type="text" class="cell cell-special" maxlength="1" data-answer="F" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
+                            <input type="text" class="cell" maxlength="1" data-answer="A" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
+                            <input type= "text"class= "cell" maxlength= "1" data-answer= "Z" autocomplete= "off" autocorrect= "off" autocapitalize= "characters" spellcheck= "false" inputmode= "text">
+                            <input type= "text"class= "cell" maxlength= "1" data-answer= "Z" autocomplete= "off" autocorrect= "off" autocapitalize= "characters" spellcheck= "false" inputmode= "text">
+                            <input type= "text"class= "cell" maxlength= "1" data-answer= "O" autocomplete= "off" autocorrect= "off" autocapitalize= "characters" spellcheck= "false" inputmode= "text">
+                            <input type= "text"class= "cell" maxlength= "1" data-answer= "L" autocomplete= "off" autocorrect= "off" autocapitalize= "characters" spellcheck= "false" inputmode= "text">
+                            <input type= "text"class= "cell" maxlength= "1" data-answer= "E" autocomplete= "off" autocorrect= "off" autocapitalize= "characters" spellcheck= "false" inputmode= "text">
+                            <input type= "text"class= "cell" maxlength="1" data-answer="T" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text">   
+                            <input type= "text"class= "cell" maxlength= "1" data-answer= "T" autocomplete= "off" autocorrect= "off" autocapitalize= "characters" spellcheck= "false" inputmode= "text">
+                            <input type= "text"class= "cell" maxlength= "1" data-answer= "O" autocomplete= "off" autocorrect= "off" autocapitalize= "characters" spellcheck= "false" inputmode= "text">       
                         </div>
                         <button type="button" class="btn-check-riga nav-btn bottone-pulsante">Verifica</button>
                         <span class="riga-status"></span>
@@ -444,8 +531,8 @@
                             <input type="text" class="cell" maxlength="1" data-answer="G" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
                             <input type="text" class="cell" maxlength="1" data-answer="I" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
                             <input type="text" class="cell" maxlength="1" data-answer="O" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
-                            <input type="text" class="cell cell-special" maxlength="1" data-answer="V" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
-                            <input type="text" class="cell" maxlength="1" data-answer="E" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
+                            <input type="text" class="cell" maxlength="1" data-answer="V" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
+                            <input type="text" class="cell cell-special" maxlength="1" data-answer="E" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
                             <input type="text" class="cell" maxlength="1" data-answer="D" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
                             <input type="text" class="cell" maxlength="1" data-answer="R" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
                             <input type="text" class="cell" maxlength="1" data-answer="I" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
@@ -455,135 +542,161 @@
                         <button type="button" class="btn-check-riga nav-btn bottone-pulsante">Verifica</button>
                         <span class="riga-status"></span>
                     </div>
-                    <!-- Riga 6: PUTTANE PARMIGIANE-->
-                     <div class="cruciverba-riga" data-row="6">
+
+                    <!-- Riga 6: HEETSINA -->
+                    <div class="cruciverba-riga" data-row="6">
                         <span class="riga-badge">6</span>
                         <div class="crossword-grid">
-                            <input type="text" class="cell" maxlength="1" data-answer="P" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
-                            <input type="text" class="cell" maxlength="1" data-answer="U" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
-                            <input type="text" class="cell" maxlength="1" data-answer="T" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
+                            <input type="text" class="cell" maxlength="1" data-answer="H" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
+                            <input type="text" class="cell" maxlength="1" data-answer="E" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
+                            <input type="text" class="cell" maxlength="1" data-answer="E" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
                             <input type="text" class="cell cell-special" maxlength="1" data-answer="T" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
-                            <input type="text" class="cell cell-special2" maxlength="1" data-answer="A" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text">
-                            <input type="text" class="cell cell-special3 "maxlength="1" data-answer="N" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="">
-                            <input type="text"class= "cell cell-special4 "maxlength= "1 "data-answer= "E"autocomplete= "off "autocorrect= "off "autocapitalize= "characters "spellcheck= "false "inputmode= "text ">
-                            <input type= "text"class= "cell cell-special5 "maxlength= "1 "data-answer= " "autocomplete= "off "autocorrect= "off "autocapitalize= "characters "spellcheck= "false "inputmode= "text ">
-                            <input type= "text"class= "cell cell-special6 "maxlength= "1 "data-answer= "P"autocomplete= "off "autocorrect= "off "autocapitalize= "characters "spellcheck= "false "inputmode= "text ">
-                            <input type= "text"class= "cell cell-special7 "maxlength= "1 "data-answer= "A"autocomplete= "off "autocorrect= "off "autocapitalize= "characters "spellcheck= "false "inputmode= "text ">
-                            <input type= "text"class= "cell cell-special8 "maxlength= "1 "data-answer= "R"autocomplete= "off "autocorrect= "off "autocapitalize= "characters "spellcheck= "false "inputmode= "text ">
-                            <input type= "text"class= "cell cell-special9 "maxlength= "1 "data-answer= "M"autocomplete= "off "autocorrect= "off "autocapitalize= "characters "spellcheck= "false "inputmode= "text ">
-                            <input type= "text"class= "cell cell-special10 "maxlength= "1 "data-answer= "I"autocomplete= "off "autocorrect= "off "autocapitalize= "characters "spellcheck= "false "inputmode= "text ">
-                            <input type= "text"class= "cell cell-special11 "maxlength= "1 "data-answer= "G"autocomplete= "off "autocorrect= "off "autocapitalize= "characters "spellcheck= "false "inputmode= "text ">
-                            <input type= "text"class= "cell cell-special12 "maxlength= "1 "data-answer= "I"autocomplete= "off "autocorrect= "off "autocapitalize= "characters "spellcheck= "false "inputmode= "text ">
-                            <input type= "text"class= "cell cell-special13 "maxlength= "1 "data-answer= "A"autocomplete= "off "autocorrect= "off "autocapitalize= "characters "spellcheck= "false "inputmode= "text ">  
-                            <input type= "text"class= "cell cell-special14 "maxlength= "1 "data-answer= "N"autocomplete= "off "autocorrect= "off "autocapitalize= "characters "spellcheck= "false "inputmode= "text ">  
-                            <input type= "text"class= "cell cell-special15 "maxlength= "1 "data-answer= "E"autocomplete= "off "autocorrect= "off "autocapitalize= "characters "spellcheck= "false "inputmode= "text ">  
+                            <input type="text" class="cell" maxlength="1" data-answer="S" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
+                            <input type="text" class="cell" maxlength="1" data-answer="I" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
+                            <input type="text" class="cell" maxlength="1" data-answer="N" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
+                            <input type="text" class="cell" maxlength="1" data-answer="A" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="done">
                         </div>
                         <button type="button" class="btn-check-riga nav-btn bottone-pulsante">Verifica</button>
                         <span class="riga-status"></span>
                     </div>
+
                     <!-- Riga 7: PERLETTI-->
                     <div class="cruciverba-riga" data-row="7">
                         <span class="riga-badge">7</span>
                         <div class="crossword-grid">
                             <input type="text" class="cell" maxlength="1" data-answer="P" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
                             <input type="text" class="cell" maxlength="1" data-answer="E" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
-                            <input type="text" class="cell cell-special" maxlength="1" data-answer="R" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
-                            <input type="text" class="cell cell-special2 "maxlength= "1 "data-answer= "L "autocomplete= "off "autocorrect= "off "autocapitalize= "characters "spellcheck= "false "inputmode= "text ">
-                            <input type= "text"class= "cell cell-special3 "maxlength= "1 "data-answer= "E "autocomplete= "off "autocorrect= "off "autocapitalize= "characters "spellcheck= "false "inputmode= "text ">
-                            <input type= "text"class= "cell cell-special4 "maxlength= "1 "data-answer= "T"autocomplete= "off "autocorrect= "off "autocapitalize= "characters "spellcheck= "false "inputmode= "text ">
-                            <input type= "text"class= "cell cell-special5 "maxlength= "1 "data-answer= "T"autocomplete= "off "autocorrect= "off "autocapitalize= "characters "spellcheck= "false "inputmode= "text ">   
-                            <input type= "text"class= "cell cell-special6 "maxlength= "1 "data-answer= "I"autocomplete= "off "autocorrect= "off "autocapitalize= "characters "spellcheck= "false "inputmode= "text ">
+                            <input type="text" class="cell" maxlength="1" data-answer="R" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
+                            <input type="text" class="cell" maxlength= "1 "data-answer= "L" autocomplete= "off "autocorrect= "off "autocapitalize= "characters "spellcheck= "false "inputmode= "text ">
+                            <input type= "text"class= "cell" maxlength= "1 "data-answer= "E" autocomplete= "off "autocorrect= "off "autocapitalize= "characters "spellcheck= "false "inputmode= "text ">
+                            <input type= "text"class= "cell cell-special" maxlength= "1 "data-answer= "T"autocomplete= "off "autocorrect= "off "autocapitalize= "characters "spellcheck= "false "inputmode= "text ">
+                            <input type= "text"class= "cell" maxlength= "1 "data-answer= "T"autocomplete= "off "autocorrect= "off "autocapitalize= "characters "spellcheck= "false "inputmode= "text ">   
+                            <input type= "text"class= "cell" maxlength= "1 "data-answer= "I"autocomplete= "off "autocorrect= "off "autocapitalize= "characters "spellcheck= "false "inputmode= "text ">
                         </div>
                         <button type="button" class="btn-check-riga nav-btn bottone-pulsante">Verifica</button>
                         <span class="riga-status"></span>
                     </div>
-                    <!-- Riga 8: SUCCO-->
-                     <div class="cruciverba-riga" data-row="8">
+
+                    <!-- Riga 8: SUJI -->
+                    <div class="cruciverba-riga" data-row="8">
                         <span class="riga-badge">8</span>
                         <div class="crossword-grid">
                             <input type="text" class="cell" maxlength="1" data-answer="S" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
                             <input type="text" class="cell" maxlength="1" data-answer="U" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
-                            <input type="text" class="cell cell-special" maxlength="1" data-answer="C" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
-                            <input type= "text"class= "cell cell-special2 "maxlength= "1 "data-answer= "C "autocomplete= "off "autocorrect= "off "autocapitalize= "characters "spellcheck= "false "inputmode= "text ">
-                            <input type= "text"class= "cell cell-special3 "maxlength= "1 "data-answer= "O "autocomplete= "off "autocorrect= "off "autocapitalize= "characters "spellcheck= "false "inputmode= "text ">
-                        </div>
-                        <button type="button" class="btn-check-riga nav-btn bottone-pulsante">Verifica</button>
-                        <span class="riga-status"></span>
-                     </div>
-                     <!-- Riga 9: MACEDONIA -->
-                      <div class="cruciverba-riga" data-row="9">
-                        <span class="riga-badge">9</span>
-                        <div class="crossword-grid">
-                            <input type="text" class="cell" maxlength="1" data-answer="M" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
-                            <input type="text" class="cell" maxlength="1" data-answer="A" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
-                            <input type= "text"class= "cell cell-special "maxlength= "1 "data-answer= "C "autocomplete= "off "autocorrect= "off "autocapitalize= "characters "spellcheck= "false "inputmode= "text ">
-                            <input type= "text"class= "cell cell-special2 "maxlength= "1 "data-answer= "E "autocomplete= "off "autocorrect= "off "autocapitalize= "characters "spellcheck= "false "inputmode= "text ">
-                            <input type= "text"class= "cell cell-special3 "maxlength= "1 "data-answer= "D"autocomplete= "off "autocorrect= "off "autocapitalize= "characters "spellcheck= "false "inputmode= "text ">
-                            <input type= "text"class= "cell cell-special4" maxlength= "1" data-answer= "O" autocomplete= "off" autocorrect= "off" autocapitalize= "characters" spellcheck= "false" inputmode= "text">
-                            <input type= "text"class= "cell cell-special5" maxlength= "1" data-answer= "N" autocomplete= "off" autocorrect= "off" autocapitalize= "characters" spellcheck= "false" inputmode= "text">
-                            <input type= "text"class= "cell cell-special6" maxlength= "1" data-answer= "I" autocomplete= "off" autocorrect= "off" autocapitalize= "characters" spellcheck= "false" inputmode= "text">   
-                            <input type= "text"class= "cell cell-special7" maxlength= "1" data-answer= "A" autocomplete= "off" autocorrect= "off" autocapitalize= "characters" spellcheck= "false" inputmode= "text">   
-                        </div>
-                        <button type="button" class="btn-check-riga nav-btn bottone-pulsante">Verifica</button>
-                        <span class="riga-status"></span>
-                      </div>
-                    <!-- Riga 10: FATA -->
-                    <div class="cruciverba-riga" data-row="10">
-                        <span class="riga-badge">10</span>
-                        <div class="crossword-grid">
-                            <input type="text" class="cell" maxlength="1" data-answer="F" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
-                            <input type="text" class="cell" maxlength="1" data-answer="A" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
-                            <input type= "text"class= "cell cell-special "maxlength= "1 "data-answer= "T "autocomplete= "off "autocorrect= "off "autocapitalize= "characters "spellcheck= "false "inputmode= "text ">
-                            <input type= "text"class= "cell cell-special2 "maxlength= "1 "data-answer= "A "autocomplete= "off "autocorrect= "off "autocapitalize= "characters "spellcheck= "false "inputmode= "text ">
-                        </div>
-                        <button type="button" class="btn-check-riga nav-btn bottone-pulsante">Verifica</button>
-                        <span class="riga-status"></span>
-                      </div>
-                      <!-- Riga 11: MATEMATICA-->
-                      <div class="cruciverba-riga" data-row="11">
-                        <span class="riga-badge">11</span>
-                        <div class="crossword-grid">
-                            <input type="text" class="cell" maxlength="1" data-answer="M" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
-                            <input type="text" class="cell" maxlength="1" data-answer="A" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
-                            <input type= "text"class= "cell cell-special "maxlength= "1 "data-answer= "T "autocomplete= "off "autocorrect= "off "autocapitalize= "characters "spellcheck= "false "inputmode= "text ">
-                            <input type= "text"class= "cell cell-special2 "maxlength= "1 "data-answer= "E "autocomplete= "off "autocorrect= "off "autocapitalize= "characters "spellcheck= "false "inputmode= "text ">
-                            <input type= "text"class= "cell cell-special3 "maxlength= "1 "data-answer= "M"autocomplete= "off "autocorrect= "off "autocapitalize= "characters "spellcheck= "false "inputmode= "text ">
-                            <input type= "text"class= "cell cell-special4" maxlength= "1" data-answer= "A" autocomplete= "off" autocorrect= "off" autocapitalize= "characters" spellcheck= "false" inputmode= "text">
-                            <input type= "text"class= "cell cell-special5" maxlength= "1" data-answer= "T" autocomplete= "off" autocorrect= "off" autocapitalize= "characters" spellcheck= "false" inputmode= "text">
-                            <input type= "text"class= "cell cell-special6" maxlength= "1" data-answer= "I" autocomplete= "off" autocorrect= "off" autocapitalize= "characters" spellcheck= "false" inputmode= "text">   
-                            <input type= "text"class= "cell cell-special7" maxlength= "1" data-answer= "C" autocomplete= "off" autocorrect= "off" autocapitalize= "characters" spellcheck= "false" inputmode= "text">   
-                            <input type= "text"class= "cell cell-special8" maxlength= "1" data-answer= "A" autocomplete= "off" autocorrect= "off" autocapitalize= "characters" spellcheck= "false" inputmode= "text">   
-                        </div>
-                        <button type="button" class="btn-check-riga nav-btn bottone-pulsante">Verifica</button>
-                        <span class="riga-status"></span>   
-                        </div>
-                    <!--Riga 12: FAZZOLETTO-->
-                    <div class="cruciverba-riga" data-row="12">
-                        <span class="riga-badge">12</span>
-                        <div class="crossword-grid">
-                            <input type="text" class="cell" maxlength="1" data-answer="F" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
-                            <input type="text" class="cell" maxlength="1" data-answer="A" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
-                            <input type= "text"class= "cell cell-special "maxlength= "1 "data-answer= "Z "autocomplete= "off "autocorrect= "off "autocapitalize= "characters "spellcheck= "false "inputmode= "text ">
-                            <input type= "text"class= "cell cell-special2 "maxlength= "1 "data-answer= "Z "autocomplete= "off "autocorrect= "off "autocapitalize= "characters "spellcheck= "false "inputmode= "text ">
-                            <input type= "text"class= "cell cell-special3 "maxlength= "1    "data-answer= "O"autocomplete= "off "autocorrect= "off "autocapitalize= "characters "spellcheck= "false "inputmode= "text ">
-                            <input type= "text"class= "cell cell-special4" maxlength= "1" data-answer= "L" autocomplete= "off" autocorrect= "off" autocapitalize= "characters" spellcheck= "false" inputmode= "text">
-                            <input type= "text"class= "cell cell-special5" maxlength= "1" data-answer= "E" autocomplete= "off" autocorrect= "off" autocapitalize= "characters" spellcheck= "false" inputmode= "text">
-                            <input type= "text"class= "cell cell-special6" maxlength= "1" data-answer= "T" autocomplete= "off" autocorrect= "off" autocapitalize= "characters" spellcheck= "false" inputmode= "text">   
-                            <input type= "text"class= "cell cell-special7" maxlength= "1" data-answer= "T" autocomplete= "off" autocorrect= "off" autocapitalize= "characters" spellcheck= "false" inputmode= "text">
-                            <input type= "text"class= "cell cell-special8" maxlength= "1" data-answer= "O" autocomplete= "off" autocorrect= "off" autocapitalize= "characters" spellcheck= "false" inputmode= "text">       
+                            <input type="text" class="cell" maxlength="1" data-answer="J" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
+                            <input type="text" class="cell cell-special" maxlength="1" data-answer="I" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="done">
                         </div>
                         <button type="button" class="btn-check-riga nav-btn bottone-pulsante">Verifica</button>
                         <span class="riga-status"></span>
                     </div>
-                            
-            </div>
-            <p id="risultato-cruciverba"></p>
-        </div>
 
+                    <!-- Riga 9: PUTTANE PARMIGIANE -->
+                    <div class="cruciverba-riga" data-row="9">
+                        <span class="riga-badge">9</span>
+                        <div class="crossword-grid">
+                            <input type="text" class="cell" maxlength="1" data-answer="P" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
+                            <input type="text" class="cell" maxlength="1" data-answer="U" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
+                            <input type="text" class="cell" maxlength="1" data-answer="T" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
+                            <input type="text" class="cell" maxlength="1" data-answer="T" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
+                            <input type="text" class="cell cell-special" maxlength="1" data-answer="A" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
+                            <input type="text" class="cell" maxlength="1" data-answer="N" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
+                            <input type="text" class="cell" maxlength="1" data-answer="E" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
+                            <input type="text" class="cell" maxlength="1" data-answer="P" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
+                            <input type="text" class="cell" maxlength="1" data-answer="A" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
+                            <input type="text" class="cell" maxlength="1" data-answer="R" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
+                            <input type="text" class="cell" maxlength="1" data-answer="M" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
+                            <input type="text" class="cell" maxlength="1" data-answer="I" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
+                            <input type="text" class="cell" maxlength="1" data-answer="G" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
+                            <input type="text" class="cell" maxlength="1" data-answer="I" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
+                            <input type="text" class="cell" maxlength="1" data-answer="A" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
+                            <input type="text" class="cell" maxlength="1" data-answer="N" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
+                            <input type="text" class="cell" maxlength="1" data-answer="E" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="done">
+                        </div>
+                        <button type="button" class="btn-check-riga nav-btn bottone-pulsante">Verifica</button>
+                        <span class="riga-status"></span>
+                    </div>
+
+                    <!-- Riga 10: MACEDONIA -->
+                    <div class="cruciverba-riga" data-row="10">
+                        <span class="riga-badge">10</span>
+                        <div class="crossword-grid">
+                            <input type="text" class="cell cell-special" maxlength="1" data-answer="M" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
+                            <input type="text" class="cell" maxlength="1" data-answer="A" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
+                            <input type="text" class="cell" maxlength="1" data-answer="C" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
+                            <input type="text" class="cell" maxlength="1" data-answer="E" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
+                            <input type="text" class="cell" maxlength="1" data-answer="D" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
+                            <input type="text" class="cell" maxlength="1" data-answer="O" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
+                            <input type="text" class="cell" maxlength="1" data-answer="N" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
+                            <input type="text" class="cell" maxlength="1" data-answer="I" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
+                            <input type="text" class="cell" maxlength="1" data-answer="A" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="done">
+                        </div>
+                        <button type="button" class="btn-check-riga nav-btn bottone-pulsante">Verifica</button>
+                        <span class="riga-status"></span>
+                    </div>
+
+                    <!-- Riga 11: SUCCO -->
+                    <div class="cruciverba-riga" data-row="11">
+                        <span class="riga-badge">11</span>
+                        <div class="crossword-grid">
+                            <input type="text" class="cell" maxlength="1" data-answer="S" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
+                            <input type="text" class="cell" maxlength="1" data-answer="U" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
+                            <input type="text" class="cell" maxlength="1" data-answer="C" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
+                            <input type="text" class="cell" maxlength="1" data-answer="C" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="next">
+                            <input type="text" class="cell cell-special" maxlength="1" data-answer="O" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="done">
+                        </div>
+                        <button type="button" class="btn-check-riga nav-btn bottone-pulsante">Verifica</button>
+                        <span class="riga-status"></span>
+                    </div>
+                </div>
+                <p id="risultato-cruciverba"></p>
+            </div>
+
+            <!-- COLONNA DESTRA (Indizi 7 - 11) -->
+            <div class="cruciverba-domande cruciverba-col-dx" id="cruciverba-domande-dx">
+                <span class="col-indizi-tag">Indizi 7 – 11</span>
+                
+                <div class="domanda-item" data-row="7" title="Passa il cursore per leggere tutto">
+                    <div class="domanda-item-content">
+                        <span class="domanda-badge">7</span>
+                        <span class="domanda-testo">Visti dal vivo in una pista dal nome celeste, con quel motivetto a farci girare le teste, ricordiamo quei giorni d’oro: che nome ci davamo, essendo fan di loro?</span>
+                    </div>
+                </div>
+                
+                <div class="domanda-item" data-row="8" title="Passa il cursore per leggere tutto">
+                    <div class="domanda-item-content">
+                        <span class="domanda-badge">8</span>
+                        <span class="domanda-testo">Non eran gatti né animali lontane, ma come chiamavamo le nostre birmane?</span>
+                    </div>
+                </div>
+                
+                <div class="domanda-item" data-row="9" title="Passa il cursore per leggere tutto">
+                    <div class="domanda-item-content">
+                        <span class="domanda-badge">9</span>
+                        <span class="domanda-testo">Tra un pranzo, un festino e un bicchiere di vino, è nato per caso il nostro destino. Un nome inventato così per scherzare, ma ormai è un marchio che non può cambiare: qual è?</span>
+                    </div>
+                </div>
+                
+                <div class="domanda-item" data-row="10" title="Passa il cursore per leggere tutto">
+                    <div class="domanda-item-content">
+                        <span class="domanda-badge">10</span>
+                        <span class="domanda-testo">Porta il nome di una terra antica e lontana, ma per Babbetta è una dolce ossessione quotidiana: dopo ogni pasto la pretende a gran voce, per chiudere il pranzetto in modo sano e veloce.</span>
+                    </div>
+                </div>
+                
+                <div class="domanda-item" data-row="11" title="Passa il cursore per leggere tutto">
+                    <div class="domanda-item-content">
+                        <span class="domanda-badge">11</span>
+                        <span class="domanda-testo">Sembra innocuo, dolce e quasi infantile ma con la vodka diventa un tranello sottile: in un giovedì fu la sua rovina, facendo barcollare la povera Valentina.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <!-- Libreria per i coriandoli (Confetti) -->
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-    <script src="script.js?v=16"></script>
+</div>
+
+<!-- Libreria per i coriandoli (Confetti) -->
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<script src="script.js?v=19"></script>
 </body>
 </html>
