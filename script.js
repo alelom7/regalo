@@ -1295,62 +1295,52 @@ const FOTO_PREDEFINITE = [
     {
         id: "predefinita-1",
         src: "assets/cinqueterre.jpeg",
-        titolo: "Gita in Liguria",
         isCustom: false
     },
     {
         id: "predefinita-2",
         src: "assets/perletti.jpeg",
-        titolo: "Perletti in azione",
         isCustom: false
     },
     {
         id: "predefinita-3",
         src: "assets/paul.jpeg",
-        titolo: "noi e Paul",
         isCustom: false
     },
     {
         id: "predefinita-4",
         src: "assets/astro.jpeg",
-        titolo: "incontri all'astro",
         isCustom: false
     },
     {
         id: "predefinita-5",
         src: "assets/giove.jpeg",
-        titolo: "Le bimbe del giovedrink",
         isCustom: false
     },
     {
         id: "predefinita-6",
         src: "assets/noe.jpeg",
-        titolo: "Noe & Vale",
         isCustom: false
     },
     {
         id: "predefinita-7",
         src: "assets/noe2.jpeg",
-        titolo: "Noe a Taranto",
         isCustom: false
     },
     {
         id: "predefinita-8",
         src: "assets/ladypizza.jpeg",
-        titolo: "Tappa fissa da Lady Pizza",
         isCustom: false
     },
     {
         id: "predefinita-9",
         src: "assets/ttlegirls.mp4",
-        titolo: "TTLE Girls",
         tipo: "video",
         isCustom: false
     },
     {
         id: "predefinita-10",
         src: "assets/video2.mp4",
-        titolo: "volevamo essere delle dure",
         tipo: "video",
         isCustom: false
     },
@@ -1403,7 +1393,6 @@ async function caricaESalvaMediaCondiviso(file) {
         throw new Error("Upload su Cloudinary fallito");
     }
 
-    const nomePulito = file.name.replace(/\.[^/.]+$/, "");
     const dataOggi = new Date().toLocaleDateString("it-IT", {
         day: "numeric",
         month: "short",
@@ -1413,7 +1402,6 @@ async function caricaESalvaMediaCondiviso(file) {
     const nuovoElemento = {
         id: "shared-" + Date.now() + "-" + Math.random().toString(36).substring(2, 7),
         src: uploadData.secure_url,
-        titolo: nomePulito,
         sottotitolo: `Caricata il ${dataOggi}`,
         tipo: isVideo ? "video" : "image",
         isCustom: false,
@@ -1658,10 +1646,6 @@ function renderizzaGriglia() {
         card.innerHTML = `
             <div class="grid-photo-img-wrap">
                 ${mediaHtml}
-            </div>
-            <div class="grid-photo-info">
-                <h4 class="grid-photo-title">${foto.titolo || 'Senza titolo'}</h4>
-                <p class="grid-photo-sub">${foto.sottotitolo || ''}</p>
             </div>
         `;
 

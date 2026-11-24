@@ -3201,6 +3201,12 @@ h1, h2, h3 {
     border: 1px dashed rgba(21, 128, 61, 0.3);
 }
 
+ #galleria-screen .galleria-container .galleria-badge,
+    #galleria-screen .galleria-container h2,
+    #galleria-screen .galleria-container .galleria-desc {
+    text-align: center;
+    }
+
 @media screen and (max-width: 820px) {
     .top10-container {
         margin: 1.2rem auto 3rem;
