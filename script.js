@@ -1347,6 +1347,13 @@ const FOTO_PREDEFINITE = [
         tipo: "video",
         isCustom: false
     },
+    {
+        id: "predefinita-10",
+        src: "assets/video2.mp4",
+        titolo: "volevamo essere delle dure",
+        tipo: "video",
+        isCustom: false
+    },
 ];
 
 // Stato della Galleria
@@ -1658,8 +1665,6 @@ function renderizzaMiniature() {
                 mediaEl.loading = "lazy";
             }
 
-
-
 item.appendChild(mediaEl); 
         item.addEventListener("click", () => {
             aggiornaFotoSlider(i);
@@ -1754,6 +1759,8 @@ function apriLightbox() {
 
 function chiudiLightbox() {
     const lightbox = document.getElementById("galleria-lightbox");
+    const lbVideo = document.getElementById("lightbox-video");
+    if (lbVideo) lbVideo.pause();
     if (!lightbox) return;
     lightbox.classList.add("hidden");
     lightboxAperto = false;
@@ -1763,10 +1770,32 @@ function aggiornaFotoLightbox(index) {
     if (galleriaFoto.length === 0) return;
     const foto = galleriaFoto[index];
     const img = document.getElementById("lightbox-img");
+    let lbVideo = document.getElementById("lightbox-video");
     const counter = document.getElementById("lightbox-counter");
     const title = document.getElementById("lightbox-title");
 
-    if (img) img.src = foto.src;
+    if (img && img.parentElement) {
+        if (!lbVideo) {
+            lbVideo = document.createElement("video");
+            lbVideo.id = "lightbox-video";
+            lbVideo.controls = true;
+            lbVideo.playsInline = true;
+            lbVideo.className = img.className;
+            img.parentElement.insertBefore(lbVideo, img.nextSibling);
+        }
+
+        if (foto.tipo === "video") {
+            img.classList.add("hidden");
+            lbVideo.classList.remove("hidden");
+            lbVideo.src = foto.src;
+        } else {
+            lbVideo.pause();
+            lbVideo.classList.add("hidden");
+            img.classList.remove("hidden");
+            img.src = foto.src;
+        }
+    }
+
     if (counter) counter.textContent = `${index + 1} / ${galleriaFoto.length}`;
     if (title) title.textContent = foto.titolo || "";
 }
