@@ -1364,119 +1364,69 @@ let vistaAttivaGalleria = "slider";
 let lightboxAperto = false;
 
 // Gestione IndexedDB per il salvataggio persistente delle foto caricate
-const DB_NAME_GALLERIA = "GalleriaFotograficaLaurea";
-const DB_VERSION_GALLERIA = 1;
-const STORE_NAME_GALLERIA = "foto_caricate";
+const CLOUDINARY_CLOUD_NAME = "md77rjws";
+const CLOUDINARY_UPLOAD_PRESET = "galleria";
+const FIREBASE_DB_URL = "https://galleria-d8e0d-default-rtdb.europe-west1.firebasedatabase.app";
 
-function apriDatabaseGalleria() {
-    return new Promise((resolve) => {
-        if (!window.indexedDB) {
-            resolve(null);
-            return;
-        }
-        try {
-            const req = window.indexedDB.open(DB_NAME_GALLERIA, DB_VERSION_GALLERIA);
-            req.onupgradeneeded = function(e) {
-                const db = e.target.result;
-                if (!db.objectStoreNames.contains(STORE_NAME_GALLERIA)) {
-                    db.createObjectStore(STORE_NAME_GALLERIA, { keyPath: "id" });
-                }
-            };
-            req.onsuccess = function(e) {
-                resolve(e.target.result);
-            };
-            req.onerror = function() {
-                resolve(null);
-            };
-        } catch (err) {
-            resolve(null);
-        }
-    });
-}
-
+// Legge tutte le foto e i video condivisi da Firebase (visibili a tutti)
 async function caricaFotoDaDatabase() {
-    const db = await apriDatabaseGalleria();
-    if (!db) return [];
-    return new Promise((resolve) => {
-        try {
-            const tx = db.transaction(STORE_NAME_GALLERIA, "readonly");
-            const store = tx.objectStore(STORE_NAME_GALLERIA);
-            const req = store.getAll();
-            req.onsuccess = () => resolve(req.result || []);
-            req.onerror = () => resolve([]);
-        } catch (e) {
-            resolve([]);
-        }
-    });
+    try {
+        const res = await fetch(`${FIREBASE_DB_URL}/foto_caricate.json`);
+        const data = await res.json();
+        if (!data) return [];
+        return Object.values(data).sort((a, b) => (a.timestamp || 0) - (b.timestamp || 0));
+    } catch (e) {
+        console.error("Errore lettura Firebase:", e);
+        return [];
+    }
 }
 
-async function salvaFotoInDatabase(fotoObj) {
-    const db = await apriDatabaseGalleria();
-    if (!db) return false;
-    return new Promise((resolve) => {
-        try {
-            const tx = db.transaction(STORE_NAME_GALLERIA, "readwrite");
-            const store = tx.objectStore(STORE_NAME_GALLERIA);
-            store.put(fotoObj);
-            tx.oncomplete = () => resolve(true);
-            tx.onerror = () => resolve(false);
-        } catch (e) {
-            resolve(false);
+// Carica foto o video su Cloudinary e salva i dati su Firebase
+async function caricaESalvaMediaCondiviso(file) {
+    const isVideo = file.type.startsWith("video/");
+    const endpointTipo = isVideo ? "video" : "image";
+
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
+
+    const uploadRes = await fetch(
+        `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/${endpointTipo}/upload`,
+        {
+            method: "POST",
+            body: formData
         }
+    );
+
+    const uploadData = await uploadRes.json();
+    if (!uploadRes.ok || !uploadData.secure_url) {
+        throw new Error("Upload su Cloudinary fallito");
+    }
+
+    const nomePulito = file.name.replace(/\.[^/.]+$/, "");
+    const dataOggi = new Date().toLocaleDateString("it-IT", {
+        day: "numeric",
+        month: "short",
+        year: "numeric"
     });
-}
 
-async function eliminaFotoDaDatabase(id) {
-    const db = await apriDatabaseGalleria();
-    if (!db) return false;
-    return new Promise((resolve) => {
-        try {
-            const tx = db.transaction(STORE_NAME_GALLERIA, "readwrite");
-            const store = tx.objectStore(STORE_NAME_GALLERIA);
-            store.delete(id);
-            tx.oncomplete = () => resolve(true);
-            tx.onerror = () => resolve(false);
-        } catch (e) {
-            resolve(false);
-        }
+    const nuovoElemento = {
+        id: "shared-" + Date.now() + "-" + Math.random().toString(36).substring(2, 7),
+        src: uploadData.secure_url,
+        titolo: nomePulito,
+        sottotitolo: `Caricata il ${dataOggi}`,
+        tipo: isVideo ? "video" : "image",
+        isCustom: false,
+        timestamp: Date.now()
+    };
+
+    await fetch(`${FIREBASE_DB_URL}/foto_caricate/${nuovoElemento.id}.json`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(nuovoElemento)
     });
-}
 
-// Ridimensionamento e compressione client-side delle immagini per performance ottimali
-function ottimizzaImmagine(file, maxDim = 1600, qualita = 0.85) {
-    return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            const img = new Image();
-            img.onload = function() {
-                let width = img.width;
-                let height = img.height;
-
-                if (width > maxDim || height > maxDim) {
-                    if (width > height) {
-                        height = Math.round((height * maxDim) / width);
-                        width = maxDim;
-                    } else {
-                        width = Math.round((width * maxDim) / height);
-                        height = maxDim;
-                    }
-                }
-
-                const canvas = document.createElement("canvas");
-                canvas.width = width;
-                canvas.height = height;
-                const ctx = canvas.getContext("2d");
-                ctx.drawImage(img, 0, 0, width, height);
-
-                const dataUrl = canvas.toDataURL("image/jpeg", qualita);
-                resolve(dataUrl);
-            };
-            img.onerror = () => reject(new Error("Errore nel caricamento immagine"));
-            img.src = e.target.result;
-        };
-        reader.onerror = () => reject(new Error("Errore nella lettura del file"));
-        reader.readAsDataURL(file);
-    });
+    return nuovoElemento;
 }
 
 // Mostra un messaggio toast temporaneo
@@ -1838,23 +1788,13 @@ function impostaAscoltatoriGalleria() {
             for (let i = 0; i < files.length; i++) {
                 const f = files[i];
                 try {
-                    const dataUrl = await ottimizzaImmagine(f, 1600, 0.85);
-                    const nomePulito = f.name.replace(/\.[^/.]+$/, "");
-                    const dataOggi = new Date().toLocaleDateString("it-IT", { day: "numeric", month: "short", year: "numeric" });
-                    
-                    const nuovaFoto = {
-                        id: "custom-" + Date.now() + "-" + Math.random().toString(36).substr(2, 6),
-                        src: dataUrl,
-                        titolo: nomePulito,
-                        sottotitolo: `Caricata il ${dataOggi}`,
-                        isCustom: true,
-                        timestamp: Date.now()
-                    };
-
-                    await salvaFotoInDatabase(nuovaFoto);
+                    if (spinnerText) {
+                        spinnerText.textContent = `Caricamento ${i + 1} di ${files.length}...`;
+                    }
+                    await caricaESalvaMediaCondiviso(f);
                     contatoreSalvate++;
                 } catch (err) {
-                    console.error("Errore elaborazione foto:", err);
+                    console.error("Errore elaborazione file:", err);
                 }
             }
 
