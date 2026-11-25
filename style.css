@@ -1228,7 +1228,7 @@ h1, h2, h3 {
     }
 
     .galleria-grid-container {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(4, 1fr);
         gap: 0.75rem;
     }
 
@@ -2141,7 +2141,7 @@ h1, h2, h3 {
     }
 }
 
-@media screen and (max-width: 420px) {
+@media screen and (max-width: 820px) {
     .crossword-grid {
         gap: 2px;
     }
