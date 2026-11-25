@@ -1293,11 +1293,6 @@ if (btnBackFromTop10Lock) {
 // Elenco foto predefinite caricate dalla cartella assets
 const FOTO_PREDEFINITE = [
     {
-        id: "predefinita-1",
-        src: "assets/cinqueterre.jpeg",
-        isCustom: false
-    },
-    {
         id: "predefinita-2",
         src: "assets/perletti.jpeg",
         isCustom: false
